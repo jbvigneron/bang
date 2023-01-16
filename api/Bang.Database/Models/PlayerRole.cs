@@ -1,10 +1,10 @@
-﻿namespace Bang.Database.Models
+﻿using Bang.Database.Enums;
+
+namespace Bang.Database.Models
 {
-    public enum PlayerRole
+    public class PlayerRole
     {
-        Sheriff = 1,
-        Outlaw = 2,
-        Renegade = 3,
-        Assistant = 4
+        public int Id { get; set; }
+        public RoleEnum Value { get; set; }
     }
 }
