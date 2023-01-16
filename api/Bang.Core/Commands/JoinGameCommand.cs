@@ -1,5 +1,5 @@
-﻿using MediatR;
-using Bang.Database.Models;
+﻿using Bang.Database.Models;
+using MediatR;
 
 namespace Bang.Core.Commands
 {
@@ -7,8 +7,8 @@ namespace Bang.Core.Commands
     {
         public JoinGameCommand(Guid gameId, string playerName)
         {
-            GameId = gameId;
-            PlayerName = playerName;
+            this.GameId = gameId;
+            this.PlayerName = playerName;
         }
 
         public Guid GameId { get; }

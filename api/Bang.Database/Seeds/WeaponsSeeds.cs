@@ -1,4 +1,5 @@
-﻿using Bang.Database.Models;
+﻿using Bang.Database.Enums;
+using Bang.Database.Models;
 
 namespace Bang.Database.Seeds
 {
@@ -8,7 +9,7 @@ namespace Bang.Database.Seeds
         {
             new Weapon
             {
-                Id = WeaponId.Colt45,
+                Id = WeaponEnum.Colt45,
                 Name = "Colt .45",
                 Range = 1
             }

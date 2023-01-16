@@ -1,5 +1,5 @@
-﻿using MediatR;
-using Bang.Database.Models;
+﻿using Bang.Database.Models;
+using MediatR;
 
 namespace Bang.Core.Commands
 {
