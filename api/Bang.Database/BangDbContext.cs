@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Bang.Database.Models;
+﻿using Bang.Database.Models;
 using Bang.Database.Seeds;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Database
 {
@@ -14,47 +14,44 @@ namespace Bang.Database
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<PlayerRole> PlayersRole { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Character>()
-                .Property(b => b.Name)
+                .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Character>()
-                .Property(b => b.Description)
+                .Property(e => e.Description)
                 .IsRequired()
                 .HasMaxLength(255);
 
             modelBuilder.Entity<Character>()
-                .Property(b => b.Lives)
+                .Property(e => e.Lives)
                 .IsRequired();
 
             modelBuilder.Entity<Character>()
                 .HasData(CharactersSeeds.Data);
 
             modelBuilder.Entity<Game>()
-                .Property(b => b.GameStatus)
+                .Property(e => e.GameStatus)
                 .IsRequired();
 
             modelBuilder.Entity<Player>()
-                .Property(b => b.Name)
+                .Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsRequired();
 
-            modelBuilder.Entity<Player>()
-                .Property(b => b.Role)
-                .IsRequired();
-
             modelBuilder.Entity<Weapon>()
-                .Property(b => b.Name)
+                .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Weapon>()
-                .Property(b => b.Range)
+                .Property(e => e.Range)
                 .IsRequired();
 
             modelBuilder.Entity<Weapon>()
