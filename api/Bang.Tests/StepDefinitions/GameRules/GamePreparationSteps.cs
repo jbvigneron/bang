@@ -80,5 +80,12 @@ namespace Bang.Tests.StepDefinitions.GameRules
             await this.gameDriver.UpdateGameAsync();
             this.rulesDriver.CheckFirstPlayerIsTheScheriff();
         }
+
+        [Then(@"la pioche comporte (.*) cartes")]
+        public void ThenLaPiocheComporteCartes(int count)
+        {
+            this.rulesDriver.CheckDeckCount(count);
+        }
+
     }
 }

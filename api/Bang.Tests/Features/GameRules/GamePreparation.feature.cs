@@ -459,6 +459,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 105
  testRunner.Then("c\'est au shérif de commencer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
+#line 106
+ testRunner.And("la pioche comporte 80 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

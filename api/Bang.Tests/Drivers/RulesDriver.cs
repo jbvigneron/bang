@@ -59,5 +59,16 @@ namespace Bang.Tests.Drivers
             var scheriff = this.gameContext.Current.GetScheriff();
             Assert.Equal(scheriff.Name, this.gameContext.Current.CurrentPlayerName);
         }
+
+        internal void CheckNumberOfCards(string playerName)
+        {
+            var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
+            Assert.Equal(player.Lives, player.CardsCount);
+        }
+
+        internal void CheckDeckCount(int count)
+        {
+            Assert.Equal(count, this.gameContext.Current.DeckCount);
+        }
     }
 }

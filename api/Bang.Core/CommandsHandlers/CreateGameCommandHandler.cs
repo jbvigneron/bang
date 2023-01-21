@@ -1,9 +1,10 @@
-using Bang.Core.Commands;
+﻿using Bang.Core.Commands;
 using Bang.Core.Exceptions;
 using Bang.Database;
 using Bang.Database.Enums;
 using Bang.Database.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.CommandsHandlers
 {
@@ -33,19 +34,24 @@ namespace Bang.Core.CommandsHandlers
 
             this.DetermineAvailablesRoles(request.PlayerNames);
 
+            var deck = await this.InitializeDeckAsync(cancellationToken);
+
             var game = new Game
             {
-                GameStatus = GameStatusEnum.WaitingForPlayers,
-                Players = new List<Player>()
+                GameStatus = GameStatus.WaitingForPlayers,
+                Players = new List<Player>(),
+                Deck = deck,
+                DeckCount = deck.Count,
+                DiscardPile = new List<GameDiscardCard>()
             };
 
-            this.AssignRolesToAllPlayers(request, game);
+            this.AssignRolesToAllPlayers(request.PlayerNames, game);
 
             await context.Games.AddAsync(game, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
             return game;
         }
-        
+
         private void DetermineAvailablesRoles(IEnumerable<string> playerNames)
         {
             if (playerNames.Count() < 4 || playerNames.Count() > 7)
@@ -69,9 +75,18 @@ namespace Bang.Core.CommandsHandlers
             }
         }
 
-        private void AssignRolesToAllPlayers(CreateGameCommand request, Game game)
+        private Task<List<GameDeckCard>> InitializeDeckAsync(CancellationToken cancellationToken) =>
+            this.context.Cards
+                .OrderBy(c => Guid.NewGuid())
+                .Select(c => new GameDeckCard
+                {
+                    CardId = c.Id
+                })
+                .ToListAsync(cancellationToken);
+
+        private void AssignRolesToAllPlayers(IEnumerable<string> playerNames, Game game)
         {
-            foreach (var playerName in request.PlayerNames)
+            foreach (var playerName in playerNames)
             {
                 var player = new Player
                 {
