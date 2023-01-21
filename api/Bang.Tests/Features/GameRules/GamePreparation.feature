@@ -103,3 +103,4 @@ Scénario: Démarrage de la partie
 	Et "Emilie" pioche une carte personnage
 	Et "Martin" pioche une carte personnage
 	Alors c'est au shérif de commencer
+	Et la pioche comporte 80 cartes
