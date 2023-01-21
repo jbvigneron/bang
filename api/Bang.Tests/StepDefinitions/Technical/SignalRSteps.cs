@@ -5,13 +5,13 @@ using Bang.Tests.Drivers;
 namespace Bang.Tests.StepDefinitions.Technical
 {
     [Binding]
-    public sealed class PlayerJoinStepDefinitions
+    public sealed class SignalRSteps
     {
         private readonly GameDriver gameDriver;
         private readonly SignalRDriver signalRDriver;
         private readonly StatusDriver stateDriver;
 
-        public PlayerJoinStepDefinitions(GameDriver gameDriver, SignalRDriver eventsDriver, StatusDriver stateDriver)
+        public SignalRSteps(GameDriver gameDriver, SignalRDriver eventsDriver, StatusDriver stateDriver)
         {
             this.gameDriver = gameDriver;
             this.signalRDriver = eventsDriver;
@@ -36,14 +36,20 @@ namespace Bang.Tests.StepDefinitions.Technical
         public void ThenEstAvertiQueEstPresent(string receiver, string emitter)
         {
             this.signalRDriver.CheckPlayerMessages(receiver, EventNames.PlayerReady, 1);
-            this.stateDriver.CheckPlayerStatus(emitter, PlayerStatusEnum.Alive);
+            this.stateDriver.CheckPlayerStatus(emitter, PlayerStatus.Alive);
         }
+
+        [Then(@"tous les joueurs sont avertis")]
+        public void ThenTousLesJoueursSontAvertis()
+        {
+            this.signalRDriver.CheckMessages(EventNames.GameReady);
+        }
+
 
         [Then(@"la partie peut commencer")]
         public void ThenLaPartiePeutCommencer()
         {
-            this.signalRDriver.CheckMessages(EventNames.GameReady);
-            this.stateDriver.CheckGameStatus(GameStatusEnum.InProgress);
+            this.stateDriver.CheckGameStatus(GameStatus.InProgress);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿Fonctionnalité: Initialisation du jeu
+﻿Fonctionnalité: Préparation du jeu
 
-Scénario: Démarrer la partie à 4 joueurs
+Scénario: Faire une partie à 4 joueurs
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -11,7 +11,7 @@ Scénario: Démarrer la partie à 4 joueurs
 	Alors il y a un shérif
 	Et il y a 3 autres personnes avec un autre rôle
 
-Scénario: Démarrer la partie à 5 joueurs
+Scénario: Faire une partie à 5 joueurs
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -23,7 +23,7 @@ Scénario: Démarrer la partie à 5 joueurs
 	Alors il y a un shérif
 	Et il y a 4 autres personnes avec un autre rôle
 
-Scénario: Démarrer la partie à 6 joueurs
+Scénario: Faire une partie à 6 joueurs
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -36,7 +36,7 @@ Scénario: Démarrer la partie à 6 joueurs
 	Alors il y a un shérif
 	Et il y a 5 autres personnes avec un autre rôle
 
-Scénario: Démarrer la partie à 7 joueurs
+Scénario: Faire une partie à 7 joueurs
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -50,7 +50,7 @@ Scénario: Démarrer la partie à 7 joueurs
 	Alors il y a un shérif
 	Et il y a 6 autres personnes avec un autre rôle
 
-Scénario: Dévoiler le schérif
+Scénario: Dévoiler le shérif
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -58,7 +58,7 @@ Scénario: Dévoiler le schérif
 		| Emilie     |
 		| Martin     |
 	Quand la partie se prépare
-	Alors le schérif dévoile sa carte
+	Alors le shérif dévoile sa carte
 
 Scénario: Distribution des personnages
 	Sachant que les joueurs suivants veulent jouer

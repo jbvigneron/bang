@@ -3,15 +3,14 @@ using Bang.Tests.Drivers;
 namespace Bang.Tests.StepDefinitions.GameRules
 {
     [Binding]
-    public sealed class InitializationStepDefinitions
+    public sealed class GamePreparationSteps
     {
         private readonly GameDriver gameDriver;
         private readonly RulesDriver rulesDriver;
-        private readonly StatusDriver statusDriver;
 
         private IEnumerable<string> playerNames;
 
-        public InitializationStepDefinitions(GameDriver gameDriver, RulesDriver rulesDriver)
+        public GamePreparationSteps(GameDriver gameDriver, RulesDriver rulesDriver)
         {
             this.gameDriver = gameDriver;
             this.rulesDriver = rulesDriver;
@@ -47,7 +46,7 @@ namespace Bang.Tests.StepDefinitions.GameRules
             this.rulesDriver.CheckAllOthersRoles(count);
         }
 
-        [Then(@"le schérif dévoile sa carte")]
+        [Then(@"le shérif dévoile sa carte")]
         public void ThenLeScherifDevoileSaCarte()
         {
             this.rulesDriver.CheckIsSheriffUnveiled();
@@ -76,11 +75,10 @@ namespace Bang.Tests.StepDefinitions.GameRules
         }
 
         [Then(@"c'est au shérif de commencer")]
-        public async Task ThenCestAuSherifDeCommencer()
+        public async Task ThenCEstAuSherifDeCommencer()
         {
             await this.gameDriver.UpdateGameAsync();
             this.rulesDriver.CheckFirstPlayerIsTheScheriff();
         }
-
     }
 }
