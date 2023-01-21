@@ -1,6 +1,6 @@
 ﻿namespace Bang.Database.Enums
 {
-    public enum RoleEnum
+    public enum Role
     {
         Sheriff,
         Outlaw,

@@ -1,4 +1,4 @@
-﻿using Bang.Core.Commands;
+using Bang.Core.Commands;
 using Bang.Core.Exceptions;
 using Bang.Database;
 using Bang.Database.Enums;
@@ -11,12 +11,12 @@ namespace Bang.Core.CommandsHandlers
     {
         private readonly BangDbContext context;
 
-        private readonly List<RoleEnum> roles = new()
+        private readonly List<Role> roles = new()
         {
-            RoleEnum.Sheriff,
-            RoleEnum.Renegade,
-            RoleEnum.Outlaw,
-            RoleEnum.Outlaw
+            Role.Sheriff,
+            Role.Renegade,
+            Role.Outlaw,
+            Role.Outlaw
         };
 
         public CreateGameCommandHandler(BangDbContext context)
@@ -26,12 +26,12 @@ namespace Bang.Core.CommandsHandlers
 
         public async Task<Game> Handle(CreateGameCommand request, CancellationToken cancellationToken)
         {
-            if(request.PlayerNames.Distinct().Count() != request.PlayerNames.Count())
+            if (request.PlayerNames.Distinct().Count() != request.PlayerNames.Count())
             {
                 throw new GameException("Les joueurs doivent avoir des noms différents");
             }
 
-            this.DetermineRolesAvailables(request);
+            this.DetermineAvailablesRoles(request.PlayerNames);
 
             var game = new Game
             {
@@ -46,26 +46,26 @@ namespace Bang.Core.CommandsHandlers
             return game;
         }
         
-        private void DetermineRolesAvailables(CreateGameCommand request)
+        private void DetermineAvailablesRoles(IEnumerable<string> playerNames)
         {
-            if (request.PlayerNames.Count() < 4 || request.PlayerNames.Count() > 7)
+            if (playerNames.Count() < 4 || playerNames.Count() > 7)
             {
-                throw new ArgumentOutOfRangeException(nameof(request.PlayerNames), "Le nombre de joueurs doit être compris entre 4 et 7");
+                throw new ArgumentOutOfRangeException(nameof(playerNames), "Le nombre de joueurs doit être compris entre 4 et 7");
             }
 
-            if (request.PlayerNames.Count() >= 5)
+            if (playerNames.Count() >= 5)
             {
-                this.roles.Add(RoleEnum.Assistant);
+                this.roles.Add(Role.Assistant);
             }
 
-            if (request.PlayerNames.Count() >= 6)
+            if (playerNames.Count() >= 6)
             {
-                this.roles.Add(RoleEnum.Outlaw);
+                this.roles.Add(Role.Outlaw);
             }
 
-            if (request.PlayerNames.Count() == 7)
+            if (playerNames.Count() == 7)
             {
-                this.roles.Add(RoleEnum.Assistant);
+                this.roles.Add(Role.Assistant);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Bang.Core.CommandsHandlers
                 var player = new Player
                 {
                     Name = playerName,
-                    Status = PlayerStatusEnum.NotReady
+                    Status = PlayerStatus.NotReady
                 };
 
                 this.AssignRoleToPlayer(player);
@@ -93,7 +93,7 @@ namespace Bang.Core.CommandsHandlers
                 Value = this.roles[roleIndex]
             };
 
-            if (player.Role.Value == RoleEnum.Sheriff)
+            if (player.Role.Value == Role.Sheriff)
             {
                 player.IsScheriff = true;
                 player.Lives++;

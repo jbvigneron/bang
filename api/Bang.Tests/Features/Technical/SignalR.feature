@@ -1,4 +1,4 @@
-﻿Fonctionnalité: Un joueur rejoint une partie
+﻿Fonctionnalité: Communications entre les joueurs avec SignalR
 
 Contexte:
 	Sachant qu'une partie est initialisée avec ces joueurs
@@ -18,4 +18,5 @@ Scénario: Le jeu est prêt
 	Et "Max" rejoint la partie
 	Et "Emilie" rejoint la partie
 	Et "Martin" rejoint la partie
-	Alors la partie peut commencer
+	Alors tous les joueurs sont avertis
+	Et la partie peut commencer

@@ -12,12 +12,12 @@ namespace Bang.Tests.Drivers
             this.gameContext = gameContext;
         }
 
-        public void CheckGameStatus(GameStatusEnum status)
+        public void CheckGameStatus(GameStatus status)
         {
             Assert.Equal(status, this.gameContext.Current.GameStatus);
         }
 
-        public void CheckPlayerStatus(string playerName, PlayerStatusEnum status)
+        public void CheckPlayerStatus(string playerName, PlayerStatus status)
         {
             var newPlayer = this.gameContext.Current.Players.Single(p => p.Name == playerName);
             Assert.Equal(status, newPlayer.Status);

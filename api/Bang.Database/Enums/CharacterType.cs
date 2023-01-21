@@ -1,6 +1,6 @@
 ﻿namespace Bang.Database.Enums
 {
-    public enum CharacterEnum
+    public enum CharacterType
     {
         BartCassidy,
         BlackJack,

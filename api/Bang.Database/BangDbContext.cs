@@ -1,4 +1,4 @@
-﻿using Bang.Database.Models;
+using Bang.Database.Models;
 using Bang.Database.Seeds;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,7 +34,7 @@ namespace Bang.Database
                 .IsRequired();
 
             modelBuilder.Entity<Character>()
-                .HasData(CharactersSeeds.Data);
+                .HasData(CharactersSeeds.Fill());
 
             modelBuilder.Entity<Game>()
                 .Property(e => e.GameStatus)
@@ -55,7 +55,7 @@ namespace Bang.Database
                 .IsRequired();
 
             modelBuilder.Entity<Weapon>()
-                .HasData(WeaponsSeeds.Data);
+                .HasData(WeaponsSeeds.Fill());
         }
     }
 }
