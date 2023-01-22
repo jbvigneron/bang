@@ -1,10 +1,10 @@
 ﻿using MediatR;
 
-namespace Bang.Core.Commands
+namespace Bang.Core.Notifications
 {
-    public class JoinGameCommand : IRequest<Guid>
+    public class PlayerJoin : INotification
     {
-        public JoinGameCommand(Guid gameId, string playerName)
+        public PlayerJoin(Guid gameId, string playerName)
         {
             this.GameId = gameId;
             this.PlayerName = playerName;

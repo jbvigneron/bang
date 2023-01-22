@@ -7,11 +7,11 @@ using System.Security.Claims;
 namespace Bang.Core.Hubs
 {
     [Authorize]
-    public class GameHub : Hub
+    public class InGameHub : Hub
     {
         private readonly IMediator mediator;
 
-        public GameHub(IMediator mediator)
+        public InGameHub(IMediator mediator)
         {
             this.mediator = mediator;
         }

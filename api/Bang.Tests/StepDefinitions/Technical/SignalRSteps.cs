@@ -1,4 +1,3 @@
-using Bang.Core.Constants;
 using Bang.Database.Enums;
 using Bang.Tests.Drivers;
 
@@ -9,47 +8,73 @@ namespace Bang.Tests.StepDefinitions.Technical
     {
         private readonly GameDriver gameDriver;
         private readonly SignalRDriver signalRDriver;
+        private readonly RulesDriver rulesDriver;
         private readonly StatusDriver stateDriver;
 
-        public SignalRSteps(GameDriver gameDriver, SignalRDriver eventsDriver, StatusDriver stateDriver)
+        private IEnumerable<string> playerNames;
+
+        public SignalRSteps(GameDriver gameDriver, SignalRDriver eventsDriver, RulesDriver rulesDriver, StatusDriver stateDriver)
         {
             this.gameDriver = gameDriver;
             this.signalRDriver = eventsDriver;
+            this.rulesDriver = rulesDriver;
             this.stateDriver = stateDriver;
         }
 
-        [Given(@"une partie est initialisée avec ces joueurs")]
-        public Task GivenUnePartieEstInitialiseeAvecCesJoueurs(Table table)
+        [Given(@"ces joueurs souhaitent faire une partie")]
+        public void GivenCesJoueursSouhaitentFaireUnePartie(Table table)
         {
-            var playerNames = table.Rows.Select(r => r["playerName"]);
-            return this.gameDriver.InitGameAsync(playerNames);
+            this.playerNames = table.Rows.Select(r => r["playerName"]);
+        }
+
+        [When(@"une partie est initialisée")]
+        public async Task WhenUnePartieEstInitialisee()
+        {
+            await this.signalRDriver.ConnectToPublicHub();
+            await this.gameDriver.InitGameAsync(this.playerNames);
         }
 
         [When(@"""([^""]*)"" rejoint la partie")]
         public async Task WhenRejointLaPartie(string playerName)
         {
             await this.gameDriver.JoinGameAsync(playerName);
-            await this.signalRDriver.ListenGameHub(playerName);
+            await this.signalRDriver.ConnectToInGameHub(playerName);
         }
 
-        [Then(@"""([^""]*)"" est averti que ""([^""]*)"" est présent")]
-        public void ThenEstAvertiQueEstPresent(string receiver, string emitter)
+        [Then(@"un message ""([^""]*)"" est envoyé au hub public")]
+        public void ThenUnMessageAuHubPublic(string message)
         {
-            this.signalRDriver.CheckPlayerMessages(receiver, EventNames.PlayerReady, 1);
-            this.stateDriver.CheckPlayerStatus(emitter, PlayerStatus.Alive);
+            this.signalRDriver.CheckPublicMessage(message);
         }
 
-        [Then(@"tous les joueurs sont avertis")]
-        public void ThenTousLesJoueursSontAvertis()
+        [Then(@"le jeu contient (.*) cartes")]
+        public void ThenLeJeuContientCartes(int count)
         {
-            this.signalRDriver.CheckMessages(EventNames.GameReady);
+            this.rulesDriver.CheckDeckCount(count);
         }
 
+        [Then(@"""([^""]*)"" reçoit un message ""([^""]*)""")]
+        public void ThenRecoitUnMessage(string receiver, string message)
+        {
+            this.signalRDriver.CheckInGameMessage(receiver, message);
+        }
+
+        [Then(@"""([^""]*)"" est prêt")]
+        public void ThenEstPret(string playerName)
+        {
+            this.stateDriver.CheckPlayerStatus(playerName, PlayerStatus.Alive);
+        }
 
         [Then(@"la partie peut commencer")]
         public void ThenLaPartiePeutCommencer()
         {
             this.stateDriver.CheckGameStatus(GameStatus.InProgress);
+        }
+
+        [Then(@"c'est au tour du schérif")]
+        public void ThenCestAuTourDuScherif()
+        {
+            this.stateDriver.CheckIsScheriffTurn();
         }
     }
 }

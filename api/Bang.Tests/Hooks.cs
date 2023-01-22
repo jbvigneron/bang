@@ -9,9 +9,9 @@ namespace Bang.Tests
     public class Hooks
     {
         private readonly TestWebApplicationFactory<Program> factory;
-        private readonly BrowserContext browser;
+        private readonly BrowsersContext browser;
 
-        public Hooks(TestWebApplicationFactory<Program> factory, BrowserContext browser)
+        public Hooks(TestWebApplicationFactory<Program> factory, BrowsersContext browser)
         {
             this.factory = factory;
             this.browser = browser;
