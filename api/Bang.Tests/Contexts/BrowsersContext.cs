@@ -8,13 +8,15 @@ namespace Bang.Tests.Contexts
         {
             this.Cookies = new Dictionary<string, IList<string>>();
             this.PublicHubMessages = new List<string>();
-            this.InGameHubMessages = new Dictionary<string, IList<string>>();
+            this.GameHubMessages = new Dictionary<string, IList<string>>();
+            this.PlayerHubMessages = new Dictionary<string, IList<string>>();
         }
 
-        public TestWebApplicationFactory<Program> HttpClientFactory { get; internal set; }
-        public IDictionary<string, HttpClient> HttpClients { get; internal set; }
-        public IDictionary<string, IList<string>> Cookies { get; internal set; }
-        public IList<string> PublicHubMessages { get; internal set; }
-        public IDictionary<string, IList<string>> InGameHubMessages { get; internal set; }
+        public TestWebApplicationFactory<Program>? HttpClientFactory { get; set; }
+        public IDictionary<string, HttpClient>? HttpClients { get; set; }
+        public IDictionary<string, IList<string>> Cookies { get; }
+        public IList<string> PublicHubMessages { get; }
+        public IDictionary<string, IList<string>> GameHubMessages { get; }
+        public IDictionary<string, IList<string>> PlayerHubMessages { get; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace Bang.Database.Models
 {
-    public abstract class CardPile
+    public class PlayerDeck
     {
         public Guid Id { get; set; }
-        public Guid GameId { get; set; }
-        public virtual Game Game { get; set; }
+        public Guid PlayerId { get; set; }
+        public virtual Player Player { get; set; }
         public virtual ICollection<Card> Cards { get; set; }
     }
 }

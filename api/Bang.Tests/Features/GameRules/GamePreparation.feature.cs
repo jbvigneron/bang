@@ -389,7 +389,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Sid Ketchum",
                             "4"});
                 table8.AddRow(new string[] {
-                            "Slab le flingeur",
+                            "Slab le flingueur",
                             "4"});
                 table8.AddRow(new string[] {
                             "Suzy Lafayette",

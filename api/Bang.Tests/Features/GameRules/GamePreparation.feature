@@ -71,23 +71,23 @@ Scénario: Distribution des personnages
 	Et "Max" pioche une carte personnage
 	Alors un personnage est attribué à "Max"
 	Et le nombre de vies de "Max" lui est attribué selon son personnage et son rôle
-		| characterName    | lives |
-		| Bart Cassidy     | 4     |
-		| Black Jack       | 4     |
-		| Calamity Janet   | 4     |
-		| El Gringo        | 3     |
-		| Jesse Jones      | 4     |
-		| Jourdonnais      | 4     |
-		| Kit Carlson      | 4     |
-		| Lucky Duke       | 4     |
-		| Paul Regret      | 3     |
-		| Pedro Ramirez    | 4     |
-		| Rose Doolan      | 4     |
-		| Sid Ketchum      | 4     |
-		| Slab le flingeur | 4     |
-		| Suzy Lafayette   | 4     |
-		| Sam le vautour   | 4     |
-		| Willy le Kid     | 4     |
+		| characterName     | lives |
+		| Bart Cassidy      | 4     |
+		| Black Jack        | 4     |
+		| Calamity Janet    | 4     |
+		| El Gringo         | 3     |
+		| Jesse Jones       | 4     |
+		| Jourdonnais       | 4     |
+		| Kit Carlson       | 4     |
+		| Lucky Duke        | 4     |
+		| Paul Regret       | 3     |
+		| Pedro Ramirez     | 4     |
+		| Rose Doolan       | 4     |
+		| Sid Ketchum       | 4     |
+		| Slab le flingueur | 4     |
+		| Suzy Lafayette    | 4     |
+		| Sam le vautour    | 4     |
+		| Willy le Kid      | 4     |
 	Et l arme principale de "Max" est "Colt .45" d'une portée de 1
 
 Scénario: Démarrage de la partie

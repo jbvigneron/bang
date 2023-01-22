@@ -22,7 +22,7 @@ namespace Bang.Core.CommandsHandlers
             );
 
             await this.mediator.Publish(
-                new DeckInitialize(gameId), cancellationToken
+                new GameDeckPrepare(gameId), cancellationToken
             );
 
             return gameId;
