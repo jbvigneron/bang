@@ -54,7 +54,7 @@ namespace Bang.Tests.StepDefinitions.Technical
         [Then(@"le jeu contient (.*) cartes")]
         public void ThenLeJeuContientCartes(int count)
         {
-            this.rulesDriver.CheckDeckCount(count);
+            this.rulesDriver.CheckGameDeckCount(count);
         }
 
         [Then(@"""([^""]*)"" reçoit un message de groupe ""([^""]*)""")]

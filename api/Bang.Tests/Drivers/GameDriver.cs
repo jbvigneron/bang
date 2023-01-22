@@ -50,10 +50,11 @@ namespace Bang.Tests.Drivers
             this.gameContext.Current = await client.GetFromJsonAsync<Game>($"api/game/{gameId}");
         }
 
-        public Task<Player> GetPlayerInfoAsync(string playerName)
+        public async Task UpdatePlayerCardsAsync(string playerName)
         {
             var client = this.browserContext.HttpClients[playerName];
-            return client.GetFromJsonAsync<Player>("api/player/me");
+            var cards = await client.GetFromJsonAsync<IList<Card>>("api/player/cards");
+            this.gameContext.PlayerCards[playerName] = cards;
         }
     }
 }
