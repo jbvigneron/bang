@@ -1,4 +1,5 @@
 ﻿using Bang.Core.Constants;
+using Bang.Core.Extensions;
 using Bang.Database.Models;
 using Bang.Tests.Contexts;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -22,12 +23,7 @@ namespace Bang.Tests.Drivers
             var server = browsersContext.HttpClientFactory.Server;
             var httpClient = server.CreateClient();
 
-            var connection = new HubConnectionBuilder()
-                .WithUrl(
-                    "http://localhost/PublicHub",
-                    options => options.HttpMessageHandlerFactory = _ => server.CreateHandler())
-                .Build();
-
+            var connection = this.ConnectToOpenHub("http://localhost/PublicHub");
             await connection.StartAsync();
 
             connection.On<Game>(HubMessages.NewGame, game =>
@@ -36,9 +32,9 @@ namespace Bang.Tests.Drivers
                 this.gameContext.Current = game;
             });
 
-            connection.On<Game>(HubMessages.DeckReady, game =>
+            connection.On<Game>(HubMessages.GameDeckReady, game =>
             {
-                this.browsersContext.PublicHubMessages.Add(HubMessages.DeckReady);
+                this.browsersContext.PublicHubMessages.Add(HubMessages.GameDeckReady);
                 this.gameContext.Current = game;
             });
 
@@ -47,41 +43,21 @@ namespace Bang.Tests.Drivers
                 this.browsersContext.PublicHubMessages.Add(HubMessages.AllPlayerJoined);
                 this.gameContext.Current = game;
             });
-
-            connection.On<string>(HubMessages.ItsYourTurn, playerName =>
-            {
-                this.browsersContext.PublicHubMessages.Add(HubMessages.ItsYourTurn);
-                this.gameContext.Current.CurrentPlayerName = playerName;
-            });
         }
 
-        public async Task ConnectToInGameHub(string playerName)
+        public async Task ConnectToGameHub(string playerName)
         {
             var server = browsersContext.HttpClientFactory.Server;
             var httpClient = browsersContext.HttpClients[playerName];
 
-            var connection = new HubConnectionBuilder()
-                .WithUrl(
-                    "http://localhost/InGameHub",
-                    options =>
-                    {
-                        options.HttpMessageHandlerFactory = _ => server.CreateHandler();
+            this.browsersContext.GameHubMessages.Add(playerName, new List<string>());
 
-                        options.Headers = this.browsersContext.Cookies[playerName]
-                            .ToDictionary(
-                            _ => HeaderNames.Cookie,
-                            value => value
-                        );
-                    })
-                .Build();
-
-            this.browsersContext.InGameHubMessages.Add(playerName, new List<string>());
-
+            var connection = this.ConnectToProtectedHub("http://localhost/GameHub", playerName);
             await connection.StartAsync();
 
             connection.On<Player>(HubMessages.PlayerJoin, player =>
             {
-                this.browsersContext.InGameHubMessages[playerName].Add(HubMessages.PlayerJoin);
+                this.browsersContext.GameHubMessages[playerName].Add(HubMessages.PlayerJoin);
 
                 for (int i = 0; i < gameContext.Current.Players.Count; i++)
                 {
@@ -93,16 +69,79 @@ namespace Bang.Tests.Drivers
             });
         }
 
+        public async Task ConnectToPlayerHub(string playerName)
+        {
+            var server = browsersContext.HttpClientFactory.Server;
+            var httpClient = browsersContext.HttpClients[playerName];
+
+            this.browsersContext.PlayerHubMessages.Add(playerName, new List<string>());
+
+            var connection = this.ConnectToProtectedHub("http://localhost/PlayerHub", playerName);
+            await connection.StartAsync();
+
+            connection.On<string>(HubMessages.ItsYourTurn, name =>
+            {
+                this.browsersContext.PlayerHubMessages[playerName].Add(HubMessages.ItsYourTurn);
+                this.gameContext.Current.CurrentPlayerName = name;
+            });
+
+            connection.On<IEnumerable<Card>>(HubMessages.PlayerDeckReady, cards =>
+            {
+                this.browsersContext.PlayerHubMessages[playerName].Add(HubMessages.PlayerDeckReady);
+                this.gameContext.Cards = cards;
+            });
+        }
+
         public void CheckPublicMessage(string message)
         {
             var events = this.browsersContext.PublicHubMessages;
             Assert.Contains(message, events);
         }
 
-        public void CheckInGameMessage(string playerName, string message)
+        public void CheckGameMessage(string playerName, string message)
         {
-            var events = this.browsersContext.InGameHubMessages[playerName];
+            var events = this.browsersContext.GameHubMessages[playerName];
             Assert.Contains(message, events);
+        }
+
+        public void CheckPlayerMessage(string playerName, string message)
+        {
+            var events = this.browsersContext.GameHubMessages[playerName];
+            Assert.Contains(message, events);
+        }
+
+        public void CheckScheriffMessage(string message)
+        {
+            var scheriff = this.gameContext.Current.GetScheriff();
+            var events = this.browsersContext.PlayerHubMessages[scheriff.Name];
+            Assert.Contains(message, events);
+        }
+
+        private HubConnection ConnectToOpenHub(string url)
+        {
+            var server = browsersContext.HttpClientFactory.Server;
+
+            return new HubConnectionBuilder()
+                .WithUrl(url, options => options.HttpMessageHandlerFactory = _ => server.CreateHandler())
+                .Build();
+        }
+
+        private HubConnection ConnectToProtectedHub(string url, string playerName)
+        {
+            var server = browsersContext.HttpClientFactory.Server;
+
+            return new HubConnectionBuilder()
+                .WithUrl(url, options =>
+                {
+                    options.HttpMessageHandlerFactory = _ => server.CreateHandler();
+
+                    options.Headers = this.browsersContext.Cookies[playerName]
+                        .ToDictionary(
+                        _ => HeaderNames.Cookie,
+                        value => value
+                    );
+                })
+                .Build();
         }
     }
 }

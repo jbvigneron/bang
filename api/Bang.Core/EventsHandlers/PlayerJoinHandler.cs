@@ -15,14 +15,22 @@ namespace Bang.Core.NotificationsHandlers
     public class PlayerJoinHandler : INotificationHandler<PlayerJoin>
     {
         private readonly BangDbContext dbContext;
-        private readonly IHubContext<PublicHub> publicHub;
-        private readonly IHubContext<InGameHub> inGameHub;
 
-        public PlayerJoinHandler(BangDbContext dbContext, IHubContext<PublicHub> generalHub, IHubContext<InGameHub> inGameHub)
+        private readonly IHubContext<PublicHub> publicHub;
+        private readonly IHubContext<GameHub> gameHub;
+        private readonly IHubContext<PlayerHub> playerHub;
+
+        public PlayerJoinHandler(BangDbContext dbContext,
+            IHubContext<PublicHub> generalHub,
+            IHubContext<GameHub> gameHub,
+            IHubContext<PlayerHub> playerHub
+        )
         {
             this.dbContext = dbContext;
+
             this.publicHub = generalHub;
-            this.inGameHub = inGameHub;
+            this.gameHub = gameHub;
+            this.playerHub = playerHub;
         }
 
         public async Task Handle(PlayerJoin notification, CancellationToken cancellationToken)
@@ -49,15 +57,21 @@ namespace Bang.Core.NotificationsHandlers
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            var groupId = game.Id.ToString();
-            await this.inGameHub.Clients.Group(groupId).SendAsync(HubMessages.PlayerJoin, player, cancellationToken);
+            await this.gameHub
+                .Clients.Group(game.Id.ToString())
+                .SendAsync(HubMessages.PlayerJoin, player, cancellationToken);
 
             if (game.GameStatus == GameStatus.InProgress)
             {
-                await this.publicHub.Clients.All.SendAsync(HubMessages.AllPlayerJoined, game, cancellationToken);
+                await this.publicHub
+                    .Clients.All
+                    .SendAsync(HubMessages.AllPlayerJoined, game, cancellationToken);
 
                 var scheriff = game.GetScheriff();
-                await this.publicHub.Clients.All.SendAsync(HubMessages.ItsYourTurn, scheriff.Name, cancellationToken);
+
+                await this.playerHub
+                    .Clients.Group(scheriff.Id.ToString())
+                    .SendAsync(HubMessages.ItsYourTurn, scheriff.Name, cancellationToken);
             }
         }
         private Task<Character> GetRandomCharacterAsync(CancellationToken cancellationToken) =>

@@ -2,9 +2,9 @@
 
 namespace Bang.Core.Events
 {
-    public class DeckInitialize : INotification
+    public class GameDeckPrepare : INotification
     {
-        public DeckInitialize(Guid gameId)
+        public GameDeckPrepare(Guid gameId)
         {
             this.GameId = gameId;
         }

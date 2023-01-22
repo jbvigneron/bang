@@ -38,7 +38,11 @@ namespace Bang.Tests.StepDefinitions.Technical
         public async Task WhenRejointLaPartie(string playerName)
         {
             await this.gameDriver.JoinGameAsync(playerName);
-            await this.signalRDriver.ConnectToInGameHub(playerName);
+
+            await Task.WhenAll(
+                this.signalRDriver.ConnectToGameHub(playerName),
+                this.signalRDriver.ConnectToPlayerHub(playerName)
+            );
         }
 
         [Then(@"un message ""([^""]*)"" est envoyé au hub public")]
@@ -53,10 +57,10 @@ namespace Bang.Tests.StepDefinitions.Technical
             this.rulesDriver.CheckDeckCount(count);
         }
 
-        [Then(@"""([^""]*)"" reçoit un message ""([^""]*)""")]
-        public void ThenRecoitUnMessage(string receiver, string message)
+        [Then(@"""([^""]*)"" reçoit un message de groupe ""([^""]*)""")]
+        public void ThenRecoitUnMessageDeGroupe(string receiver, string message)
         {
-            this.signalRDriver.CheckInGameMessage(receiver, message);
+            this.signalRDriver.CheckGameMessage(receiver, message);
         }
 
         [Then(@"""([^""]*)"" est prêt")]
@@ -75,6 +79,12 @@ namespace Bang.Tests.StepDefinitions.Technical
         public void ThenCestAuTourDuScherif()
         {
             this.stateDriver.CheckIsScheriffTurn();
+        }
+
+        [Then(@"un message ""([^""]*)"" est envoyé au schérif")]
+        public void ThenUnMessageEstEnvoyeAuScherif(string message)
+        {
+            this.signalRDriver.CheckScheriffMessage(message);
         }
     }
 }

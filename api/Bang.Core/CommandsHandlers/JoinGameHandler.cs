@@ -1,7 +1,7 @@
 ﻿using Bang.Core.Commands;
+using Bang.Core.Events;
 using Bang.Core.Notifications;
 using Bang.Core.Queries;
-using Bang.Database;
 using MediatR;
 
 namespace Bang.Core.CommandsHandlers
@@ -21,9 +21,12 @@ namespace Bang.Core.CommandsHandlers
                 new PlayerJoin(request.GameId, request.PlayerName), cancellationToken
             );
 
-            // TODO: Distribuer les cartes au joueur (envoyer un nouvel événement)
-
             var playerId = await this.mediator.Send(new PlayerIdQuery(request.GameId, request.PlayerName), cancellationToken);
+
+            await this.mediator.Publish(
+                new PlayerDeckPrepare(playerId), cancellationToken
+            );
+
             return playerId;
         }
     }
