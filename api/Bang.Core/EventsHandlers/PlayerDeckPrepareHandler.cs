@@ -12,11 +12,15 @@ namespace Bang.Core.EventsHandlers
     public class PlayerDeckPrepareHandler : INotificationHandler<PlayerDeckPrepare>
     {
         private readonly BangDbContext dbContext;
+
+        private readonly IHubContext<PublicHub> publicHub;
         private readonly IHubContext<PlayerHub> playerHub;
 
-        public PlayerDeckPrepareHandler(BangDbContext dbContext, IHubContext<PlayerHub> playerHub)
+        public PlayerDeckPrepareHandler(BangDbContext dbContext, IHubContext<PublicHub> publicHub, IHubContext<PlayerHub> playerHub)
         {
             this.dbContext = dbContext;
+
+            this.publicHub = publicHub;
             this.playerHub = playerHub;
         }
 
@@ -35,7 +39,7 @@ namespace Bang.Core.EventsHandlers
                 .Include(d => d.Game)
                 .FirstAsync(d => d.Game.Players.Any(p => p.Id == notification.PlayerId), cancellationToken);
 
-            for(int i = 1; i <= player.Lives; i++)
+            for (int i = 1; i <= player.Lives; i++)
             {
                 var card = gameDeck.Cards.First();
 
@@ -43,8 +47,15 @@ namespace Bang.Core.EventsHandlers
                 gameDeck.Cards.Remove(card);
             }
 
+            var game = gameDeck.Game;
+            game.DeckCount = gameDeck.Cards.Count;
+
             await this.dbContext.PlayerDecks.AddAsync(playerDeck, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
+
+            await this.publicHub
+                .Clients.All
+                .SendAsync(HubMessages.GameUpdated, game, cancellationToken);
 
             await this.playerHub
                 .Clients.Group(player.Id.ToString())
