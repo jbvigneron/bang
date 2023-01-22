@@ -21,11 +21,11 @@ namespace Bang.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Game> PostAsync([FromBody] IEnumerable<string> playerNames)
+        public async Task<Guid> PostAsync([FromBody] IEnumerable<string> playerNames)
         {
             var request = new CreateGameCommand(playerNames);
-            var game = await mediator.Send(request);
-            return game;
+            var gameId = await mediator.Send(request);
+            return gameId;
         }
 
         [HttpGet("{gameId:guid}")]
@@ -40,11 +40,11 @@ namespace Bang.WebApi.Controllers
         public async Task JoinAsync([FromRoute] Guid gameId, [FromBody] string playerName)
         {
             var request = new JoinGameCommand(gameId, playerName);
-            var player = await mediator.Send(request);
+            var playerId = await mediator.Send(request);
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, player.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, playerId.ToString())
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

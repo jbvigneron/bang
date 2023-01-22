@@ -45,7 +45,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapHub<PublicHub>("/PublicHub");
 app.MapHub<GameHub>("/GameHub");
+app.MapHub<PlayerHub>("/PlayerHub");
 
 app.Run();
 

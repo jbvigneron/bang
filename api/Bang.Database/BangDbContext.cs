@@ -11,14 +11,22 @@ namespace Bang.Database
         {
         }
 
+        public DbSet<Card> Cards { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<GameDeck> GameDecks { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<PlayerRole> PlayersRole { get; set; }
+        public DbSet<PlayerDeck> PlayerDecks { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Card>()
+                .Property(e => e.Id);
+
+            modelBuilder.Entity<Card>()
+                .HasData(CardsSeeds.Fill());
+
             modelBuilder.Entity<Character>()
                 .Property(e => e.Name)
                 .IsRequired()
@@ -34,16 +42,51 @@ namespace Bang.Database
                 .IsRequired();
 
             modelBuilder.Entity<Character>()
-                .HasData(CharactersSeeds.Data);
+                .HasData(CharactersSeeds.Fill());
 
             modelBuilder.Entity<Game>()
                 .Property(e => e.GameStatus)
                 .IsRequired();
 
+            modelBuilder.Entity<GameDeck>()
+                .HasOne(e => e.Game)
+                .WithMany()
+                .HasForeignKey(e => e.GameId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GameDeck>()
+                .HasMany(e => e.Cards)
+                .WithMany();
+
             modelBuilder.Entity<Player>()
                 .Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.Character)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.Role)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.Weapon)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlayerDeck>()
+                .HasOne(e => e.Player)
+                .WithMany()
+                .HasForeignKey(e => e.PlayerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlayerDeck>()
+                .HasMany(e => e.Cards)
+                .WithMany();
 
             modelBuilder.Entity<Weapon>()
                 .Property(e => e.Name)
@@ -55,7 +98,7 @@ namespace Bang.Database
                 .IsRequired();
 
             modelBuilder.Entity<Weapon>()
-                .HasData(WeaponsSeeds.Data);
+                .HasData(WeaponsSeeds.Fill());
         }
     }
 }

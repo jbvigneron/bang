@@ -9,6 +9,7 @@ namespace Bang.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PlayerController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -19,7 +20,6 @@ namespace Bang.WebApi.Controllers
         }
 
         [HttpGet("me")]
-        [Authorize]
         public async Task<Player> GetMeAsync()
         {
             var playerId = Guid.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -27,6 +27,16 @@ namespace Bang.WebApi.Controllers
             var request = new PlayerQuery(playerId);
             var player = await mediator.Send(request);
             return player;
+        }
+
+        [HttpGet("cards")]
+        public async Task<IList<Card>> GetCardsAsync()
+        {
+            var playerId = Guid.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var request = new PlayerCardsQuery(playerId);
+            var cards = await mediator.Send(request);
+            return cards;
         }
     }
 }

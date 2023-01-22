@@ -1,5 +1,4 @@
 ﻿using Bang.Core.Extensions;
-using Bang.Database.Models;
 using Bang.Tests.Contexts;
 
 namespace Bang.Tests.Drivers
@@ -31,13 +30,17 @@ namespace Bang.Tests.Drivers
             Assert.True(sheriff.IsScheriff);
         }
 
-        public void CheckPlayerHasACharacter(Player player)
+        public void CheckPlayerHasACharacter(string playerName)
         {
+            var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
             Assert.NotNull(player.Character);
         }
 
-        public void CheckPlayerLives(Player player, int expectedLives)
+        public void CheckPlayerLives(string playerName, Table table)
         {
+            var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
+            var expectedLives = int.Parse(table.Rows.Single(r => r["characterName"] == player!.Character!.Name)["lives"]);
+
             if (player!.IsScheriff)
             {
                 Assert.Equal(expectedLives + 1, player.Lives);
@@ -48,8 +51,9 @@ namespace Bang.Tests.Drivers
             }
         }
 
-        public void CheckWeapon(Player player, string weaponName, int weaponRange)
+        public void CheckWeapon(string playerName, string weaponName, int weaponRange)
         {
+            var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
             Assert.Equal(weaponName, player!.Weapon!.Name);
             Assert.Equal(weaponRange, player.Weapon.Range);
         }
@@ -58,6 +62,19 @@ namespace Bang.Tests.Drivers
         {
             var scheriff = this.gameContext.Current.GetScheriff();
             Assert.Equal(scheriff.Name, this.gameContext.Current.CurrentPlayerName);
+        }
+
+        public void CheckGameDeckCount(int count)
+        {
+            Assert.Equal(count, this.gameContext.Current.DeckCount);
+        }
+
+        public void CheckPlayerDeckCount(string playerName)
+        {
+            var numberOfCards = this.gameContext.PlayerCards[playerName].Count();
+
+            var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
+            Assert.Equal(player.Lives, numberOfCards);
         }
     }
 }

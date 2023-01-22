@@ -1,6 +1,6 @@
 ﻿namespace Bang.Database.Enums
 {
-    public enum GameStatusEnum
+    public enum GameStatus
     {
         WaitingForPlayers,
         InProgress,

@@ -1,6 +1,6 @@
 ﻿namespace Bang.Database.Enums
 {
-    public enum PlayerStatusEnum
+    public enum PlayerStatus
     {
         NotReady,
         Alive,

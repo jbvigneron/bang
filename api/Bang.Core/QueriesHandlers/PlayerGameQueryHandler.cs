@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.QueriesHandlers
 {
-    public class GameFromPlayerIdQueryHandler : IRequestHandler<GameFromPlayerIdQuery, Game>
+    public class PlayerGameQueryHandler : IRequestHandler<PlayerGameQuery, Game>
     {
         private readonly BangDbContext context;
 
-        public GameFromPlayerIdQueryHandler(BangDbContext context)
+        public PlayerGameQueryHandler(BangDbContext context)
         {
             this.context = context;
         }
 
-        public Task<Game> Handle(GameFromPlayerIdQuery request, CancellationToken cancellationToken)
+        public Task<Game> Handle(PlayerGameQuery request, CancellationToken cancellationToken)
         {
             return this.context.Games
                 .Include(g => g.Players)
