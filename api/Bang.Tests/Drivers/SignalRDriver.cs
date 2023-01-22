@@ -85,10 +85,10 @@ namespace Bang.Tests.Drivers
                 this.gameContext.Current.CurrentPlayerName = name;
             });
 
-            connection.On<IEnumerable<Card>>(HubMessages.PlayerDeckReady, cards =>
+            connection.On<IList<Card>>(HubMessages.PlayerDeckReady, cards =>
             {
                 this.browsersContext.PlayerHubMessages[playerName].Add(HubMessages.PlayerDeckReady);
-                this.gameContext.Cards = cards;
+                this.gameContext.PlayerCards[playerName] = cards;
             });
         }
 

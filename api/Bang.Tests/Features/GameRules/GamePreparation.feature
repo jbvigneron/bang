@@ -86,9 +86,20 @@ Scénario: Distribution des personnages
 		| Sid Ketchum       | 4     |
 		| Slab le flingueur | 4     |
 		| Suzy Lafayette    | 4     |
-		| Sam le vautour    | 4     |
+		| Sam le Vautour    | 4     |
 		| Willy le Kid      | 4     |
 	Et l arme principale de "Max" est "Colt .45" d'une portée de 1
+
+Scénario: Distribution des cartes au lancement du jeu
+	Sachant que les joueurs suivants veulent jouer
+		| playerName |
+		| Jean       |
+		| Max        |
+		| Emilie     |
+		| Martin     |
+	Quand la partie se prépare
+	Et "Jean" pioche une carte personnage
+	Alors "Jean" possède autant de cartes qu'il a de points de vie
 
 Scénario: Démarrage de la partie
 	Sachant que les joueurs suivants veulent jouer

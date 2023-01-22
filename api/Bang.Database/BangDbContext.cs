@@ -54,6 +54,10 @@ namespace Bang.Database
                 .HasForeignKey(e => e.GameId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<GameDeck>()
+                .HasMany(e => e.Cards)
+                .WithMany();
+
             modelBuilder.Entity<Player>()
                 .Property(e => e.Name)
                 .HasMaxLength(50)
@@ -79,6 +83,10 @@ namespace Bang.Database
                 .WithMany()
                 .HasForeignKey(e => e.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlayerDeck>()
+                .HasMany(e => e.Cards)
+                .WithMany();
 
             modelBuilder.Entity<Weapon>()
                 .Property(e => e.Name)

@@ -55,23 +55,30 @@ namespace Bang.Tests.StepDefinitions.GameRules
         [Then(@"un personnage est attribué à ""([^""]*)""")]
         public async Task ThenUnPersonnageEstAttribueA(string playerName)
         {
-            var player = await this.gameDriver.GetPlayerInfoAsync(playerName);
-            this.rulesDriver.CheckPlayerHasACharacter(player);
+            await this.gameDriver.UpdateGameAsync();
+            this.rulesDriver.CheckPlayerHasACharacter(playerName);
         }
 
         [Then(@"le nombre de vies de ""([^""]*)"" lui est attribué selon son personnage et son rôle")]
         public async Task ThenLeNombreDeViesDeLuiEstAttribueSelonSonPersonnageEtSonRole(string playerName, Table table)
         {
-            var player = await this.gameDriver.GetPlayerInfoAsync(playerName);
-            var expectedLives = int.Parse(table.Rows.Single(r => r["characterName"] == player!.Character!.Name)["lives"]);
-            this.rulesDriver.CheckPlayerLives(player, expectedLives);
+            await this.gameDriver.UpdateGameAsync();
+            this.rulesDriver.CheckPlayerLives(playerName, table);
         }
 
         [Then(@"l arme principale de ""([^""]*)"" est ""([^""]*)"" d'une portée de (.*)")]
         public async Task ThenLArmePrincipaleDeEstDunePorteeDe(string playerName, string weaponName, int weaponRange)
         {
-            var player = await this.gameDriver.GetPlayerInfoAsync(playerName);
-            this.rulesDriver.CheckWeapon(player, weaponName, weaponRange);
+            await this.gameDriver.UpdateGameAsync();
+            this.rulesDriver.CheckWeapon(playerName, weaponName, weaponRange);
+        }
+
+        [Then(@"""([^""]*)"" possède autant de cartes qu'il a de points de vie")]
+        public async Task ThenPossedeAutantDeCartesQuilADePointsDeVies(string playerName)
+        {
+            await this.gameDriver.UpdateGameAsync();
+            await this.gameDriver.UpdatePlayerCardsAsync(playerName);
+            this.rulesDriver.CheckPlayerDeckCount(playerName);
         }
 
         [Then(@"c'est au shérif de commencer")]
@@ -85,7 +92,7 @@ namespace Bang.Tests.StepDefinitions.GameRules
         public async Task ThenLaPiocheComporteCartes(int count)
         {
             await this.gameDriver.UpdateGameAsync();
-            this.rulesDriver.CheckDeckCount(count);
+            this.rulesDriver.CheckGameDeckCount(count);
         }
     }
 }
