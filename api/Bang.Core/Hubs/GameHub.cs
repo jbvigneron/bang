@@ -20,7 +20,7 @@ namespace Bang.Core.Hubs
         {
             var principal = this.Context.User;
             var playerId = Guid.Parse(principal.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var game = await this.mediator.Send(new GameFromPlayerIdQuery(playerId));
+            var game = await this.mediator.Send(new PlayerGameQuery(playerId));
 
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, game.Id.ToString());
             await base.OnConnectedAsync();
