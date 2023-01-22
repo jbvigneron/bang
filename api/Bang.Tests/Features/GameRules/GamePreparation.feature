@@ -60,7 +60,7 @@ Scénario: Dévoiler le shérif
 	Quand la partie se prépare
 	Alors le shérif dévoile sa carte
 
-Scénario: Distribution des personnages
+Scénario: Distribuer les personnages
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -90,7 +90,17 @@ Scénario: Distribution des personnages
 		| Willy le Kid      | 4     |
 	Et l arme principale de "Max" est "Colt .45" d'une portée de 1
 
-Scénario: Distribution des cartes au lancement du jeu
+Scénario: Pioche de départ
+	Sachant que les joueurs suivants veulent jouer
+		| playerName |
+		| Jean       |
+		| Max        |
+		| Emilie     |
+		| Martin     |
+	Quand la partie se prépare
+	Alors la pioche comporte 80 cartes
+
+Scénario: Cartes de départ pour le joueur
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -101,7 +111,7 @@ Scénario: Distribution des cartes au lancement du jeu
 	Et "Jean" pioche une carte personnage
 	Alors "Jean" possède autant de cartes qu'il a de points de vie
 
-Scénario: Démarrage de la partie
+Scénario: Le schérif commence
 	Sachant que les joueurs suivants veulent jouer
 		| playerName |
 		| Jean       |
@@ -114,4 +124,3 @@ Scénario: Démarrage de la partie
 	Et "Emilie" pioche une carte personnage
 	Et "Martin" pioche une carte personnage
 	Alors c'est au shérif de commencer
-	Et la pioche comporte 80 cartes

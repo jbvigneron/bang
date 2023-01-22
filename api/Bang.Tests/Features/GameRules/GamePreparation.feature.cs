@@ -309,14 +309,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Distribution des personnages")]
+        [Xunit.SkippableFactAttribute(DisplayName="Distribuer les personnages")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Distribution des personnages")]
-        public void DistributionDesPersonnages()
+        [Xunit.TraitAttribute("Description", "Distribuer les personnages")]
+        public void DistribuerLesPersonnages()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Distribution des personnages", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Distribuer les personnages", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 63
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -410,14 +410,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Distribution des cartes au lancement du jeu")]
+        [Xunit.SkippableFactAttribute(DisplayName="Pioche de départ")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Distribution des cartes au lancement du jeu")]
-        public void DistributionDesCartesAuLancementDuJeu()
+        [Xunit.TraitAttribute("Description", "Pioche de départ")]
+        public void PiocheDeDepart()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Distribution des cartes au lancement du jeu", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pioche de départ", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 93
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -445,24 +445,21 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
 #line 101
- testRunner.And("\"Jean\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-#line 102
- testRunner.Then("\"Jean\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+ testRunner.Then("la pioche comporte 80 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Démarrage de la partie")]
+        [Xunit.SkippableFactAttribute(DisplayName="Cartes de départ pour le joueur")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Démarrage de la partie")]
-        public void DemarrageDeLaPartie()
+        [Xunit.TraitAttribute("Description", "Cartes de départ pour le joueur")]
+        public void CartesDeDepartPourLeJoueur()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Démarrage de la partie", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 104
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cartes de départ pour le joueur", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 103
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -482,29 +479,70 @@ this.ScenarioInitialize(scenarioInfo);
                             "Emilie"});
                 table9.AddRow(new string[] {
                             "Martin"});
-#line 105
+#line 104
  testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table9, "Sachant que ");
 #line hidden
-#line 111
+#line 110
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 112
+#line 111
  testRunner.And("\"Jean\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 113
+#line 112
+ testRunner.Then("\"Jean\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Le schérif commence")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Le schérif commence")]
+        public void LeScherifCommence()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Le schérif commence", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 114
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "playerName"});
+                table10.AddRow(new string[] {
+                            "Jean"});
+                table10.AddRow(new string[] {
+                            "Max"});
+                table10.AddRow(new string[] {
+                            "Emilie"});
+                table10.AddRow(new string[] {
+                            "Martin"});
+#line 115
+ testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table10, "Sachant que ");
+#line hidden
+#line 121
+ testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 122
+ testRunner.And("\"Jean\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 123
  testRunner.And("\"Max\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 114
+#line 124
  testRunner.And("\"Emilie\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 115
+#line 125
  testRunner.And("\"Martin\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 116
+#line 126
  testRunner.Then("c\'est au shérif de commencer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-#line 117
- testRunner.And("la pioche comporte 80 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
