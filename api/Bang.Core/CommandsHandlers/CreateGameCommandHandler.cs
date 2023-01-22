@@ -4,7 +4,6 @@ using Bang.Database;
 using Bang.Database.Enums;
 using Bang.Database.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.CommandsHandlers
 {
@@ -34,14 +33,10 @@ namespace Bang.Core.CommandsHandlers
 
             this.DetermineAvailablesRoles(request.PlayerNames);
 
-            var deck = await this.InitializeDeckAsync(cancellationToken);
-
             var game = new Game
             {
                 GameStatus = GameStatus.WaitingForPlayers,
                 Players = new List<Player>(),
-                Deck = deck,
-                DeckCount = deck.Count,
                 DiscardPile = new List<GameDiscardCard>()
             };
 
@@ -49,6 +44,10 @@ namespace Bang.Core.CommandsHandlers
 
             await context.Games.AddAsync(game, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
+
+            game.DeckCount = await this.InitializeDeckAsync(game, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
+
             return game;
         }
 
@@ -75,14 +74,19 @@ namespace Bang.Core.CommandsHandlers
             }
         }
 
-        private Task<List<GameDeckCard>> InitializeDeckAsync(CancellationToken cancellationToken) =>
-            this.context.Cards
-                .OrderBy(c => Guid.NewGuid())
-                .Select(c => new GameDeckCard
-                {
-                    CardId = c.Id
-                })
-                .ToListAsync(cancellationToken);
+        private async Task<int> InitializeDeckAsync(Game game, CancellationToken cancellationToken)
+        {
+            var cards = this.context.Cards.OrderBy(c => Guid.NewGuid());
+
+            var deck = new GameDeck
+            {
+                GameId = game.Id,
+                Cards = cards
+            };
+
+            await this.context.SaveChangesAsync(cancellationToken);
+            return deck.Cards.Count();
+        }            
 
         private void AssignRolesToAllPlayers(IEnumerable<string> playerNames, Game game)
         {

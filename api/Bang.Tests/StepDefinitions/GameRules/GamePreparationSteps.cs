@@ -82,10 +82,10 @@ namespace Bang.Tests.StepDefinitions.GameRules
         }
 
         [Then(@"la pioche comporte (.*) cartes")]
-        public void ThenLaPiocheComporteCartes(int count)
+        public async Task ThenLaPiocheComporteCartes(int count)
         {
+            await this.gameDriver.UpdateGameAsync();
             this.rulesDriver.CheckDeckCount(count);
         }
-
     }
 }

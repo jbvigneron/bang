@@ -12,6 +12,5 @@ namespace Bang.Database.Models
         public CardValue Value { get; set; }
         public CardSymbol Symbol { get; set; }
         public int? Range { get; set; }
-        public virtual IEnumerable<GameDeckCard> Games { get; set; }
     }
 }

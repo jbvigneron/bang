@@ -14,7 +14,7 @@ namespace Bang.Database
         public DbSet<Card> Cards { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
-        public DbSet<GameDeckCard> GamesDecks { get; set; }
+        public DbSet<GameDeck> GameDecks { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerRole> PlayersRole { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
@@ -22,7 +22,7 @@ namespace Bang.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Card>()
-                .Property(c => c.Id);
+                .Property(e => e.Id);
 
             modelBuilder.Entity<Card>()
                 .HasData(CardsSeeds.Fill());
@@ -48,15 +48,31 @@ namespace Bang.Database
                 .Property(e => e.GameStatus)
                 .IsRequired();
 
-            modelBuilder.Entity<GameDeckCard>()
-                .HasOne(gc => gc.Card)
-                .WithMany(c => c.Games)
-                .HasForeignKey(gc => gc.CardId);
+            modelBuilder.Entity<GameDeck>()
+                .HasOne(e => e.Game)
+                .WithMany()
+                .HasForeignKey(e => e.GameId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Player>()
                 .Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.Character)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.Role)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.Weapon)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Weapon>()
                 .Property(e => e.Name)
