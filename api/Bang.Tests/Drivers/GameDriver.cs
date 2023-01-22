@@ -7,10 +7,10 @@ namespace Bang.Tests.Drivers
 {
     public class GameDriver
     {
-        private readonly BrowserContext browserContext;
+        private readonly BrowsersContext browserContext;
         private readonly GameContext gameContext;
 
-        public GameDriver(BrowserContext browserContext, GameContext gameContext)
+        public GameDriver(BrowsersContext browserContext, GameContext gameContext)
         {
             this.browserContext = browserContext;
             this.gameContext = gameContext;
@@ -23,15 +23,13 @@ namespace Bang.Tests.Drivers
             var response = await client.PostAsJsonAsync("api/game", playerNames);
             response.EnsureSuccessStatusCode();
 
-            gameContext.Current = await response.Content.ReadFromJsonAsync<Game>();
+            var gameId = await response.Content.ReadFromJsonAsync<Guid>();
+            this.gameContext.Current = await client.GetFromJsonAsync<Game>($"api/game/{gameId}");
 
             browserContext.HttpClients = playerNames.ToDictionary(
                 name => name,
                 _ => browserContext.HttpClientFactory.CreateClient()
             );
-
-            this.browserContext.Cookies = new Dictionary<string, IList<string>>();
-            this.browserContext.SignalRMessages = new Dictionary<string, IList<string>>();
         }
 
         public async Task JoinGameAsync(string playerName)

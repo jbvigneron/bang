@@ -1,6 +1,6 @@
 ﻿namespace Bang.Database.Models
 {
-    public class GameDeck : CardPile
+    public class GameDiscard : CardPile
     {
     }
 }

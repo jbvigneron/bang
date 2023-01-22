@@ -9,6 +9,6 @@ namespace Bang.Database.Models
         public string? CurrentPlayerName { get; set; }
         public virtual IList<Player> Players { get; set; }
         public int DeckCount { get; set; }
-        public virtual IEnumerable<GameDiscardCard> DiscardPile { get; set; }
+        public virtual IEnumerable<GameDiscard> DiscardPile { get; set; }
     }
 }

@@ -1,22 +1,31 @@
 ﻿Fonctionnalité: Communications entre les joueurs avec SignalR
 
 Contexte:
-	Sachant qu'une partie est initialisée avec ces joueurs
+	Sachant que ces joueurs souhaitent faire une partie
 		| playerName |
 		| Jean       |
 		| Max        |
 		| Emilie     |
 		| Martin     |
+	Quand une partie est initialisée
 
-Scénario: Avertir qu'un autre joueur vient de rejoindre la partie
+Scénario: Quand une nouvelle partie est initialisée
+	Alors un message "NewGame" est envoyé au hub public
+	Et un message "DeckReady" est envoyé au hub public
+	Et le jeu contient 80 cartes
+
+Scénario: Quand un joueur rejoint la partie
 	Quand "Jean" rejoint la partie
 	Et "Max" rejoint la partie
-	Alors "Jean" est averti que "Max" est présent
+	Alors "Jean" reçoit un message "PlayerJoin"
+	Et "Max" est prêt
 
-Scénario: Le jeu est prêt
+Scénario: Quand le jeu est prêt
 	Quand "Jean" rejoint la partie
 	Et "Max" rejoint la partie
 	Et "Emilie" rejoint la partie
 	Et "Martin" rejoint la partie
-	Alors tous les joueurs sont avertis
+	Alors un message "AllPlayerJoined" est envoyé au hub public
 	Et la partie peut commencer
+	Et un message "ItsYourTurn" est envoyé au hub public
+	Et c'est au tour du schérif

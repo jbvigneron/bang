@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Bang.Database.Models;
+using MediatR;
 
-namespace Bang.Core.Commands
+namespace Bang.Core.Queries
 {
-    public class JoinGameCommand : IRequest<Guid>
+    public class PlayerIdQuery : IRequest<Guid>
     {
-        public JoinGameCommand(Guid gameId, string playerName)
+        public PlayerIdQuery(Guid gameId, string playerName)
         {
             this.GameId = gameId;
             this.PlayerName = playerName;
