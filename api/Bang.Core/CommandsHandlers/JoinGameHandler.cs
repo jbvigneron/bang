@@ -21,7 +21,9 @@ namespace Bang.Core.CommandsHandlers
                 new PlayerJoin(request.GameId, request.PlayerName), cancellationToken
             );
 
-            var playerId = await this.mediator.Send(new PlayerIdQuery(request.GameId, request.PlayerName), cancellationToken);
+            var playerId = await this.mediator.Send(
+                new PlayerIdQuery(request.GameId, request.PlayerName), cancellationToken
+            );
 
             await this.mediator.Publish(
                 new PlayerDeckPrepare(playerId), cancellationToken

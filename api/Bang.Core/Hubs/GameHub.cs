@@ -1,29 +1,12 @@
-﻿using Bang.Core.Queries;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.SignalR;
 
 namespace Bang.Core.Hubs
 {
-    [Authorize]
     public class GameHub : Hub
     {
-        private readonly IMediator mediator;
-
-        public GameHub(IMediator mediator)
+        public Task Subscribe(Guid gameId)
         {
-            this.mediator = mediator;
-        }
-
-        public override async Task OnConnectedAsync()
-        {
-            var principal = this.Context.User;
-            var playerId = Guid.Parse(principal.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var game = await this.mediator.Send(new PlayerGameQuery(playerId));
-
-            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, game.Id.ToString());
-            await base.OnConnectedAsync();
+            return this.Groups.AddToGroupAsync(this.Context.ConnectionId, gameId.ToString());
         }
     }
 }

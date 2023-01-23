@@ -7,18 +7,30 @@ namespace Bang.Tests.StepDefinitions.Technical
     public sealed class SignalRSteps
     {
         private readonly GameDriver gameDriver;
-        private readonly SignalRDriver signalRDriver;
         private readonly RulesDriver rulesDriver;
         private readonly StatusDriver stateDriver;
 
+        private readonly PublicHubDriver publicHubDriver;
+        private readonly GameHubDriver gameHubDriver;
+        private readonly PlayerHubDriver playerHubDriver;
+
         private IEnumerable<string> playerNames;
 
-        public SignalRSteps(GameDriver gameDriver, SignalRDriver eventsDriver, RulesDriver rulesDriver, StatusDriver stateDriver)
+        public SignalRSteps(
+            GameDriver gameDriver,
+            RulesDriver rulesDriver,
+            StatusDriver stateDriver,
+            PublicHubDriver publicHubDriver,
+            GameHubDriver gameHubDriver,
+            PlayerHubDriver playerHubDriver)
         {
             this.gameDriver = gameDriver;
-            this.signalRDriver = eventsDriver;
             this.rulesDriver = rulesDriver;
             this.stateDriver = stateDriver;
+
+            this.publicHubDriver = publicHubDriver;
+            this.gameHubDriver = gameHubDriver;
+            this.playerHubDriver = playerHubDriver;
         }
 
         [Given(@"ces joueurs souhaitent faire une partie")]
@@ -30,25 +42,28 @@ namespace Bang.Tests.StepDefinitions.Technical
         [When(@"une partie est initialisée")]
         public async Task WhenUnePartieEstInitialisee()
         {
-            await this.signalRDriver.ConnectToPublicHub();
+            await Task.WhenAll(
+                this.publicHubDriver.ConnectToHubAsync(),
+                this.gameHubDriver.ConnectToHubAsync()
+            );
+
             await this.gameDriver.InitGameAsync(this.playerNames);
         }
 
         [When(@"""([^""]*)"" rejoint la partie")]
         public async Task WhenRejointLaPartie(string playerName)
         {
+            await this.gameHubDriver.SubscribeToMessagesAsync();
             await this.gameDriver.JoinGameAsync(playerName);
 
-            await Task.WhenAll(
-                this.signalRDriver.ConnectToGameHub(playerName),
-                this.signalRDriver.ConnectToPlayerHub(playerName)
-            );
+            await this.playerHubDriver.ConnectToHubAsync(playerName);
+            await this.playerHubDriver.SubscribeToMessagesAsync(playerName);
         }
 
         [Then(@"un message ""([^""]*)"" est envoyé au hub public")]
         public void ThenUnMessageAuHubPublic(string message)
         {
-            this.signalRDriver.CheckPublicMessage(message);
+            this.publicHubDriver.CheckMessage(message);
         }
 
         [Then(@"le jeu contient (.*) cartes")]
@@ -57,11 +72,12 @@ namespace Bang.Tests.StepDefinitions.Technical
             this.rulesDriver.CheckGameDeckCount(count);
         }
 
-        [Then(@"""([^""]*)"" reçoit un message de groupe ""([^""]*)""")]
-        public void ThenRecoitUnMessageDeGroupe(string receiver, string message)
+        [Then(@"un message ""([^""]*)"" est envoyé au hub du jeu")]
+        public void ThenUnMessageEstEnvoyeAuHubDuJeu(string message)
         {
-            this.signalRDriver.CheckGameMessage(receiver, message);
+            this.gameHubDriver.CheckMessage(message);
         }
+
 
         [Then(@"""([^""]*)"" est prêt")]
         public void ThenEstPret(string playerName)
@@ -81,10 +97,10 @@ namespace Bang.Tests.StepDefinitions.Technical
             this.stateDriver.CheckIsScheriffTurn();
         }
 
-        [Then(@"un message ""([^""]*)"" est envoyé au schérif")]
-        public void ThenUnMessageEstEnvoyeAuScherif(string message)
+        [Then(@"un message ""([^""]*)"" est envoyé à ""([^""]*)""")]
+        public void ThenUnMessageEstEnvoyeA(string message, string playerName)
         {
-            this.signalRDriver.CheckScheriffMessage(message);
+            this.playerHubDriver.CheckMessage(playerName, message);
         }
     }
 }

@@ -8,16 +8,16 @@ namespace Bang.Core.QueriesHandlers
 {
     public class PlayerQueryHandler : IRequestHandler<PlayerQuery, Player>
     {
-        private readonly BangDbContext context;
+        private readonly BangDbContext dbContext;
 
-        public PlayerQueryHandler(BangDbContext context)
+        public PlayerQueryHandler(BangDbContext dbContext)
         {
-            this.context = context;
+            this.dbContext = dbContext;
         }
 
         public Task<Player> Handle(PlayerQuery request, CancellationToken cancellationToken)
         {
-            return this.context.Players
+            return this.dbContext.Players
                 .Include(p => p.Character)
                 .Include(p => p.Role)
                 .Include(p => p.Weapon)

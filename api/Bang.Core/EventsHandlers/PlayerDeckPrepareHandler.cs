@@ -12,16 +12,12 @@ namespace Bang.Core.EventsHandlers
     public class PlayerDeckPrepareHandler : INotificationHandler<PlayerDeckPrepare>
     {
         private readonly BangDbContext dbContext;
+        private readonly IHubContext<GameHub> gameHub;
 
-        private readonly IHubContext<PublicHub> publicHub;
-        private readonly IHubContext<PlayerHub> playerHub;
-
-        public PlayerDeckPrepareHandler(BangDbContext dbContext, IHubContext<PublicHub> publicHub, IHubContext<PlayerHub> playerHub)
+        public PlayerDeckPrepareHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
         {
             this.dbContext = dbContext;
-
-            this.publicHub = publicHub;
-            this.playerHub = playerHub;
+            this.gameHub = gameHub;
         }
 
         public async Task Handle(PlayerDeckPrepare notification, CancellationToken cancellationToken)
@@ -53,13 +49,9 @@ namespace Bang.Core.EventsHandlers
             await this.dbContext.PlayerDecks.AddAsync(playerDeck, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.publicHub
-                .Clients.All
-                .SendAsync(HubMessages.GameUpdated, game, cancellationToken);
-
-            await this.playerHub
-                .Clients.Group(player.Id.ToString())
-                .SendAsync(HubMessages.PlayerDeckReady, playerDeck.Cards, cancellationToken);
+            await this.gameHub
+                .Clients.Group(game.Id.ToString())
+                .SendAsync(HubMessages.Game.GameDeckUpdated, game.Id, game.DeckCount, cancellationToken);
         }
     }
 }
