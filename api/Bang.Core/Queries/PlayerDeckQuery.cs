@@ -3,9 +3,9 @@ using MediatR;
 
 namespace Bang.Core.Queries
 {
-    public class PlayerCardsQuery : IRequest<IList<Card>>
+    public class PlayerDeckQuery : IRequest<IList<Card>>
     {
-        public PlayerCardsQuery(Guid playerId)
+        public PlayerDeckQuery(Guid playerId)
         {
             PlayerId = playerId;
         }

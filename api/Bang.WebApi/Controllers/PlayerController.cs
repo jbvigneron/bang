@@ -34,7 +34,7 @@ namespace Bang.WebApi.Controllers
         {
             var playerId = Guid.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-            var request = new PlayerCardsQuery(playerId);
+            var request = new PlayerDeckQuery(playerId);
             var cards = await mediator.Send(request);
             return cards;
         }

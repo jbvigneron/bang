@@ -9,24 +9,25 @@ namespace Bang.Tests
     public class Hooks
     {
         private readonly TestWebApplicationFactory<Program> factory;
-        private readonly BrowsersContext browser;
+        private readonly HttpClientFactoryContext driver;
 
-        public Hooks(TestWebApplicationFactory<Program> factory, BrowsersContext browser)
+        public Hooks(TestWebApplicationFactory<Program> factory, HttpClientFactoryContext driver)
         {
             this.factory = factory;
-            this.browser = browser;
 
             using (var scope = factory.Services.GetService<IServiceScopeFactory>()!.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<BangDbContext>();
                 dbContext!.Database.EnsureCreated();
             }
+
+            this.driver = driver;
         }
 
         [BeforeScenario]
         public void BeforeScenario()
         {
-            this.browser.HttpClientFactory = this.factory;
+            this.driver.Factory = this.factory;
         }
     }
 }

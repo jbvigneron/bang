@@ -15,20 +15,12 @@ namespace Bang.Core.NotificationsHandlers
     public class PlayerJoinHandler : INotificationHandler<PlayerJoin>
     {
         private readonly BangDbContext dbContext;
-
-        private readonly IHubContext<PublicHub> publicHub;
         private readonly IHubContext<GameHub> gameHub;
         private readonly IHubContext<PlayerHub> playerHub;
 
-        public PlayerJoinHandler(BangDbContext dbContext,
-            IHubContext<PublicHub> generalHub,
-            IHubContext<GameHub> gameHub,
-            IHubContext<PlayerHub> playerHub
-        )
+        public PlayerJoinHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
         {
             this.dbContext = dbContext;
-
-            this.publicHub = generalHub;
             this.gameHub = gameHub;
             this.playerHub = playerHub;
         }
@@ -59,19 +51,19 @@ namespace Bang.Core.NotificationsHandlers
 
             await this.gameHub
                 .Clients.Group(game.Id.ToString())
-                .SendAsync(HubMessages.PlayerJoin, player, cancellationToken);
+                .SendAsync(HubMessages.Game.PlayerJoin, game.Id, player, cancellationToken);
 
             if (game.GameStatus == GameStatus.InProgress)
             {
-                await this.publicHub
-                    .Clients.All
-                    .SendAsync(HubMessages.AllPlayerJoined, game, cancellationToken);
+                await this.gameHub
+                    .Clients.Group(game.Id.ToString())
+                    .SendAsync(HubMessages.Game.AllPlayerJoined, game.Id, game, cancellationToken);
 
                 var scheriff = game.GetScheriff();
 
-                await this.playerHub
-                    .Clients.Group(scheriff.Id.ToString())
-                    .SendAsync(HubMessages.ItsYourTurn, scheriff.Name, cancellationToken);
+                await this.gameHub
+                    .Clients.Group(game.Id.ToString())
+                    .SendAsync(HubMessages.Game.PlayerTurn, game.Id, scheriff.Name, cancellationToken);
             }
         }
         private Task<Character> GetRandomCharacterAsync(CancellationToken cancellationToken) =>

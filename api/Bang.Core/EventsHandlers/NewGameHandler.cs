@@ -67,7 +67,7 @@ namespace Bang.Core.EventsHandlers
             await this.dbContext.Games.AddAsync(game, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.publicHub.Clients.All.SendAsync(HubMessages.NewGame, game, cancellationToken);
+            await this.publicHub.Clients.All.SendAsync(HubMessages.Public.NewGame, game, cancellationToken);
         }
 
         private void DetermineAvailablesRoles(int numberOfPlayers)

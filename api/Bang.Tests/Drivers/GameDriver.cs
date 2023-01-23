@@ -9,16 +9,18 @@ namespace Bang.Tests.Drivers
     {
         private readonly BrowsersContext browserContext;
         private readonly GameContext gameContext;
+        private readonly HttpClientFactoryContext httpClientFactoryContext;
 
-        public GameDriver(BrowsersContext browserContext, GameContext gameContext)
+        public GameDriver(BrowsersContext browserContext, GameContext gameContext, HttpClientFactoryContext httpClientFactoryContext)
         {
             this.browserContext = browserContext;
             this.gameContext = gameContext;
+            this.httpClientFactoryContext = httpClientFactoryContext;
         }
 
         public async Task InitGameAsync(IEnumerable<string> playerNames)
         {
-            var client = this.browserContext.HttpClientFactory.CreateClient();
+            var client = this.httpClientFactoryContext.Factory!.CreateClient();
 
             var response = await client.PostAsJsonAsync("api/game", playerNames);
             response.EnsureSuccessStatusCode();
@@ -28,7 +30,7 @@ namespace Bang.Tests.Drivers
 
             browserContext.HttpClients = playerNames.ToDictionary(
                 name => name,
-                _ => browserContext.HttpClientFactory.CreateClient()
+                _ => this.httpClientFactoryContext.Factory.CreateClient()
             );
         }
 
@@ -40,13 +42,13 @@ namespace Bang.Tests.Drivers
             result.EnsureSuccessStatusCode();
 
             result.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string> cookies);
-            this.browserContext.Cookies[playerName] = cookies.ToList();
+            this.browserContext.Cookies[playerName] = cookies;
         }
 
         public async Task UpdateGameAsync()
         {
             var gameId = this.gameContext.Current.Id;
-            var client = this.browserContext.HttpClientFactory.CreateClient();
+            var client = this.httpClientFactoryContext.Factory!.CreateClient();
             this.gameContext.Current = await client.GetFromJsonAsync<Game>($"api/game/{gameId}");
         }
 

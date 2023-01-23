@@ -1,4 +1,4 @@
-﻿Fonctionnalité: Communications entre les joueurs avec SignalR
+﻿Fonctionnalité: Communications SignalR
 
 Contexte:
 	Sachant que ces joueurs souhaitent faire une partie
@@ -11,13 +11,12 @@ Contexte:
 
 Scénario: Quand une nouvelle partie est créée
 	Alors un message "NewGame" est envoyé au hub public
-	Et un message "GameDeckReady" est envoyé au hub public
 	Et le jeu contient 80 cartes
 
 Scénario: Quand un joueur rejoint la partie
 	Quand "Jean" rejoint la partie
 	Et "Max" rejoint la partie
-	Alors "Jean" reçoit un message de groupe "PlayerJoin"
+	Alors un message "PlayerJoin" est envoyé au hub du jeu
 	Et "Max" est prêt
 
 Scénario: Quand la partie est prête
@@ -25,7 +24,11 @@ Scénario: Quand la partie est prête
 	Et "Max" rejoint la partie
 	Et "Emilie" rejoint la partie
 	Et "Martin" rejoint la partie
-	Alors un message "AllPlayerJoined" est envoyé au hub public
+	Alors un message "AllPlayerJoined" est envoyé au hub du jeu
 	Et la partie peut commencer
+	Et un message "PlayerTurn" est envoyé au hub du jeu
 	Et c'est au tour du schérif
-	Et un message "ItsYourTurn" est envoyé au schérif
+
+Scénario: Quand un joueur pioche ses cartes
+	Quand "Jean" rejoint la partie
+	Alors un message "PlayerDeckReady" est envoyé à "Jean"
