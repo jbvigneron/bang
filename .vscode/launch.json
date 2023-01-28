@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/api/Bang.WebApi/bin/Debug/net7.0/Bang.WebApi.dll",
+            "program": "${workspaceFolder}/api/Bang.WebApi/bin/Debug/net6.0/Bang.WebApi.dll",
             "args": [],
             "cwd": "${workspaceFolder}/api/Bang.WebApi",
             "stopAtEntry": false,
