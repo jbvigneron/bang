@@ -73,7 +73,10 @@ namespace Bang.Tests.Drivers
         public Task SubscribeToMessagesAsync() =>
             this.connection.InvokeAsync("Subscribe", this.gameContext.Current.Id);
 
-        public void CheckMessage(string message) =>
+        public async Task CheckMessageAsync(string message)
+        {
+            await Task.Delay(1000);
             Assert.Contains(message, this.messages);
+        }
     }
 }
