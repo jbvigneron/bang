@@ -3,10 +3,12 @@ using Bang.Core.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using SignalRSwaggerGen.Attributes;
 using System.Security.Claims;
 
 namespace Bang.Core.Hubs
 {
+    [SignalRHub]
     [Authorize]
     public class PlayerHub : Hub
     {
