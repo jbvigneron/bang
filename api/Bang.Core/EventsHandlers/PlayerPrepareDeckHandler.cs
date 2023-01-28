@@ -9,18 +9,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.EventsHandlers
 {
-    public class PlayerDeckPrepareHandler : INotificationHandler<PlayerDeckPrepare>
+    public class PlayerPrepareDeckHandler : INotificationHandler<PlayerPrepareDeck>
     {
         private readonly BangDbContext dbContext;
         private readonly IHubContext<GameHub> gameHub;
 
-        public PlayerDeckPrepareHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
+        public PlayerPrepareDeckHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
         {
             this.dbContext = dbContext;
             this.gameHub = gameHub;
         }
 
-        public async Task Handle(PlayerDeckPrepare notification, CancellationToken cancellationToken)
+        public async Task Handle(PlayerPrepareDeck notification, CancellationToken cancellationToken)
         {
             var playerDeck = new PlayerDeck
             {

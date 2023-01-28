@@ -4,6 +4,8 @@ using Bang.Database;
 using Bang.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,16 @@ builder.Services.AddScoped<CustomCookieAuthenticationEvents>();
 
 builder.Services.AddSignalR();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Bang API v1", Version = "v1" });
+    options.AddSignalRSwaggerGen(options =>
+    {
+        var assemblyCore = Assembly.Load("Bang.Core");
+        options.ScanAssembly(assemblyCore);
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +47,11 @@ if (!app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
