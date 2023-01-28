@@ -42,7 +42,7 @@ namespace Bang.Core.CommandsHandlers
                 throw new PlayerException("Ce n'est pas à vous de jouer.", player);
             }
 
-            await this.mediator.Publish(new CardsDraw(request.PlayerId), cancellationToken);
+            await this.mediator.Publish(new PlayerDrawCards(request.PlayerId), cancellationToken);
         }
     }
 }

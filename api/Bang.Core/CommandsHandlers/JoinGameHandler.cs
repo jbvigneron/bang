@@ -26,7 +26,7 @@ namespace Bang.Core.CommandsHandlers
             );
 
             await this.mediator.Publish(
-                new PlayerDeckPrepare(playerId), cancellationToken
+                new PlayerPrepareDeck(playerId), cancellationToken
             );
 
             return playerId;
