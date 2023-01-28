@@ -1,4 +1,5 @@
-﻿Fonctionnalité: Tour d'un joueur
+﻿#language: fr-FR
+Fonctionnalité: Tour d'un joueur
 
 Scénario: Piocher 2 cartes
 	Sachant qu'une partie est lancée avec ces joueurs
