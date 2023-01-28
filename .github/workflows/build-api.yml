@@ -1,0 +1,51 @@
+name: Build API
+
+on:
+  pull_request:
+    branches:
+      - "master"
+      - "develop"
+  push:
+    branches:
+      - "master"
+      - "develop"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup GitHub repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: api
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+        working-directory: api
+
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
+        working-directory: api
+
+      - name: Generate Live Documentation
+        uses: cryptic-wizard/run-specflow-tests@v1.3.1
+        with:
+          test-assembly-path: api/Bang.Tests/bin/Release/net6.0
+          test-assembly-dll: Bang.Tests.dll
+          no-build: true
+          output-html: LivingDoc.html
+          upload-artifact: false
+
+      - name: Publish Live Documentation
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: 'Specflow Test Results'
+          path: LivingDoc.html

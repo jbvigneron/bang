@@ -8,20 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.EventsHandlers
 {
-    public class CardsDrawHandler : INotificationHandler<CardsDraw>
+    public class PlayerDrawCardsHandler : INotificationHandler<PlayerDrawCards>
     {
         private readonly BangDbContext dbContext;
         private readonly IHubContext<GameHub> gameHub;
         private readonly IHubContext<PlayerHub> playerHub;
 
-        public CardsDrawHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
+        public PlayerDrawCardsHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
         {
             this.dbContext = dbContext;
             this.gameHub = gameHub;
             this.playerHub = playerHub;
         }
 
-        public async Task Handle(CardsDraw notification, CancellationToken cancellationToken)
+        public async Task Handle(PlayerDrawCards notification, CancellationToken cancellationToken)
         {
             var playerDeck = await this.dbContext.PlayersDecks
                 .Include(d => d.Cards)
