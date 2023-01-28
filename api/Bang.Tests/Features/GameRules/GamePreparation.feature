@@ -1,4 +1,5 @@
-﻿Fonctionnalité: Préparation du jeu
+﻿#language: fr-FR
+Fonctionnalité: Préparation du jeu
 
 Scénario: Faire une partie à 4 joueurs
 	Sachant que les joueurs suivants veulent jouer

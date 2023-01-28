@@ -88,7 +88,7 @@ namespace Bang.Tests.Features.GameRules
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Piocher 2 cartes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -108,13 +108,13 @@ this.ScenarioInitialize(scenarioInfo);
                             "Emilie"});
                 table11.AddRow(new string[] {
                             "Martin"});
-#line 4
+#line 5
  testRunner.Given("une partie est lancée avec ces joueurs", ((string)(null)), table11, "Sachant qu\'");
 #line hidden
-#line 10
+#line 11
  testRunner.When("c\'est au tour du schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 11
+#line 12
  testRunner.Then("le schérif pioche au moins 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }
