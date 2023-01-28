@@ -73,11 +73,10 @@ namespace Bang.Tests.StepDefinitions.Technical
         }
 
         [Then(@"un message ""([^""]*)"" est envoyé au hub du jeu")]
-        public void ThenUnMessageEstEnvoyeAuHubDuJeu(string message)
+        public Task ThenUnMessageEstEnvoyeAuHubDuJeu(string message)
         {
-            this.gameHubDriver.CheckMessage(message);
+            return this.gameHubDriver.CheckMessageAsync(message);
         }
-
 
         [Then(@"""([^""]*)"" est prêt")]
         public void ThenEstPret(string playerName)
@@ -92,10 +91,10 @@ namespace Bang.Tests.StepDefinitions.Technical
         }
 
         [Then(@"un message ""([^""]*)"" est envoyé au schérif")]
-        public void ThenUnMessageEstEnvoyeAuScherif(string message)
+        public async Task ThenUnMessageEstEnvoyeAuScherif(string message)
         {
             var scheriffName = this.gameDriver.GetScheriffName();
-            this.playerHubDriver.CheckMessage(scheriffName, message);
+            await this.playerHubDriver.CheckMessageAsync(scheriffName, message);
         }
 
         [Then(@"c'est au tour du schérif")]
@@ -105,9 +104,9 @@ namespace Bang.Tests.StepDefinitions.Technical
         }
 
         [Then(@"un message ""([^""]*)"" est envoyé à ""([^""]*)""")]
-        public void ThenUnMessageEstEnvoyeA(string message, string playerName)
+        public Task ThenUnMessageEstEnvoyeA(string message, string playerName)
         {
-            this.playerHubDriver.CheckMessage(playerName, message);
+            return this.playerHubDriver.CheckMessageAsync(playerName, message);
         }
 
         [Then(@"le schérif pioche de nouvelles cartes")]
