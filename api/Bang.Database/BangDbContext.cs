@@ -14,9 +14,9 @@ namespace Bang.Database
         public DbSet<Card> Cards { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
-        public DbSet<GameDeck> GameDecks { get; set; }
+        public DbSet<GameDeck> GamesDecks { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<PlayerDeck> PlayerDecks { get; set; }
+        public DbSet<PlayerDeck> PlayersDecks { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,6 +48,12 @@ namespace Bang.Database
                 .Property(e => e.GameStatus)
                 .IsRequired();
 
+            modelBuilder.Entity<Game>()
+                .HasMany(g => g.Players)
+                .WithOne()
+                .HasForeignKey(e => e.GameId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<GameDeck>()
                 .HasOne(e => e.Game)
                 .WithMany()
@@ -69,9 +75,9 @@ namespace Bang.Database
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Player>()
-                .HasOne(e => e.Role)
+                .HasOne(e => e.Character)
                 .WithMany()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Player>()
                 .HasOne(e => e.Weapon)

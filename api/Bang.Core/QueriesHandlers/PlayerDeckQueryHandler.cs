@@ -17,7 +17,7 @@ namespace Bang.Core.QueriesHandlers
 
         public async Task<IList<Card>> Handle(PlayerDeckQuery request, CancellationToken cancellationToken)
         {
-            var deck = await this.dbContext.PlayerDecks
+            var deck = await this.dbContext.PlayersDecks
                 .Include(p => p.Cards)
                 .FirstAsync(g => g.PlayerId == request.PlayerId, cancellationToken);
 

@@ -1,4 +1,5 @@
-﻿using Bang.Database.Models;
+﻿using Bang.Core.Extensions;
+using Bang.Database.Models;
 using Bang.Tests.Contexts;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -45,6 +46,13 @@ namespace Bang.Tests.Drivers
             this.browserContext.Cookies[playerName] = cookies;
         }
 
+        public async Task DrawCardsAsync(string playerName)
+        {
+            var client = this.browserContext.HttpClients[playerName];
+            var result = await client.PostAsync($"api/player/cards/draw", null);
+            result.EnsureSuccessStatusCode();
+        }
+
         public async Task UpdateGameAsync()
         {
             var gameId = this.gameContext.Current.Id;
@@ -57,6 +65,11 @@ namespace Bang.Tests.Drivers
             var client = this.browserContext.HttpClients[playerName];
             var cards = await client.GetFromJsonAsync<IList<Card>>("api/player/cards");
             this.gameContext.PlayerCards[playerName] = cards;
+        }
+
+        public string GetScheriffName()
+        {
+            return this.gameContext.Current.GetScheriff().Name;
         }
     }
 }
