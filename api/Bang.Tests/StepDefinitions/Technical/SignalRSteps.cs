@@ -91,6 +91,13 @@ namespace Bang.Tests.StepDefinitions.Technical
             this.stateDriver.CheckGameStatus(GameStatus.InProgress);
         }
 
+        [Then(@"un message ""([^""]*)"" est envoyé au schérif")]
+        public void ThenUnMessageEstEnvoyeAuScherif(string message)
+        {
+            var scheriffName = this.gameDriver.GetScheriffName();
+            this.playerHubDriver.CheckMessage(scheriffName, message);
+        }
+
         [Then(@"c'est au tour du schérif")]
         public void ThenCestAuTourDuScherif()
         {
@@ -101,6 +108,13 @@ namespace Bang.Tests.StepDefinitions.Technical
         public void ThenUnMessageEstEnvoyeA(string message, string playerName)
         {
             this.playerHubDriver.CheckMessage(playerName, message);
+        }
+
+        [Then(@"le schérif pioche de nouvelles cartes")]
+        public Task ThenLeScherifPiocheDeNouvellesCartes()
+        {
+            var scheriffName = this.gameDriver.GetScheriffName();
+            return this.gameDriver.DrawCardsAsync(scheriffName);
         }
     }
 }

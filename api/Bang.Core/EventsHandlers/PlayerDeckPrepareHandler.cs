@@ -30,28 +30,30 @@ namespace Bang.Core.EventsHandlers
 
             var player = await this.dbContext.Players.FirstAsync(p => p.Id == notification.PlayerId, cancellationToken);
 
-            var gameDeck = await this.dbContext.GameDecks
+            var gameDeck = await this.dbContext.GamesDecks
                 .Include(d => d.Cards)
                 .Include(d => d.Game)
                 .FirstAsync(d => d.Game.Players.Any(p => p.Id == notification.PlayerId), cancellationToken);
+
+            var game = gameDeck.Game;
 
             for (int i = 1; i <= player.Lives; i++)
             {
                 var card = gameDeck.Cards.First();
 
                 playerDeck.Cards.Add(card);
+                player.DeckCount++;
+
                 gameDeck.Cards.Remove(card);
+                game.DeckCount--;
             }
 
-            var game = gameDeck.Game;
-            game.DeckCount = gameDeck.Cards.Count;
-
-            await this.dbContext.PlayerDecks.AddAsync(playerDeck, cancellationToken);
+            await this.dbContext.PlayersDecks.AddAsync(playerDeck, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await this.gameHub
                 .Clients.Group(game.Id.ToString())
-                .SendAsync(HubMessages.Game.GameDeckUpdated, game.Id, game.DeckCount, cancellationToken);
+                .SendAsync(HubMessages.Game.DeckUpdated, game.Id, game.DeckCount, cancellationToken);
         }
     }
 }

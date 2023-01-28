@@ -1,4 +1,5 @@
-﻿using Bang.Core.Queries;
+﻿using Bang.Core.Commands;
+using Bang.Core.Queries;
 using Bang.Database.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +38,14 @@ namespace Bang.WebApi.Controllers
             var request = new PlayerDeckQuery(playerId);
             var cards = await mediator.Send(request);
             return cards;
+        }
+
+        [HttpPost("cards/draw")]
+        public Task DrawCardsAsync()
+        {
+            var playerId = Guid.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var request = new DrawCardsCommand(playerId);
+            return mediator.Send(request);
         }
     }
 }

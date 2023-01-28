@@ -9,16 +9,19 @@
 
         public class Game
         {
-            public const string GameDeckReady = "GameDeckReady";
+            public const string GameDeckReady = "DeckReady";
             public const string PlayerJoin = "PlayerJoin";
-            public const string GameDeckUpdated = "GameDeckUpdated";
+            public const string DeckUpdated = "DeckUpdated";
             public const string AllPlayerJoined = "AllPlayerJoined";
             public const string PlayerTurn = "PlayerTurn";
+            public const string CardsDrawn = "CardsDrawn";
         }
 
         public class Player
         {
-            public const string PlayerDeckReady = "PlayerDeckReady";
+            public const string DeckReady = "DeckReady";
+            public const string YourTurn = "YourTurn";
+            public const string NewCards = "NewCards";
         }
     }
 }

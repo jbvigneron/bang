@@ -41,9 +41,9 @@ namespace Bang.Tests.Drivers
                         players[i] = player;
             });
 
-            connection.On<Guid, int>(HubMessages.Game.GameDeckUpdated, (gameId, deckCount) =>
+            connection.On<Guid, int>(HubMessages.Game.DeckUpdated, (gameId, deckCount) =>
             {
-                this.messages.Add(HubMessages.Game.GameDeckUpdated);
+                this.messages.Add(HubMessages.Game.DeckUpdated);
                 this.gameContext.Current.DeckCount = deckCount;
             });
 
@@ -57,6 +57,13 @@ namespace Bang.Tests.Drivers
             {
                 this.messages.Add(HubMessages.Game.PlayerTurn);
                 this.gameContext.Current.CurrentPlayerName = name;
+            });
+
+            connection.On<Guid, int, string, int>(HubMessages.Game.CardsDrawn, (gameId, gameDeckCount, playerName, playerDeckCount) =>
+            {
+                this.messages.Add(HubMessages.Game.CardsDrawn);
+                this.gameContext.Current.DeckCount = gameDeckCount;
+                this.gameContext.Current.Players.Single(p => p.Name == playerName).DeckCount = playerDeckCount;
             });
 
             await connection.StartAsync();
