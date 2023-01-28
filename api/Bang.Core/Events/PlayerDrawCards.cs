@@ -2,9 +2,9 @@
 
 namespace Bang.Core.Events
 {
-    public class CardsDraw : INotification
+    public class PlayerDrawCards : INotification
     {
-        public CardsDraw(Guid playerId)
+        public PlayerDrawCards(Guid playerId)
         {
             PlayerId = playerId;
         }
