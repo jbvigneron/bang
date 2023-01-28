@@ -19,7 +19,7 @@ namespace Bang.Tests.Features.Technical
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CommunicationsSignalRFeature : object, Xunit.IClassFixture<CommunicationsSignalRFeature.FixtureData>, System.IDisposable
+    public partial class SignalRFeature : object, Xunit.IClassFixture<SignalRFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Bang.Tests.Features.Technical
 #line 1 "SignalR.feature"
 #line hidden
         
-        public CommunicationsSignalRFeature(CommunicationsSignalRFeature.FixtureData fixtureData, Bang_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public SignalRFeature(SignalRFeature.FixtureData fixtureData, Bang_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Bang.Tests.Features.Technical
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("fr-FR"), "Features/Technical", "Communications SignalR", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("fr-FR"), "Features/Technical", "SignalR", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,18 +79,18 @@ namespace Bang.Tests.Features.Technical
         {
 #line 3
 #line hidden
-            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                         "playerName"});
-            table11.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "Jean"});
-            table11.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "Max"});
-            table11.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "Emilie"});
-            table11.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "Martin"});
 #line 4
- testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table11, "Sachant que ");
+ testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table12, "Sachant que ");
 #line hidden
 #line 10
  testRunner.When("une partie est initialisée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
@@ -103,7 +103,7 @@ namespace Bang.Tests.Features.Technical
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Quand une nouvelle partie est créée")]
-        [Xunit.TraitAttribute("FeatureTitle", "Communications SignalR")]
+        [Xunit.TraitAttribute("FeatureTitle", "SignalR")]
         [Xunit.TraitAttribute("Description", "Quand une nouvelle partie est créée")]
         public void QuandUneNouvellePartieEstCreee()
         {
@@ -134,7 +134,7 @@ this.FeatureBackground();
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Quand un joueur rejoint la partie")]
-        [Xunit.TraitAttribute("FeatureTitle", "Communications SignalR")]
+        [Xunit.TraitAttribute("FeatureTitle", "SignalR")]
         [Xunit.TraitAttribute("Description", "Quand un joueur rejoint la partie")]
         public void QuandUnJoueurRejointLaPartie()
         {
@@ -171,7 +171,7 @@ this.FeatureBackground();
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Quand la partie est prête")]
-        [Xunit.TraitAttribute("FeatureTitle", "Communications SignalR")]
+        [Xunit.TraitAttribute("FeatureTitle", "SignalR")]
         [Xunit.TraitAttribute("Description", "Quand la partie est prête")]
         public void QuandLaPartieEstPrete()
         {
@@ -213,21 +213,24 @@ this.FeatureBackground();
  testRunner.And("un message \"PlayerTurn\" est envoyé au hub du jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 30
+ testRunner.And("un message \"YourTurn\" est envoyé au schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 31
  testRunner.And("c\'est au tour du schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Quand un joueur pioche ses cartes")]
-        [Xunit.TraitAttribute("FeatureTitle", "Communications SignalR")]
-        [Xunit.TraitAttribute("Description", "Quand un joueur pioche ses cartes")]
-        public void QuandUnJoueurPiocheSesCartes()
+        [Xunit.SkippableFactAttribute(DisplayName="Quand les joueurs piochent leurs cartes")]
+        [Xunit.TraitAttribute("FeatureTitle", "SignalR")]
+        [Xunit.TraitAttribute("Description", "Quand les joueurs piochent leurs cartes")]
+        public void QuandLesJoueursPiochentLeursCartes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Quand un joueur pioche ses cartes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Quand les joueurs piochent leurs cartes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -240,11 +243,57 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-#line 33
+#line 34
  testRunner.When("\"Jean\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 34
- testRunner.Then("un message \"PlayerDeckReady\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line 35
+ testRunner.Then("un message \"DeckReady\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Quand c\'est le tour du premier joueur")]
+        [Xunit.TraitAttribute("FeatureTitle", "SignalR")]
+        [Xunit.TraitAttribute("Description", "Quand c\'est le tour du premier joueur")]
+        public void QuandCestLeTourDuPremierJoueur()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Quand c\'est le tour du premier joueur", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 37
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 3
+this.FeatureBackground();
+#line hidden
+#line 38
+ testRunner.When("\"Jean\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 39
+ testRunner.And("\"Max\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 40
+ testRunner.And("\"Emilie\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 41
+ testRunner.And("\"Martin\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 42
+ testRunner.Then("le schérif pioche de nouvelles cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+#line 43
+ testRunner.And("un message \"CardsDrawn\" est envoyé au hub du jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 44
+ testRunner.And("un message \"NewCards\" est envoyé au schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -257,12 +306,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                CommunicationsSignalRFeature.FeatureSetup();
+                SignalRFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CommunicationsSignalRFeature.FeatureTearDown();
+                SignalRFeature.FeatureTearDown();
             }
         }
     }

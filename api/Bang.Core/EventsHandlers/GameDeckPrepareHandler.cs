@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.EventsHandlers
 {
-    public class GameDeckCreateHandler : INotificationHandler<GameDeckPrepare>
+    public class GameDeckPrepareHandler : INotificationHandler<GameDeckPrepare>
     {
         private readonly BangDbContext dbContext;
         private readonly IHubContext<GameHub> gameHub;
 
-        public GameDeckCreateHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
+        public GameDeckPrepareHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
         {
             this.dbContext = dbContext;
             this.gameHub = gameHub;
@@ -30,7 +30,7 @@ namespace Bang.Core.EventsHandlers
                 Cards = cards
             };
 
-            await this.dbContext.GameDecks.AddAsync(deck, cancellationToken);
+            await this.dbContext.GamesDecks.AddAsync(deck, cancellationToken);
 
             var game = await this.dbContext.Games.SingleAsync(g => g.Id == notification.GameId, cancellationToken);
             game.DeckCount = cards.Count;

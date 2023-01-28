@@ -33,7 +33,7 @@ namespace Bang.Core.EventsHandlers
         {
             if (notification.PlayerNames.Distinct().Count() != notification.PlayerNames.Count())
             {
-                throw new GameException("Les joueurs doivent avoir des noms différents");
+                throw new GameException("Les joueurs doivent avoir des noms différents", notification.GameId);
             }
 
             var game = new Game

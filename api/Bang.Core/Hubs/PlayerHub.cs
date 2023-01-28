@@ -27,7 +27,7 @@ namespace Bang.Core.Hubs
             var cards = await this.mediator.Send(new PlayerDeckQuery(playerId));
 
             await this.Clients.Group(playerId.ToString())
-                .SendAsync(HubMessages.Player.PlayerDeckReady, cards);
+                .SendAsync(HubMessages.Player.DeckReady, cards);
         }
     }
 }

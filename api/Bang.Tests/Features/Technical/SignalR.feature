@@ -1,4 +1,4 @@
-﻿Fonctionnalité: Communications SignalR
+﻿Fonctionnalité: SignalR
 
 Contexte:
 	Sachant que ces joueurs souhaitent faire une partie
@@ -27,8 +27,18 @@ Scénario: Quand la partie est prête
 	Alors un message "AllPlayerJoined" est envoyé au hub du jeu
 	Et la partie peut commencer
 	Et un message "PlayerTurn" est envoyé au hub du jeu
+	Et un message "YourTurn" est envoyé au schérif
 	Et c'est au tour du schérif
 
-Scénario: Quand un joueur pioche ses cartes
+Scénario: Quand les joueurs piochent leurs cartes
 	Quand "Jean" rejoint la partie
-	Alors un message "PlayerDeckReady" est envoyé à "Jean"
+	Alors un message "DeckReady" est envoyé à "Jean"
+
+Scénario: Quand c'est le tour du premier joueur
+	Quand "Jean" rejoint la partie
+	Et "Max" rejoint la partie
+	Et "Emilie" rejoint la partie
+	Et "Martin" rejoint la partie
+	Alors le schérif pioche de nouvelles cartes
+	Et un message "CardsDrawn" est envoyé au hub du jeu
+	Et un message "NewCards" est envoyé au schérif

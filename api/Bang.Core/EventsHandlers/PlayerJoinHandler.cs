@@ -33,7 +33,7 @@ namespace Bang.Core.NotificationsHandlers
 
             if (game.GameStatus != GameStatus.WaitingForPlayers)
             {
-                throw new GameException("L'identifiant de la partie est incorrect");
+                throw new GameException("L'identifiant de la partie est incorrect", notification.GameId);
             }
 
             var player = game.Players.First(p => p.Name == notification.PlayerName);
@@ -64,6 +64,10 @@ namespace Bang.Core.NotificationsHandlers
                 await this.gameHub
                     .Clients.Group(game.Id.ToString())
                     .SendAsync(HubMessages.Game.PlayerTurn, game.Id, scheriff.Name, cancellationToken);
+
+                await this.playerHub
+                    .Clients.Group(scheriff.Id.ToString())
+                    .SendAsync(HubMessages.Player.YourTurn, cancellationToken);
             }
         }
         private Task<Character> GetRandomCharacterAsync(CancellationToken cancellationToken) =>

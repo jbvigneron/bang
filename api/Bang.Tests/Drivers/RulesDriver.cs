@@ -71,10 +71,20 @@ namespace Bang.Tests.Drivers
 
         public void CheckPlayerDeckCount(string playerName)
         {
-            var numberOfCards = this.gameContext.PlayerCards[playerName].Count();
+            var playerDeckCount = this.gameContext.PlayerCards[playerName].Count();
 
             var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
-            Assert.Equal(player.Lives, numberOfCards);
+            var expected = player.Lives;
+            Assert.Equal(expected, playerDeckCount);
+        }
+
+        public void CheckPlayerDeckCountAfterDraw(string playerName, int count)
+        {
+            var playerDeckCount = this.gameContext.PlayerCards[playerName].Count();
+
+            var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
+            var expected = player.Lives + count;
+            Assert.True(playerDeckCount >= expected);
         }
     }
 }
