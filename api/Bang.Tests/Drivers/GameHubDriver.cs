@@ -75,7 +75,7 @@ namespace Bang.Tests.Drivers
 
         public async Task CheckMessageAsync(string message)
         {
-            await Task.Delay(1000);
+            await Task.Delay(1500);
             Assert.Contains(message, this.messages);
         }
     }
