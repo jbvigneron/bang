@@ -34,11 +34,16 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release
         working-directory: api
-
+        
       - name: Run tests
-        run: dotnet test --no-build --configuration Release --verbosity normal
+        run: dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=Bang.Tests.trx"
         working-directory: api
 
+      - name: Publish tests results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        with:
+          trx_files: "api/Bang.Tests/TestResults/*.trx"
+          
       - name: Generate Live Documentation
         uses: cryptic-wizard/run-specflow-tests@v1.3.1
         with:
@@ -51,5 +56,5 @@ jobs:
       - name: Publish Live Documentation
         uses: actions/upload-artifact@v3.1.2
         with:
-          name: 'Specflow Test Results'
+          name: "Live Documentation"
           path: LivingDoc.html
