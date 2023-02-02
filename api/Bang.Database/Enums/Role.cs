@@ -5,6 +5,6 @@
         Sheriff,
         Outlaw,
         Renegade,
-        Assistant
+        DeputyScheriff
     }
 }
