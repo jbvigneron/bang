@@ -15,6 +15,12 @@ namespace Bang.Database.Seeds
             },
             new Weapon
             {
+                Id = WeaponKind.Volcanic,
+                Name = "Volcanic",
+                Range = 1
+            },
+            new Weapon
+            {
                 Id = WeaponKind.Schofield,
                 Name = "Schofield",
                 Range = 2

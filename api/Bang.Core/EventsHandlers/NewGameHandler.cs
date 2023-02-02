@@ -76,13 +76,13 @@ namespace Bang.Core.EventsHandlers
                 throw new ArgumentOutOfRangeException(nameof(numberOfPlayers), "Le nombre de joueurs doit être compris entre 4 et 7");
 
             if (numberOfPlayers >= 5)
-                this.roles.Add(Role.Assistant);
+                this.roles.Add(Role.DeputyScheriff);
 
             if (numberOfPlayers >= 6)
                 this.roles.Add(Role.Outlaw);
 
             if (numberOfPlayers == 7)
-                this.roles.Add(Role.Assistant);
+                this.roles.Add(Role.DeputyScheriff);
         }
 
         private PlayerRole GetRandomRole()

@@ -2,9 +2,9 @@
 {
     public enum CardSymbol
     {
-        Pique,
-        Carreau,
-        Trefle,
-        Coeur
+        Club,
+        Diamond,
+        Heart,
+        Spade
     }
 }
