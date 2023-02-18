@@ -98,18 +98,18 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
-                table11.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Jean"});
-                table11.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Max"});
-                table11.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Emilie"});
-                table11.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Martin"});
 #line 5
- testRunner.Given("une partie est lancée avec ces joueurs", ((string)(null)), table11, "Sachant qu\'");
+ testRunner.Given("une partie est lancée avec ces joueurs", ((string)(null)), table6, "Sachant qu\'");
 #line hidden
 #line 11
  testRunner.When("c\'est au tour du schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");

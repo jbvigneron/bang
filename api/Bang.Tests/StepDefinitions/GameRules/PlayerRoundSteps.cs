@@ -1,5 +1,4 @@
-﻿using Bang.Tests.Contexts;
-using Bang.Tests.Drivers;
+﻿using Bang.Tests.Drivers;
 
 namespace Bang.Tests.StepDefinitions.GameRules
 {

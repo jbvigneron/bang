@@ -79,18 +79,18 @@ namespace Bang.Tests.Features.Technical
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "playerName"});
-            table12.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "Jean"});
-            table12.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "Max"});
-            table12.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "Emilie"});
-            table12.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "Martin"});
 #line 5
- testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table12, "Sachant que ");
+ testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table7, "Sachant que ");
 #line hidden
 #line 11
  testRunner.When("une partie est initialisée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");

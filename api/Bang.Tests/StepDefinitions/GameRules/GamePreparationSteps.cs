@@ -8,7 +8,7 @@ namespace Bang.Tests.StepDefinitions.GameRules
         private readonly GameDriver gameDriver;
         private readonly RulesDriver rulesDriver;
 
-        private IEnumerable<string> playerNames;
+        private List<string> playerNames = new();
 
         public GamePreparationSteps(GameDriver gameDriver, RulesDriver rulesDriver)
         {
@@ -16,10 +16,16 @@ namespace Bang.Tests.StepDefinitions.GameRules
             this.rulesDriver = rulesDriver;
         }
 
-        [Given(@"les joueurs suivants veulent jouer")]
+        [Given(@"ces joueurs veulent jouer")]
         public void GivenCesJoueursVeulentJouer(Table table)
         {
-            this.playerNames = table.Rows.Select(r => r["playerName"]);
+            this.playerNames = table.Rows.Select(r => r["playerName"]).ToList();
+        }
+
+        [Given(@"ces joueurs supplémentaires veulent jouer")]
+        public void GivenCesJoueursSupplementairesVeulentJouer(Table table)
+        {
+            this.playerNames.AddRange(table.Rows.Select(r => r["playerName"]));
         }
 
         [When(@"la partie se prépare")]
@@ -40,10 +46,22 @@ namespace Bang.Tests.StepDefinitions.GameRules
             this.rulesDriver.CheckHasOneSheriff();
         }
 
-        [Then(@"il y a (.*) autres personnes avec un autre rôle")]
-        public void ThenIlYAAutresPersonnesAvecUnAutreRole(int count)
+        [Then(@"il y a un renégat")]
+        public void ThenIlYAUnRenegat()
         {
-            this.rulesDriver.CheckAllOthersRoles(count);
+            this.rulesDriver.CheckHasOneRenegade();
+        }
+
+        [Then(@"il y a (.*) hors-la-loi")]
+        public void ThenIlYAHorsLaLoi(int count)
+        {
+            this.rulesDriver.CheckOutlawsCount(count);
+        }
+
+        [Then(@"il y a (.*) adjoint\w? au shérif")]
+        public void ThenIlYAAdjointsAuSherif(int count)
+        {
+            this.rulesDriver.CheckDeputiesCount(count);
         }
 
         [Then(@"le shérif dévoile sa carte")]
