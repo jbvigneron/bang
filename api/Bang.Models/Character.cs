@@ -1,6 +1,6 @@
-﻿using Bang.Database.Enums;
+﻿using Bang.Models.Enums;
 
-namespace Bang.Database.Models
+namespace Bang.Models
 {
     public class Character
     {

@@ -1,4 +1,4 @@
-using Bang.Database.Enums;
+using Bang.Models.Enums;
 using Bang.Tests.Drivers;
 
 namespace Bang.Tests.StepDefinitions.Technical

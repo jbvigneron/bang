@@ -1,6 +1,6 @@
 ﻿using Bang.Core.Commands;
 using Bang.Core.Queries;
-using Bang.Database.Models;
+using Bang.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

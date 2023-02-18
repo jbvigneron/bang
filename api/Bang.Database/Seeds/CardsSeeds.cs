@@ -1,5 +1,5 @@
-﻿using Bang.Database.Enums;
-using Bang.Database.Models;
+﻿using Bang.Models.Enums;
+using Bang.Models;
 
 namespace Bang.Database.Seeds
 {
