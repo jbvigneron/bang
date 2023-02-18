@@ -1,5 +1,5 @@
 ﻿using Bang.Core.Extensions;
-using Bang.Database.Enums;
+using Bang.Models.Enums;
 using Bang.Tests.Contexts;
 
 namespace Bang.Tests.Drivers

@@ -3,8 +3,8 @@ using Bang.Core.Events;
 using Bang.Core.Exceptions;
 using Bang.Core.Hubs;
 using Bang.Database;
-using Bang.Database.Enums;
-using Bang.Database.Models;
+using Bang.Models;
+using Bang.Models.Enums;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 

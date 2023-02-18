@@ -1,4 +1,4 @@
-﻿namespace Bang.Database.Models
+﻿namespace Bang.Models
 {
     public class GameDeck : CardPile
     {

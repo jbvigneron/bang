@@ -2,7 +2,7 @@
 using Bang.Core.Events;
 using Bang.Core.Hubs;
 using Bang.Database;
-using Bang.Database.Models;
+using Bang.Models;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;

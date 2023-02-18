@@ -1,4 +1,4 @@
-﻿namespace Bang.Database.Enums
+﻿namespace Bang.Models.Enums
 {
     public enum CardValue
     {

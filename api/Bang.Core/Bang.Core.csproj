@@ -14,7 +14,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Bang.Database\Bang.Database.csproj" />
+	  <ProjectReference Include="..\Bang.Database\Bang.Database.csproj" />
+	  <ProjectReference Include="..\Bang.Models\Bang.Models.csproj" />
 	</ItemGroup>
 
 </Project>
