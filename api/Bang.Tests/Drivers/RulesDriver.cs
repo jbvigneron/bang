@@ -1,4 +1,5 @@
 ﻿using Bang.Core.Extensions;
+using Bang.Models.Enums;
 using Bang.Tests.Contexts;
 
 namespace Bang.Tests.Drivers
@@ -18,10 +19,22 @@ namespace Bang.Tests.Drivers
             Assert.NotNull(sheriff);
         }
 
-        public void CheckAllOthersRoles(int othersCount)
+        public void CheckHasOneRenegade()
         {
-            var others = this.gameContext.Current.Players.Where(p => !p.IsScheriff);
-            Assert.Equal(othersCount, others.Count());
+            var renegade = this.gameContext.Current.Players.SingleOrDefault(p => p.Role!.Value == Role.Renegade);
+            Assert.NotNull(renegade);
+        }
+
+        public void CheckOutlawsCount(int count)
+        {
+            var outlaws = this.gameContext.Current.Players.Where(p => p.Role!.Value == Role.Outlaw);
+            Assert.Equal(count, outlaws.Count());
+        }
+
+        public void CheckDeputiesCount(int count)
+        {
+            var deputies = this.gameContext.Current.Players.Where(p => p.Role!.Value == Role.DeputyScheriff);
+            Assert.Equal(count, deputies.Count());
         }
 
         public void CheckIsSheriffUnveiled()

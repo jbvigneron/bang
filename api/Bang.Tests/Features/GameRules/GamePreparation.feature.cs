@@ -75,20 +75,39 @@ namespace Bang.Tests.Features.GameRules
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 4
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "playerName"});
+            table1.AddRow(new string[] {
+                        "Jean"});
+            table1.AddRow(new string[] {
+                        "Max"});
+            table1.AddRow(new string[] {
+                        "Emilie"});
+            table1.AddRow(new string[] {
+                        "Martin"});
+#line 5
+ testRunner.Given("ces joueurs veulent jouer", ((string)(null)), table1, "Sachant que ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Faire une partie à 4 joueurs")]
+        [Xunit.SkippableFactAttribute(DisplayName="Partie à 4 joueurs")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Faire une partie à 4 joueurs")]
-        public void FaireUnePartieA4Joueurs()
+        [Xunit.TraitAttribute("Description", "Partie à 4 joueurs")]
+        public void PartieA4Joueurs()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Faire une partie à 4 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partie à 4 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,41 +117,34 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table1.AddRow(new string[] {
-                            "Jean"});
-                table1.AddRow(new string[] {
-                            "Max"});
-                table1.AddRow(new string[] {
-                            "Emilie"});
-                table1.AddRow(new string[] {
-                            "Martin"});
-#line 5
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table1, "Sachant que ");
-#line hidden
-#line 11
- testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 12
- testRunner.Then("il y a un shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line 4
+this.FeatureBackground();
 #line hidden
 #line 13
- testRunner.And("il y a 3 autres personnes avec un autre rôle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 14
+ testRunner.Then("il y a un shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+#line 15
+ testRunner.And("il y a un renégat", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 16
+ testRunner.And("il y a 2 hors-la-loi", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Faire une partie à 5 joueurs")]
+        [Xunit.SkippableFactAttribute(DisplayName="Partie à 5 joueurs")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Faire une partie à 5 joueurs")]
-        public void FaireUnePartieA5Joueurs()
+        [Xunit.TraitAttribute("Description", "Partie à 5 joueurs")]
+        public void PartieA5Joueurs()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Faire une partie à 5 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 15
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partie à 5 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -142,43 +154,44 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
                 table2.AddRow(new string[] {
-                            "Jean"});
-                table2.AddRow(new string[] {
-                            "Max"});
-                table2.AddRow(new string[] {
-                            "Emilie"});
-                table2.AddRow(new string[] {
-                            "Martin"});
-                table2.AddRow(new string[] {
                             "Anna"});
-#line 16
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table2, "Sachant que ");
+#line 19
+ testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table2, "Sachant que ");
 #line hidden
-#line 23
+#line 22
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 24
+#line 23
  testRunner.Then("il y a un shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
+#line 24
+ testRunner.And("il y a un renégat", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
 #line 25
- testRunner.And("il y a 4 autres personnes avec un autre rôle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.And("il y a 2 hors-la-loi", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 26
+ testRunner.And("il y a 1 adjoint au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Faire une partie à 6 joueurs")]
+        [Xunit.SkippableFactAttribute(DisplayName="Partie à 6 joueurs")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Faire une partie à 6 joueurs")]
-        public void FaireUnePartieA6Joueurs()
+        [Xunit.TraitAttribute("Description", "Partie à 6 joueurs")]
+        public void PartieA6Joueurs()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Faire une partie à 6 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 27
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partie à 6 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 28
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -188,45 +201,46 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
-                table3.AddRow(new string[] {
-                            "Jean"});
-                table3.AddRow(new string[] {
-                            "Max"});
-                table3.AddRow(new string[] {
-                            "Emilie"});
-                table3.AddRow(new string[] {
-                            "Martin"});
                 table3.AddRow(new string[] {
                             "Anna"});
                 table3.AddRow(new string[] {
                             "Eric"});
-#line 28
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table3, "Sachant que ");
+#line 29
+ testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table3, "Sachant que ");
 #line hidden
-#line 36
+#line 33
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 37
+#line 34
  testRunner.Then("il y a un shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
-#line 38
- testRunner.And("il y a 5 autres personnes avec un autre rôle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line 35
+ testRunner.And("il y a un renégat", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 36
+ testRunner.And("il y a 3 hors-la-loi", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 37
+ testRunner.And("il y a 1 adjoint au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Faire une partie à 7 joueurs")]
+        [Xunit.SkippableFactAttribute(DisplayName="Partie à 7 joueurs")]
         [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Faire une partie à 7 joueurs")]
-        public void FaireUnePartieA7Joueurs()
+        [Xunit.TraitAttribute("Description", "Partie à 7 joueurs")]
+        public void PartieA7Joueurs()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Faire une partie à 7 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 40
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partie à 7 joueurs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -236,175 +250,34 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
-                table4.AddRow(new string[] {
-                            "Jean"});
-                table4.AddRow(new string[] {
-                            "Max"});
-                table4.AddRow(new string[] {
-                            "Emilie"});
-                table4.AddRow(new string[] {
-                            "Martin"});
                 table4.AddRow(new string[] {
                             "Anna"});
                 table4.AddRow(new string[] {
                             "Eric"});
                 table4.AddRow(new string[] {
                             "Jane"});
-#line 41
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table4, "Sachant que ");
+#line 40
+ testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table4, "Sachant que ");
 #line hidden
-#line 50
+#line 45
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 51
+#line 46
  testRunner.Then("il y a un shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
-#line 52
- testRunner.And("il y a 6 autres personnes avec un autre rôle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line 47
+ testRunner.And("il y a un renégat", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Dévoiler le shérif")]
-        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Dévoiler le shérif")]
-        public void DevoilerLeSherif()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dévoiler le shérif", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 54
-this.ScenarioInitialize(scenarioInfo);
+#line 48
+ testRunner.And("il y a 3 hors-la-loi", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table5.AddRow(new string[] {
-                            "Jean"});
-                table5.AddRow(new string[] {
-                            "Max"});
-                table5.AddRow(new string[] {
-                            "Emilie"});
-                table5.AddRow(new string[] {
-                            "Martin"});
-#line 55
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table5, "Sachant que ");
-#line hidden
-#line 61
- testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 62
- testRunner.Then("le shérif dévoile sa carte", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Distribuer les personnages")]
-        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Distribuer les personnages")]
-        public void DistribuerLesPersonnages()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Distribuer les personnages", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 64
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table6.AddRow(new string[] {
-                            "Jean"});
-                table6.AddRow(new string[] {
-                            "Max"});
-                table6.AddRow(new string[] {
-                            "Emilie"});
-                table6.AddRow(new string[] {
-                            "Martin"});
-#line 65
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table6, "Sachant que ");
-#line hidden
-#line 71
- testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 72
- testRunner.And("\"Max\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-#line 73
- testRunner.Then("un personnage est attribué à \"Max\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
-                            "characterName",
-                            "lives"});
-                table7.AddRow(new string[] {
-                            "Bart Cassidy",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Black Jack",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Calamity Janet",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "El Gringo",
-                            "3"});
-                table7.AddRow(new string[] {
-                            "Jesse Jones",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Jourdonnais",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Kit Carlson",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Lucky Duke",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Paul Regret",
-                            "3"});
-                table7.AddRow(new string[] {
-                            "Pedro Ramirez",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Rose Doolan",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Sid Ketchum",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Slab le flingueur",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Suzy Lafayette",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Sam le Vautour",
-                            "4"});
-                table7.AddRow(new string[] {
-                            "Willy le Kid",
-                            "4"});
-#line 74
- testRunner.And("le nombre de vies de \"Max\" lui est attribué selon son personnage et son rôle", ((string)(null)), table7, "Et ");
-#line hidden
-#line 92
- testRunner.And("l arme principale de \"Max\" est \"Colt .45\" d\'une portée de 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line 49
+ testRunner.And("il y a 2 adjoints au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -418,6 +291,211 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pioche de départ", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 51
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 52
+ testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 53
+ testRunner.Then("la pioche comporte 80 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Dévoiler le shérif")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Dévoiler le shérif")]
+        public void DevoilerLeSherif()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dévoiler le shérif", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 55
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 56
+ testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 57
+ testRunner.Then("le shérif dévoile sa carte", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Distribution des personnages")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Distribution des personnages")]
+        public void DistributionDesPersonnages()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Distribution des personnages", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 59
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 60
+ testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 61
+ testRunner.And("\"Max\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 62
+ testRunner.Then("un personnage est attribué à \"Max\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "characterName",
+                            "lives"});
+                table5.AddRow(new string[] {
+                            "Bart Cassidy",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Black Jack",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Calamity Janet",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "El Gringo",
+                            "3"});
+                table5.AddRow(new string[] {
+                            "Jesse Jones",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Jourdonnais",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Kit Carlson",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Lucky Duke",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Paul Regret",
+                            "3"});
+                table5.AddRow(new string[] {
+                            "Pedro Ramirez",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Rose Doolan",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Sid Ketchum",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Slab le flingueur",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Suzy Lafayette",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Sam le Vautour",
+                            "4"});
+                table5.AddRow(new string[] {
+                            "Willy le Kid",
+                            "4"});
+#line 63
+ testRunner.And("le nombre de vies de \"Max\" lui est attribué selon son personnage et son rôle", ((string)(null)), table5, "Et ");
+#line hidden
+#line 81
+ testRunner.And("l arme principale de \"Max\" est \"Colt .45\" d\'une portée de 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Nombre de cartes en main")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Nombre de cartes en main")]
+        public void NombreDeCartesEnMain()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nombre de cartes en main", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 83
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 84
+ testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 85
+ testRunner.And("\"Jean\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 86
+ testRunner.Then("\"Jean\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+#line 87
+ testRunner.When("\"Max\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 88
+ testRunner.Then("\"Max\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+#line 89
+ testRunner.When("\"Emilie\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 90
+ testRunner.Then("\"Emilie\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+#line 91
+ testRunner.When("\"Martin\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 92
+ testRunner.Then("\"Martin\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Le shérif commence")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Le shérif commence")]
+        public void LeSherifCommence()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Le shérif commence", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 94
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -428,120 +506,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table8.AddRow(new string[] {
-                            "Jean"});
-                table8.AddRow(new string[] {
-                            "Max"});
-                table8.AddRow(new string[] {
-                            "Emilie"});
-                table8.AddRow(new string[] {
-                            "Martin"});
+#line 4
+this.FeatureBackground();
+#line hidden
 #line 95
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table8, "Sachant que ");
-#line hidden
-#line 101
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 102
- testRunner.Then("la pioche comporte 80 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Cartes de départ pour le joueur")]
-        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Cartes de départ pour le joueur")]
-        public void CartesDeDepartPourLeJoueur()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cartes de départ pour le joueur", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 104
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table9.AddRow(new string[] {
-                            "Jean"});
-                table9.AddRow(new string[] {
-                            "Max"});
-                table9.AddRow(new string[] {
-                            "Emilie"});
-                table9.AddRow(new string[] {
-                            "Martin"});
-#line 105
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table9, "Sachant que ");
-#line hidden
-#line 111
- testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 112
+#line 96
  testRunner.And("\"Jean\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 113
- testRunner.Then("\"Jean\" possède autant de cartes qu\'il a de points de vie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Le schérif commence")]
-        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
-        [Xunit.TraitAttribute("Description", "Le schérif commence")]
-        public void LeScherifCommence()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Le schérif commence", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 115
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table10.AddRow(new string[] {
-                            "Jean"});
-                table10.AddRow(new string[] {
-                            "Max"});
-                table10.AddRow(new string[] {
-                            "Emilie"});
-                table10.AddRow(new string[] {
-                            "Martin"});
-#line 116
- testRunner.Given("les joueurs suivants veulent jouer", ((string)(null)), table10, "Sachant que ");
-#line hidden
-#line 122
- testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 123
- testRunner.And("\"Jean\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-#line 124
+#line 97
  testRunner.And("\"Max\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 125
+#line 98
  testRunner.And("\"Emilie\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 126
+#line 99
  testRunner.And("\"Martin\" pioche une carte personnage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
-#line 127
+#line 100
  testRunner.Then("c\'est au shérif de commencer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }
