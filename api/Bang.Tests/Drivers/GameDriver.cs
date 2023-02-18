@@ -1,5 +1,5 @@
 ﻿using Bang.Core.Extensions;
-using Bang.Database.Models;
+using Bang.Models;
 using Bang.Tests.Contexts;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Json;

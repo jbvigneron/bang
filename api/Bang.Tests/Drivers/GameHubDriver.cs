@@ -1,5 +1,5 @@
 ﻿using Bang.Core.Constants;
-using Bang.Database.Models;
+using Bang.Models;
 using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;

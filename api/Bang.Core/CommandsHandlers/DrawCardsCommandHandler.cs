@@ -2,7 +2,7 @@
 using Bang.Core.Events;
 using Bang.Core.Exceptions;
 using Bang.Core.Queries;
-using Bang.Database.Enums;
+using Bang.Models.Enums;
 using MediatR;
 
 namespace Bang.Core.CommandsHandlers

@@ -1,4 +1,4 @@
-﻿using Bang.Database.Models;
+﻿using Bang.Models;
 using Bang.Database.Seeds;
 using Microsoft.EntityFrameworkCore;
 

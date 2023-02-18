@@ -1,6 +1,6 @@
 ﻿using Bang.Core.Queries;
 using Bang.Database;
-using Bang.Database.Models;
+using Bang.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
