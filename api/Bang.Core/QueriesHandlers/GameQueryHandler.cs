@@ -20,8 +20,10 @@ namespace Bang.Core.QueriesHandlers
             return this.dbContext.Games
                 .Include(g => g.Players)
                     .ThenInclude(p => p.Character)
-                .Include(p => p.Players)
+                .Include(g => g.Players)
                     .ThenInclude(p => p.Weapon)
+                .Include(g => g.Players)
+                    .ThenInclude(p => p.Role)
                 .FirstAsync(g => g.Id == request.GameId, cancellationToken);
         }
     }

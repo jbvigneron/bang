@@ -1,73 +1,62 @@
 ﻿#language: fr-FR
 Fonctionnalité: Préparation du jeu
 
-Scénario: Faire une partie à 4 joueurs
-	Sachant que les joueurs suivants veulent jouer
+Contexte:
+	Sachant que ces joueurs veulent jouer
 		| playerName |
 		| Jean       |
 		| Max        |
 		| Emilie     |
 		| Martin     |
+
+Scénario: Partie à 4 joueurs
 	Quand la partie se prépare
 	Alors il y a un shérif
-	Et il y a 3 autres personnes avec un autre rôle
+	Et il y a un renégat
+	Et il y a 2 hors-la-loi
 
-Scénario: Faire une partie à 5 joueurs
-	Sachant que les joueurs suivants veulent jouer
+Scénario: Partie à 5 joueurs
+	Sachant que ces joueurs supplémentaires veulent jouer
 		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
 		| Anna       |
 	Quand la partie se prépare
 	Alors il y a un shérif
-	Et il y a 4 autres personnes avec un autre rôle
+	Et il y a un renégat
+	Et il y a 2 hors-la-loi
+	Et il y a 1 adjoint au shérif
 
-Scénario: Faire une partie à 6 joueurs
-	Sachant que les joueurs suivants veulent jouer
+Scénario: Partie à 6 joueurs
+	Sachant que ces joueurs supplémentaires veulent jouer
 		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
 		| Anna       |
 		| Eric       |
 	Quand la partie se prépare
 	Alors il y a un shérif
-	Et il y a 5 autres personnes avec un autre rôle
+	Et il y a un renégat
+	Et il y a 3 hors-la-loi
+	Et il y a 1 adjoint au shérif
 
-Scénario: Faire une partie à 7 joueurs
-	Sachant que les joueurs suivants veulent jouer
+Scénario: Partie à 7 joueurs
+	Sachant que ces joueurs supplémentaires veulent jouer
 		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
 		| Anna       |
 		| Eric       |
 		| Jane       |
 	Quand la partie se prépare
 	Alors il y a un shérif
-	Et il y a 6 autres personnes avec un autre rôle
+	Et il y a un renégat
+	Et il y a 3 hors-la-loi
+	Et il y a 2 adjoints au shérif
+
+Scénario: Pioche de départ
+	Quand la partie se prépare
+	Alors la pioche comporte 80 cartes
 
 Scénario: Dévoiler le shérif
-	Sachant que les joueurs suivants veulent jouer
-		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
 	Quand la partie se prépare
 	Alors le shérif dévoile sa carte
 
-Scénario: Distribuer les personnages
-	Sachant que les joueurs suivants veulent jouer
-		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
+Scénario: Distribution des personnages
 	Quand la partie se prépare
 	Et "Max" pioche une carte personnage
 	Alors un personnage est attribué à "Max"
@@ -91,34 +80,18 @@ Scénario: Distribuer les personnages
 		| Willy le Kid      | 4     |
 	Et l arme principale de "Max" est "Colt .45" d'une portée de 1
 
-Scénario: Pioche de départ
-	Sachant que les joueurs suivants veulent jouer
-		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
-	Quand la partie se prépare
-	Alors la pioche comporte 80 cartes
-
-Scénario: Cartes de départ pour le joueur
-	Sachant que les joueurs suivants veulent jouer
-		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
+Scénario: Nombre de cartes en main
 	Quand la partie se prépare
 	Et "Jean" pioche une carte personnage
 	Alors "Jean" possède autant de cartes qu'il a de points de vie
+	Quand "Max" pioche une carte personnage
+	Alors "Max" possède autant de cartes qu'il a de points de vie
+	Quand "Emilie" pioche une carte personnage
+	Alors "Emilie" possède autant de cartes qu'il a de points de vie
+	Quand "Martin" pioche une carte personnage
+	Alors "Martin" possède autant de cartes qu'il a de points de vie
 
-Scénario: Le schérif commence
-	Sachant que les joueurs suivants veulent jouer
-		| playerName |
-		| Jean       |
-		| Max        |
-		| Emilie     |
-		| Martin     |
+Scénario: Le shérif commence
 	Quand la partie se prépare
 	Et "Jean" pioche une carte personnage
 	Et "Max" pioche une carte personnage
