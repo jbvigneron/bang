@@ -79,18 +79,18 @@ namespace Bang.Tests.Features.Technical
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "playerName"});
-            table7.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "Jean"});
-            table7.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "Max"});
-            table7.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "Emilie"});
-            table7.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "Martin"});
 #line 5
- testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table7, "Sachant que ");
+ testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table8, "Sachant que ");
 #line hidden
 #line 11
  testRunner.When("une partie est initialisée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
@@ -213,10 +213,10 @@ this.FeatureBackground();
  testRunner.And("un message \"PlayerTurn\" est envoyé au hub du jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 31
- testRunner.And("un message \"YourTurn\" est envoyé au schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.And("un message \"YourTurn\" est envoyé au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 32
- testRunner.And("c\'est au tour du schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.And("c\'est au tour du shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -287,13 +287,13 @@ this.FeatureBackground();
  testRunner.And("\"Martin\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 43
- testRunner.Then("le schérif pioche de nouvelles cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+ testRunner.Then("le shérif pioche de nouvelles cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
 #line 44
  testRunner.And("un message \"CardsDrawn\" est envoyé au hub du jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 45
- testRunner.And("un message \"NewCards\" est envoyé au schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.And("un message \"NewCards\" est envoyé au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();

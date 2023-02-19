@@ -38,7 +38,7 @@ namespace Bang.Core.NotificationsHandlers
 
             var player = game.Players.First(p => p.Name == notification.PlayerName);
             player.Character = await this.GetRandomCharacterAsync(cancellationToken);
-            player.Lives = GetLives(player.Character, player.IsScheriff);
+            player.Lives = GetLives(player.Character, player.IsSheriff);
             player.Weapon = await this.GetColt45Async(cancellationToken);
             player.Status = PlayerStatus.Alive;
 
@@ -59,14 +59,14 @@ namespace Bang.Core.NotificationsHandlers
                     .Clients.Group(game.Id.ToString())
                     .SendAsync(HubMessages.Game.AllPlayerJoined, game.Id, game, cancellationToken);
 
-                var scheriff = game.GetScheriff();
+                var sheriff = game.GetSheriff();
 
                 await this.gameHub
                     .Clients.Group(game.Id.ToString())
-                    .SendAsync(HubMessages.Game.PlayerTurn, game.Id, scheriff.Name, cancellationToken);
+                    .SendAsync(HubMessages.Game.PlayerTurn, game.Id, sheriff.Name, cancellationToken);
 
                 await this.playerHub
-                    .Clients.Group(scheriff.Id.ToString())
+                    .Clients.Group(sheriff.Id.ToString())
                     .SendAsync(HubMessages.Player.YourTurn, cancellationToken);
             }
         }
