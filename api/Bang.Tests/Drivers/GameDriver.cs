@@ -1,4 +1,4 @@
-﻿using Bang.Core.Extensions;
+using Bang.Core.Extensions;
 using Bang.Models;
 using Bang.Tests.Contexts;
 using Microsoft.Net.Http.Headers;
@@ -67,9 +67,9 @@ namespace Bang.Tests.Drivers
             this.gameContext.PlayerCards[playerName] = cards;
         }
 
-        public string GetScheriffName()
+        public string GetSheriffName()
         {
-            return this.gameContext.Current.GetScheriff().Name;
+            return this.gameContext.Current.GetSheriff().Name;
         }
     }
 }

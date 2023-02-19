@@ -28,8 +28,8 @@ Scénario: Quand la partie est prête
 	Alors un message "AllPlayerJoined" est envoyé au hub du jeu
 	Et la partie peut commencer
 	Et un message "PlayerTurn" est envoyé au hub du jeu
-	Et un message "YourTurn" est envoyé au schérif
-	Et c'est au tour du schérif
+	Et un message "YourTurn" est envoyé au shérif
+	Et c'est au tour du shérif
 
 Scénario: Quand les joueurs piochent leurs cartes
 	Quand "Jean" rejoint la partie
@@ -40,6 +40,6 @@ Scénario: Quand c'est le tour du premier joueur
 	Et "Max" rejoint la partie
 	Et "Emilie" rejoint la partie
 	Et "Martin" rejoint la partie
-	Alors le schérif pioche de nouvelles cartes
+	Alors le shérif pioche de nouvelles cartes
 	Et un message "CardsDrawn" est envoyé au hub du jeu
-	Et un message "NewCards" est envoyé au schérif
+	Et un message "NewCards" est envoyé au shérif

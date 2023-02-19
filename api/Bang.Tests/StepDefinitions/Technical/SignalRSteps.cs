@@ -91,17 +91,17 @@ namespace Bang.Tests.StepDefinitions.Technical
             this.stateDriver.CheckGameStatus(GameStatus.InProgress);
         }
 
-        [Then(@"un message ""([^""]*)"" est envoyé au schérif")]
+        [Then(@"un message ""([^""]*)"" est envoyé au shérif")]
         public async Task ThenUnMessageEstEnvoyeAuScherif(string message)
         {
-            var scheriffName = this.gameDriver.GetScheriffName();
-            await this.playerHubDriver.CheckMessageAsync(scheriffName, message);
+            var sheriffName = this.gameDriver.GetSheriffName();
+            await this.playerHubDriver.CheckMessageAsync(sheriffName, message);
         }
 
-        [Then(@"c'est au tour du schérif")]
+        [Then(@"c'est au tour du shérif")]
         public void ThenCestAuTourDuScherif()
         {
-            this.stateDriver.CheckIsScheriffTurn();
+            this.stateDriver.CheckIsSheriffTurn();
         }
 
         [Then(@"un message ""([^""]*)"" est envoyé à ""([^""]*)""")]
@@ -110,11 +110,11 @@ namespace Bang.Tests.StepDefinitions.Technical
             return this.playerHubDriver.CheckMessageAsync(playerName, message);
         }
 
-        [Then(@"le schérif pioche de nouvelles cartes")]
+        [Then(@"le shérif pioche de nouvelles cartes")]
         public Task ThenLeScherifPiocheDeNouvellesCartes()
         {
-            var scheriffName = this.gameDriver.GetScheriffName();
-            return this.gameDriver.DrawCardsAsync(scheriffName);
+            var sheriffName = this.gameDriver.GetSheriffName();
+            return this.gameDriver.DrawCardsAsync(sheriffName);
         }
     }
 }
