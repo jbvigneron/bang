@@ -1,5 +1,4 @@
-﻿using Bang.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace Bang.Core.Commands
 {
@@ -7,7 +6,7 @@ namespace Bang.Core.Commands
     {
         public CreateGameCommand(IEnumerable<string> playerNames)
         {
-            PlayerNames = playerNames;
+            this.PlayerNames = playerNames;
         }
 
         public IEnumerable<string> PlayerNames { get; }
