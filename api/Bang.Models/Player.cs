@@ -14,7 +14,7 @@ namespace Bang.Models
 
         public int Lives { get; set; }
 
-        public bool IsScheriff { get; set; }
+        public bool IsSheriff { get; set; }
 
         public virtual PlayerRole? Role { get; set; }
 

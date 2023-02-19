@@ -1,4 +1,4 @@
-﻿using Bang.Core.Extensions;
+using Bang.Core.Extensions;
 using Bang.Models.Enums;
 using Bang.Tests.Contexts;
 
@@ -24,11 +24,11 @@ namespace Bang.Tests.Drivers
             Assert.Equal(status, newPlayer.Status);
         }
 
-        internal void CheckIsScheriffTurn()
+        public void CheckIsSheriffTurn()
         {
-            var scheriff = this.gameContext.Current.GetScheriff();
+            var sheriff = this.gameContext.Current.GetSheriff();
             var currentPlayerName = this.gameContext.Current.CurrentPlayerName;
-            Assert.Equal(scheriff.Name, currentPlayerName);
+            Assert.Equal(sheriff.Name, currentPlayerName);
         }
     }
 }

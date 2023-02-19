@@ -1,4 +1,4 @@
-﻿using Bang.Core.Extensions;
+using Bang.Core.Extensions;
 using Bang.Models.Enums;
 using Bang.Tests.Contexts;
 
@@ -15,7 +15,7 @@ namespace Bang.Tests.Drivers
 
         public void CheckHasOneSheriff()
         {
-            var sheriff = this.gameContext.Current.GetScheriff();
+            var sheriff = this.gameContext.Current.GetSheriff();
             Assert.NotNull(sheriff);
         }
 
@@ -39,8 +39,8 @@ namespace Bang.Tests.Drivers
 
         public void CheckIsSheriffUnveiled()
         {
-            var sheriff = this.gameContext.Current.GetScheriff();
-            Assert.True(sheriff.IsScheriff);
+            var sheriff = this.gameContext.Current.GetSheriff();
+            Assert.True(sheriff.IsSheriff);
         }
 
         public void CheckPlayerHasACharacter(string playerName)
@@ -54,7 +54,7 @@ namespace Bang.Tests.Drivers
             var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
             var expectedLives = int.Parse(table.Rows.Single(r => r["characterName"] == player!.Character!.Name)["lives"]);
 
-            if (player!.IsScheriff)
+            if (player!.IsSheriff)
             {
                 Assert.Equal(expectedLives + 1, player.Lives);
             }
@@ -73,8 +73,8 @@ namespace Bang.Tests.Drivers
 
         public void CheckFirstPlayerIsTheScheriff()
         {
-            var scheriff = this.gameContext.Current.GetScheriff();
-            Assert.Equal(scheriff.Name, this.gameContext.Current.CurrentPlayerName);
+            var sheriff = this.gameContext.Current.GetSheriff();
+            Assert.Equal(sheriff.Name, this.gameContext.Current.CurrentPlayerName);
         }
 
         public void CheckGameDeckCount(int count)
