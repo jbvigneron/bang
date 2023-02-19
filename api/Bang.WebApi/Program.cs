@@ -9,7 +9,6 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<BangDbContext>(options =>
@@ -33,6 +32,7 @@ builder.Services.AddSignalR();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Bang API v1", Version = "v1" });
+
     options.AddSignalRSwaggerGen(options =>
     {
         var assemblyCore = Assembly.Load("Bang.Core");
