@@ -1,5 +1,6 @@
 using Bang.Models.Enums;
 using Bang.Tests.Drivers;
+using Bang.Tests.Drivers.Hubs;
 
 namespace Bang.Tests.StepDefinitions.Technical
 {
