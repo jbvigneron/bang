@@ -4,7 +4,7 @@ using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace Bang.Tests.Drivers
+namespace Bang.Tests.Drivers.Hubs
 {
     public class PlayerHubDriver
     {
@@ -17,51 +17,51 @@ namespace Bang.Tests.Drivers
 
         public PlayerHubDriver(BrowsersContext browserContext, GameContext gameContext, HttpClientFactoryContext httpClientFactoryContext)
         {
-            this.browsersContext = browserContext;
+            browsersContext = browserContext;
             this.gameContext = gameContext;
             this.httpClientFactoryContext = httpClientFactoryContext;
         }
 
         public async Task ConnectToHubAsync(string playerName)
         {
-            this.messages.Add(playerName, new List<string>());
+            messages.Add(playerName, new List<string>());
 
-            var server = this.httpClientFactoryContext.Factory.Server;
-            var cookies = this.browsersContext.Cookies[playerName];
+            var server = httpClientFactoryContext.Factory.Server;
+            var cookies = browsersContext.Cookies[playerName];
             var connection = SignalRHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
 
             connection.On<IList<Card>>(HubMessages.Player.DeckReady, cards =>
             {
-                this.messages[playerName].Add(HubMessages.Player.DeckReady);
-                this.gameContext.PlayerCards[playerName] = cards;
+                messages[playerName].Add(HubMessages.Player.DeckReady);
+                gameContext.PlayerCards[playerName] = cards;
             });
 
             connection.On(HubMessages.Player.YourTurn, () =>
             {
-                this.messages[playerName].Add(HubMessages.Player.YourTurn);
+                messages[playerName].Add(HubMessages.Player.YourTurn);
             });
 
             connection.On<IList<Card>>(HubMessages.Player.NewCards, cards =>
             {
-                this.messages[playerName].Add(HubMessages.Player.NewCards);
+                messages[playerName].Add(HubMessages.Player.NewCards);
 
                 foreach (var card in cards)
                 {
-                    this.gameContext.PlayerCards[playerName].Add(card);
+                    gameContext.PlayerCards[playerName].Add(card);
                 }
             });
 
             await connection.StartAsync();
-            this.connections.Add(playerName, connection);
+            connections.Add(playerName, connection);
         }
 
         public Task SubscribeToMessagesAsync(string playerName) =>
-            this.connections[playerName].InvokeAsync("Subscribe");
+            connections[playerName].InvokeAsync("Subscribe");
 
         public async Task CheckMessageAsync(string playerName, string message)
         {
             await Task.Delay(1500);
-            Assert.Contains(message, this.messages[playerName]);
+            Assert.Contains(message, messages[playerName]);
         }
     }
 }

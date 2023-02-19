@@ -4,7 +4,7 @@ using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace Bang.Tests.Drivers
+namespace Bang.Tests.Drivers.Hubs
 {
     public class PublicHubDriver
     {
@@ -23,19 +23,19 @@ namespace Bang.Tests.Drivers
 
         public async Task ConnectToHubAsync()
         {
-            var server = this.httpClientFactoryContext.Factory.Server;
+            var server = httpClientFactoryContext.Factory.Server;
             var connection = SignalRHelper.ConnectToOpenHub(server, "http://localhost/PublicHub");
 
             connection.On<Game>(HubMessages.Public.NewGame, game =>
             {
-                this.messages.Add(HubMessages.Public.NewGame);
-                this.gameContext.Current = game;
+                messages.Add(HubMessages.Public.NewGame);
+                gameContext.Current = game;
             });
 
             await connection.StartAsync();
         }
 
         public void CheckMessage(string message) =>
-            Assert.Contains(message, this.messages);
+            Assert.Contains(message, messages);
     }
 }
