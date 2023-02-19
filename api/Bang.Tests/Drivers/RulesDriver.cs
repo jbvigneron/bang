@@ -1,4 +1,4 @@
-using Bang.Core.Extensions;
+﻿using Bang.Core.Extensions;
 using Bang.Models.Enums;
 using Bang.Tests.Contexts;
 
