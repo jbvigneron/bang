@@ -13,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<BangDbContext>(options =>
-               options.UseSqlite("Data Source=bang.db"));
+               options.UseInMemoryDatabase("BangDb")
+);
 
 builder.Services.RegisterCore();
 
