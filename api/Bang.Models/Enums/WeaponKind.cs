@@ -2,7 +2,7 @@
 {
     public enum WeaponKind
     {
-        Carabine,
+        Carabina,
         Colt45,
         Remington,
         Schofield,

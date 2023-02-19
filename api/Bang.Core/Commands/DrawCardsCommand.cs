@@ -6,7 +6,7 @@ namespace Bang.Core.Commands
     {
         public DrawCardsCommand(Guid playerId)
         {
-            PlayerId = playerId;
+            this.PlayerId = playerId;
         }
 
         public Guid PlayerId { get; }

@@ -33,7 +33,7 @@ namespace Bang.Database.Seeds
             },
             new Weapon
             {
-                Id = WeaponKind.Carabine,
+                Id = WeaponKind.Carabina,
                 Name = "Carabine",
                 Range = 4
             },
