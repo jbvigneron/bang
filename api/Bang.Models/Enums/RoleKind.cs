@@ -1,10 +1,10 @@
 ﻿namespace Bang.Models.Enums
 {
-    public enum Role
+    public enum RoleKind
     {
         Sheriff,
-        Outlaw,
         Renegade,
-        DeputyScheriff
+        Outlaw,
+        DeputySheriff
     }
 }

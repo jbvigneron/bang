@@ -1,4 +1,4 @@
-using Bang.Core.Extensions;
+﻿using Bang.Core.Extensions;
 using Bang.Models.Enums;
 using Bang.Tests.Contexts;
 
@@ -15,7 +15,7 @@ namespace Bang.Tests.Drivers
 
         public void CheckGameStatus(GameStatus status)
         {
-            Assert.Equal(status, this.gameContext.Current.GameStatus);
+            Assert.Equal(status, this.gameContext.Current.Status);
         }
 
         public void CheckPlayerStatus(string playerName, PlayerStatus status)

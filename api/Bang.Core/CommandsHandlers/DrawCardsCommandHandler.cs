@@ -27,12 +27,12 @@ namespace Bang.Core.CommandsHandlers
 
             var game = await this.mediator.Send(new GameQuery(player.GameId), cancellationToken);
 
-            if (game.GameStatus == GameStatus.WaitingForPlayers)
+            if (game.Status == GameStatus.WaitingForPlayers)
             {
                 throw new GameException("La partie n'a pas encore démarré.", game);
             }
 
-            if (game.GameStatus == GameStatus.Finished)
+            if (game.Status == GameStatus.Finished)
             {
                 throw new GameException("La partie est terminée.", game);
             }

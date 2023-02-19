@@ -1,4 +1,4 @@
-﻿using Bang.Models.Enums;
+using Bang.Models.Enums;
 
 namespace Bang.Models
 {
@@ -16,7 +16,7 @@ namespace Bang.Models
 
         public bool IsSheriff { get; set; }
 
-        public virtual PlayerRole? Role { get; set; }
+        public virtual Role? Role { get; set; }
 
         public Weapon? Weapon { get; set; }
 
