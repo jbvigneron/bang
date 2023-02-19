@@ -38,6 +38,9 @@ builder.Services.AddSwaggerGen(options =>
         var assemblyCore = Assembly.Load("Bang.Core");
         options.ScanAssembly(assemblyCore);
     });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 var app = builder.Build();
