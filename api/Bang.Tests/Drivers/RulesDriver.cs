@@ -21,19 +21,19 @@ namespace Bang.Tests.Drivers
 
         public void CheckHasOneRenegade()
         {
-            var renegade = this.gameContext.Current.Players.SingleOrDefault(p => p.Role!.Value == Role.Renegade);
+            var renegade = this.gameContext.Current.Players.SingleOrDefault(p => p.Role!.Id == RoleKind.Renegade);
             Assert.NotNull(renegade);
         }
 
         public void CheckOutlawsCount(int count)
         {
-            var outlaws = this.gameContext.Current.Players.Where(p => p.Role!.Value == Role.Outlaw);
+            var outlaws = this.gameContext.Current.Players.Where(p => p.Role!.Id == RoleKind.Outlaw);
             Assert.Equal(count, outlaws.Count());
         }
 
         public void CheckDeputiesCount(int count)
         {
-            var deputies = this.gameContext.Current.Players.Where(p => p.Role!.Value == Role.DeputyScheriff);
+            var deputies = this.gameContext.Current.Players.Where(p => p.Role!.Id == RoleKind.DeputySheriff);
             Assert.Equal(count, deputies.Count());
         }
 

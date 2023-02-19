@@ -1,4 +1,4 @@
-﻿using Bang.Core.Constants;
+using Bang.Core.Constants;
 using Bang.Core.Exceptions;
 using Bang.Core.Extensions;
 using Bang.Core.Hubs;
@@ -31,7 +31,7 @@ namespace Bang.Core.NotificationsHandlers
                 .Include(g => g.Players)
                 .FirstAsync(g => g.Id == notification.GameId, cancellationToken);
 
-            if (game.GameStatus != GameStatus.WaitingForPlayers)
+            if (game.Status != GameStatus.WaitingForPlayers)
             {
                 throw new GameException("L'identifiant de la partie est incorrect", notification.GameId);
             }
@@ -44,7 +44,7 @@ namespace Bang.Core.NotificationsHandlers
 
             if (game.Players.All(p => p.Status == PlayerStatus.Alive))
             {
-                game.GameStatus = GameStatus.InProgress;
+                game.Status = GameStatus.InProgress;
             }
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
@@ -53,7 +53,7 @@ namespace Bang.Core.NotificationsHandlers
                 .Clients.Group(game.Id.ToString())
                 .SendAsync(HubMessages.Game.PlayerJoin, game.Id, player, cancellationToken);
 
-            if (game.GameStatus == GameStatus.InProgress)
+            if (game.Status == GameStatus.InProgress)
             {
                 await this.gameHub
                     .Clients.Group(game.Id.ToString())
