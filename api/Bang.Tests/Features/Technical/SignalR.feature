@@ -33,7 +33,7 @@ Scénario: Quand la partie est prête
 
 Scénario: Quand les joueurs piochent leurs cartes
 	Quand "Jean" rejoint la partie
-	Alors un message "DeckReady" est envoyé à "Jean"
+	Alors un message "CardsInHand" est envoyé à "Jean"
 
 Scénario: Quand c'est le tour du premier joueur
 	Quand "Jean" rejoint la partie
@@ -42,4 +42,4 @@ Scénario: Quand c'est le tour du premier joueur
 	Et "Martin" rejoint la partie
 	Alors le shérif pioche de nouvelles cartes
 	Et un message "CardsDrawn" est envoyé au hub du jeu
-	Et un message "NewCards" est envoyé au shérif
+	Et un message "CardsInHand" est envoyé au shérif

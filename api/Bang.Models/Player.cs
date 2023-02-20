@@ -24,6 +24,8 @@ namespace Bang.Models
 
         public bool HasDrawnCards { get; set; }
 
-        public int DeckCount { get; set; }
+        public int CardsInHand { get; set; }
+
+        public virtual ICollection<Card> CardsInGame { get; set; }
     }
 }

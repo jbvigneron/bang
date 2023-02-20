@@ -6,10 +6,10 @@ namespace Bang.Tests.Contexts
     {
         public GameContext()
         {
-            this.PlayerCards = new Dictionary<string, IList<Card>>();
+            this.CardsInHand = new Dictionary<string, IList<Card>>();
         }
 
         public Game Current { get; set; }
-        public IDictionary<string, IList<Card>> PlayerCards { get; set; }
+        public IDictionary<string, IList<Card>> CardsInHand { get; set; }
     }
 }

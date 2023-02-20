@@ -96,7 +96,7 @@ namespace Bang.Tests.StepDefinitions.GameRules
         {
             await this.gameDriver.UpdateGameAsync();
             await this.gameDriver.UpdatePlayerCardsAsync(playerName);
-            this.rulesDriver.CheckPlayerDeckCount(playerName);
+            this.rulesDriver.CheckPlayerLivesAndCardsCount(playerName);
         }
 
         [Then(@"c'est au shérif de commencer")]

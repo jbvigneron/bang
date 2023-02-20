@@ -24,6 +24,8 @@ namespace Bang.Core.QueriesHandlers
                     .ThenInclude(p => p.Weapon)
                 .Include(g => g.Players)
                     .ThenInclude(p => p.Role)
+                .Include(g => g.Players)
+                    .ThenInclude(p => p.CardsInGame)
                 .FirstAsync(g => g.Id == request.GameId, cancellationToken);
         }
     }

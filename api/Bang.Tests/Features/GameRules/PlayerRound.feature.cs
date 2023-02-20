@@ -75,6 +75,51 @@ namespace Bang.Tests.Features.GameRules
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 4
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "playerName",
+                        "characterName",
+                        "role"});
+            table6.AddRow(new string[] {
+                        "Jean",
+                        "Bart Cassidy",
+                        "Schérif"});
+            table6.AddRow(new string[] {
+                        "Max",
+                        "Rose Doolan",
+                        "Renégat"});
+            table6.AddRow(new string[] {
+                        "Emilie",
+                        "Willy le Kid",
+                        "Hors-la-loi"});
+            table6.AddRow(new string[] {
+                        "Martin",
+                        "Sam le Vautour",
+                        "Hors-la-loi"});
+#line 5
+ testRunner.Given("une partie est initiée par ces joueurs", ((string)(null)), table6, "Sachant qu\'");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "playerName"});
+            table7.AddRow(new string[] {
+                        "Jean"});
+            table7.AddRow(new string[] {
+                        "Max"});
+            table7.AddRow(new string[] {
+                        "Emilie"});
+            table7.AddRow(new string[] {
+                        "Martin"});
+#line 11
+ testRunner.And("les joueurs rejoignent la partie", ((string)(null)), table7, "Et que ");
+#line hidden
+#line 17
+ testRunner.When("c\'est au tour de \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
@@ -88,7 +133,7 @@ namespace Bang.Tests.Features.GameRules
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Piocher 2 cartes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 4
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,24 +143,58 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                            "playerName"});
-                table6.AddRow(new string[] {
-                            "Jean"});
-                table6.AddRow(new string[] {
-                            "Max"});
-                table6.AddRow(new string[] {
-                            "Emilie"});
-                table6.AddRow(new string[] {
-                            "Martin"});
-#line 5
- testRunner.Given("une partie est lancée avec ces joueurs", ((string)(null)), table6, "Sachant qu\'");
+#line 4
+this.FeatureBackground();
 #line hidden
-#line 11
- testRunner.When("c\'est au tour du schérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line 20
+ testRunner.Then("\"Jean\" possède 7 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
-#line 12
- testRunner.Then("le schérif pioche au moins 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Jouer une carte de type Arme")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur")]
+        [Xunit.TraitAttribute("Description", "Jouer une carte de type Arme")]
+        [Xunit.InlineDataAttribute("Volcanic", "1", new string[0])]
+        [Xunit.InlineDataAttribute("Schofield", "2", new string[0])]
+        [Xunit.InlineDataAttribute("Remington", "3", new string[0])]
+        [Xunit.InlineDataAttribute("Carabine", "4", new string[0])]
+        [Xunit.InlineDataAttribute("Winchester", "5", new string[0])]
+        public void JouerUneCarteDeTypeArme(string weaponName, string range, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("weaponName", weaponName);
+            argumentsOfScenario.Add("range", range);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Jouer une carte de type Arme", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 22
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 23
+ testRunner.Given(string.Format("\"Jean\" possède une carte \"{0}\" dans son jeu", weaponName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Etant donné que ");
+#line hidden
+#line 24
+ testRunner.When(string.Format("\"Jean\" joue une carte \"{0}\"", weaponName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 25
+ testRunner.Then(string.Format("\"Jean\" place sa carte \"{0}\" devant lui", weaponName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+#line 26
+ testRunner.And(string.Format("\"Jean\" est armé d\'une \"{0}\" ayant une portée de {1}", weaponName, range), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 27
+ testRunner.And("\"Jean\" possède 6 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();

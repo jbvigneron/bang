@@ -25,8 +25,8 @@ namespace Bang.WebApi.Controllers
         [ProducesResponseType(typeof(IEnumerable<Character>), StatusCodes.Status200OK)]
         public Task<IEnumerable<Character>> Get()
         {
-            var request = new CharactersQuery();
-            return mediator.Send(request);
+            var query = new CharactersQuery();
+            return mediator.Send(query);
         }
     }
 }
