@@ -50,7 +50,6 @@ namespace Bang.Tests.Drivers.Hubs
 
         public async Task CheckMessageAsync(string playerName, string message)
         {
-            await Task.Delay(2000);
             Assert.Contains(message, messages[playerName]);
         }
     }
