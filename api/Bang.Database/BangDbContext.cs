@@ -1,5 +1,5 @@
-﻿using Bang.Models;
-using Bang.Database.Seeds;
+﻿using Bang.Database.Seeds;
+using Bang.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Database
@@ -16,8 +16,9 @@ namespace Bang.Database
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameDeck> GamesDecks { get; set; }
+        public DbSet<GameDiscardPile> GamesDiscardPiles { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<PlayerDeck> PlayersDecks { get; set; }
+        public DbSet<PlayerHand> PlayersHands { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
 
@@ -66,6 +67,16 @@ namespace Bang.Database
                 .HasMany(e => e.Cards)
                 .WithMany();
 
+            modelBuilder.Entity<GameDiscardPile>()
+                .HasOne(e => e.Game)
+                .WithMany()
+                .HasForeignKey(e => e.GameId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GameDiscardPile>()
+                .HasMany(e => e.Cards)
+                .WithMany();
+
             modelBuilder.Entity<Player>()
                 .Property(e => e.Name)
                 .HasMaxLength(50)
@@ -86,13 +97,13 @@ namespace Bang.Database
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<PlayerDeck>()
+            modelBuilder.Entity<PlayerHand>()
                 .HasOne(e => e.Player)
                 .WithMany()
                 .HasForeignKey(e => e.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<PlayerDeck>()
+            modelBuilder.Entity<PlayerHand>()
                 .HasMany(e => e.Cards)
                 .WithMany();
 

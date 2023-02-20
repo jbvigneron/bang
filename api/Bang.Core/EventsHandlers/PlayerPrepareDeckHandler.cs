@@ -22,7 +22,7 @@ namespace Bang.Core.EventsHandlers
 
         public async Task Handle(PlayerPrepareDeck notification, CancellationToken cancellationToken)
         {
-            var playerDeck = new PlayerDeck
+            var hand = new PlayerHand
             {
                 PlayerId = notification.PlayerId,
                 Cards = new List<Card>()
@@ -41,14 +41,14 @@ namespace Bang.Core.EventsHandlers
             {
                 var card = gameDeck.Cards.First();
 
-                playerDeck.Cards.Add(card);
+                hand.Cards.Add(card);
                 player.CardsInHand++;
 
                 gameDeck.Cards.Remove(card);
                 game.DeckCount--;
             }
 
-            await this.dbContext.PlayersDecks.AddAsync(playerDeck, cancellationToken);
+            await this.dbContext.PlayersHands.AddAsync(hand, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await this.gameHub

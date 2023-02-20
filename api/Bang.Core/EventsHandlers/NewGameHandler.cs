@@ -42,7 +42,7 @@ namespace Bang.Core.EventsHandlers
                 Id = notification.GameId,
                 Status = GameStatus.WaitingForPlayers,
                 Players = new List<Player>(),
-                DiscardPile = new List<GameDiscard>()
+                DiscardPile = new List<GameDiscardPile>()
             };
 
             this.DetermineAvailablesRoles(notification.PlayerNames.Count());
