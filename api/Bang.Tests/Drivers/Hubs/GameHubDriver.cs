@@ -59,11 +59,11 @@ namespace Bang.Tests.Drivers.Hubs
                 gameContext.Current.CurrentPlayerName = name;
             });
 
-            connection.On<Guid, int, string, int>(HubMessages.Game.CardsDrawn, (gameId, gameDeckCount, playerName, playerDeckCount) =>
+            connection.On<Guid, int, string, int>(HubMessages.Game.CardsDrawn, (gameId, gameDeckCount, playerName, cardsInHand) =>
             {
                 messages.Add(HubMessages.Game.CardsDrawn);
                 gameContext.Current.DeckCount = gameDeckCount;
-                gameContext.Current.Players.Single(p => p.Name == playerName).DeckCount = playerDeckCount;
+                gameContext.Current.Players.Single(p => p.Name == playerName).CardsInHand = cardsInHand;
             });
 
             await connection.StartAsync();

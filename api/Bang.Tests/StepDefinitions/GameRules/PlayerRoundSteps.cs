@@ -14,31 +14,61 @@ namespace Bang.Tests.StepDefinitions.GameRules
             this.rulesDriver = rulesDriver;
         }
 
-        [Given(@"une partie est lancée avec ces joueurs")]
-        public async Task GivenUnePartieEstLanceeAvecCesJoueurs(Table table)
+        [Given(@"une partie est initiée par ces joueurs")]
+        public Task GivenUnePartieEstInitieeParCesJoueurs(Table table)
         {
-            var playerNames = table.Rows.Select(r => r["playerName"]);
-            await this.gameDriver.InitGameAsync(playerNames);
+            var players = table.Rows.Select(p => (p["playerName"], p["characterName"], p["role"]));
+            return this.gameDriver.InitPreparedGameAsync(players);
+        }
 
-            foreach (var playerName in playerNames)
+        [Given(@"les joueurs rejoignent la partie")]
+        public async Task GivenLesJoueursRejoignentLaPartie(Table table)
+        {
+            foreach (var row in table.Rows)
             {
-                await this.gameDriver.JoinGameAsync(playerName);
+                await this.gameDriver.JoinGameAsync(row["playerName"]);
             }
         }
 
-        [When(@"c'est au tour du schérif")]
-        public async Task WhenCestAuTourDuScherif()
+        [Given(@"""([^""]*)"" possède une carte ""([^""]*)"" dans son jeu")]
+        public async Task GivenPossedeUneCarteDansSonJeu(string playerName, string cardName)
         {
-            var scheriffName = this.gameDriver.GetScheriffName();
-            await this.gameDriver.DrawCardsAsync(scheriffName);
-            await this.gameDriver.UpdatePlayerCardsAsync(scheriffName);
+            await this.gameDriver.CheckAndSwitchCardAsync(playerName, cardName);
+            await this.gameDriver.UpdatePlayerCardsAsync(playerName);
         }
 
-        [Then(@"le schérif pioche au moins (.*) cartes")]
-        public void ThenPiocheAuMoinsCartes(int cardsCount)
+        [When(@"c'est au tour de ""([^""]*)""")]
+        public async Task WhenCestAuTourDe(string playerName)
         {
-            var scheriffName = this.gameDriver.GetScheriffName();
-            this.rulesDriver.CheckPlayerDeckCountAfterDraw(scheriffName, cardsCount);
+            await this.gameDriver.DrawCardsAsync(playerName);
+            await this.gameDriver.UpdatePlayerCardsAsync(playerName);
+        }
+
+        [When(@"""([^""]*)"" joue une carte ""([^""]*)""")]
+        public async Task WhenJoueUneCarte(string playerName, string cardName)
+        {
+            await this.gameDriver.PlayCardAsync(playerName, cardName);
+
+            await this.gameDriver.UpdateGameAsync();
+            await this.gameDriver.UpdatePlayerCardsAsync(playerName);
+        }
+
+        [Then(@"""([^""]*)"" possède (.*) cartes en main")]
+        public void ThenPossedeCartesEnMain(string playerName, int cardsCount)
+        {
+            this.rulesDriver.CheckPlayerInHandCards(playerName, cardsCount);
+        }
+
+        [Then(@"""([^""]*)"" place sa carte ""([^""]*)"" devant lui")]
+        public void ThenPlaceSaCarteDevantLui(string playerName, string cardName)
+        {
+            this.rulesDriver.CheckPlayerInGameCards(playerName, cardName);
+        }
+
+        [Then(@"""([^""]*)"" est armé d'une ""([^""]*)"" ayant une portée de (.*)")]
+        public void ThenEstArmeDuneAyantUnePorteeDe(string playerName, string weaponName, int weaponRange)
+        {
+            this.rulesDriver.CheckWeapon(playerName, weaponName, weaponRange);
         }
     }
 }

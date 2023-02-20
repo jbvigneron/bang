@@ -41,6 +41,7 @@ namespace Bang.Core.NotificationsHandlers
             player.Lives = GetLives(player.Character, player.IsSheriff);
             player.Weapon = await this.GetColt45Async(cancellationToken);
             player.Status = PlayerStatus.Alive;
+            player.CardsInGame = new List<Card>();
 
             if (game.Players.All(p => p.Status == PlayerStatus.Alive))
             {

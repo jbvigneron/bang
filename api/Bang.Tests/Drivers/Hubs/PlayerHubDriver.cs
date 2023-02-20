@@ -30,25 +30,15 @@ namespace Bang.Tests.Drivers.Hubs
             var cookies = browsersContext.Cookies[playerName];
             var connection = SignalRHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
 
-            connection.On<IList<Card>>(HubMessages.Player.DeckReady, cards =>
+            connection.On<IList<Card>>(HubMessages.Player.CardsInHand, cards =>
             {
-                messages[playerName].Add(HubMessages.Player.DeckReady);
-                gameContext.PlayerCards[playerName] = cards;
+                messages[playerName].Add(HubMessages.Player.CardsInHand);
+                gameContext.CardsInHand[playerName] = cards;
             });
 
             connection.On(HubMessages.Player.YourTurn, () =>
             {
                 messages[playerName].Add(HubMessages.Player.YourTurn);
-            });
-
-            connection.On<IList<Card>>(HubMessages.Player.NewCards, cards =>
-            {
-                messages[playerName].Add(HubMessages.Player.NewCards);
-
-                foreach (var card in cards)
-                {
-                    gameContext.PlayerCards[playerName].Add(card);
-                }
             });
 
             await connection.StartAsync();

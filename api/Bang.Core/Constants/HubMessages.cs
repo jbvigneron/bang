@@ -15,13 +15,13 @@
             public const string AllPlayerJoined = "AllPlayerJoined";
             public const string PlayerTurn = "PlayerTurn";
             public const string CardsDrawn = "CardsDrawn";
+            public const string WeaponChanged = "WeaponChanged";
         }
 
         public class Player
         {
-            public const string DeckReady = "DeckReady";
             public const string YourTurn = "YourTurn";
-            public const string NewCards = "NewCards";
+            public const string CardsInHand = "CardsInHand";
         }
     }
 }
