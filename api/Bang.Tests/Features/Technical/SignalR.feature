@@ -1,5 +1,4 @@
-﻿#language: fr-FR
-Fonctionnalité: SignalR
+﻿Fonctionnalité: SignalR
 
 Contexte:
 	Sachant que ces joueurs souhaitent faire une partie
