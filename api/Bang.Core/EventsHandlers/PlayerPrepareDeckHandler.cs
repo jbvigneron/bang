@@ -42,7 +42,7 @@ namespace Bang.Core.EventsHandlers
                 var card = gameDeck.Cards.First();
 
                 playerDeck.Cards.Add(card);
-                player.DeckCount++;
+                player.CardsInHand++;
 
                 gameDeck.Cards.Remove(card);
                 game.DeckCount--;

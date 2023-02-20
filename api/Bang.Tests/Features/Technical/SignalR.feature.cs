@@ -247,7 +247,7 @@ this.FeatureBackground();
  testRunner.When("\"Jean\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
 #line 36
- testRunner.Then("un message \"DeckReady\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+ testRunner.Then("un message \"CardsInHand\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -293,7 +293,7 @@ this.FeatureBackground();
  testRunner.And("un message \"CardsDrawn\" est envoyé au hub du jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 45
- testRunner.And("un message \"NewCards\" est envoyé au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.And("un message \"CardsInHand\" est envoyé au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
             this.ScenarioCleanup();

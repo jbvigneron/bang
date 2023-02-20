@@ -6,22 +6,20 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.EventsHandlers
+namespace Bang.Core.NotificationsHandlers
 {
-    public class PlayerDrawCardsHandler : INotificationHandler<PlayerDrawCards>
+    public class SwitchCardHandler : INotificationHandler<SwitchCard>
     {
         private readonly BangDbContext dbContext;
-        private readonly IHubContext<GameHub> gameHub;
         private readonly IHubContext<PlayerHub> playerHub;
 
-        public PlayerDrawCardsHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
+        public SwitchCardHandler(BangDbContext dbContext, IHubContext<PlayerHub> playerHub)
         {
             this.dbContext = dbContext;
-            this.gameHub = gameHub;
             this.playerHub = playerHub;
         }
 
-        public async Task Handle(PlayerDrawCards notification, CancellationToken cancellationToken)
+        public async Task Handle(SwitchCard notification, CancellationToken cancellationToken)
         {
             var playerDeck = await this.dbContext.PlayersDecks
                 .Include(d => d.Cards)
@@ -35,26 +33,16 @@ namespace Bang.Core.EventsHandlers
                 .Include(d => d.Game)
                 .SingleAsync(d => d.GameId == player.GameId, cancellationToken);
 
-            var game = gameDeck.Game;
+            var moveToGameDeck = playerDeck.Cards.Single(c => c.Id == notification.OldCard.Id);
+            var moveToPlayerHand = gameDeck.Cards.First(c => c.Name == notification.NewCardName);
 
-            for (var i = 1; i <= 2; i++)
-            {
-                var card = gameDeck.Cards.First();
+            playerDeck.Cards.Remove(moveToGameDeck);
+            gameDeck.Cards.Add(moveToGameDeck);
 
-                playerDeck.Cards.Add(card);
-                player.CardsInHand++;
-
-                gameDeck.Cards.Remove(card);
-                game.DeckCount--;
-            }
-
-            player.HasDrawnCards = true;
+            gameDeck.Cards.Remove(moveToPlayerHand);
+            playerDeck.Cards.Add(moveToPlayerHand);
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
-
-            await this.gameHub
-                .Clients.Group(game.Id.ToString())
-                .SendAsync(HubMessages.Game.CardsDrawn, game.Id, game.DeckCount, player.Name, player.CardsInHand, cancellationToken);
 
             await this.playerHub
                 .Clients.Group(player.Id.ToString())
