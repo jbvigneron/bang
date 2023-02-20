@@ -16,11 +16,23 @@ namespace Bang.Core.CommandsHandlers
 
         protected override async Task Handle(PlayCardCommand request, CancellationToken cancellationToken)
         {
-            if (request.Card.Type == CardType.Weapon)
+            switch (request.Card.Type)
             {
-                await this.mediator.Publish(
-                    new ChangeWeapon(request.PlayerId, request.Card), cancellationToken
-                );
+                case CardType.Brown:
+                    await this.mediator.Publish(
+                        new BrownCardPlay(request.PlayerId, request.Card, request.OpponentId), cancellationToken
+                    );
+                    break;
+                case CardType.Blue:
+                    await this.mediator.Publish(
+                        new BlueCardPlay(request.PlayerId, request.Card), cancellationToken
+                    );
+                    break;
+                case CardType.Weapon:
+                    await this.mediator.Publish(
+                        new WeaponCardPlay(request.PlayerId, request.Card), cancellationToken
+                    );
+                    break;
             }
         }
     }

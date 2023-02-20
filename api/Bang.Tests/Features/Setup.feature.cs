@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Bang.Tests.Features.GameRules
+namespace Bang.Tests.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -28,7 +28,7 @@ namespace Bang.Tests.Features.GameRules
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GamePreparation.feature"
+#line 1 "Setup.feature"
 #line hidden
         
         public PreparationDuJeuFeature(PreparationDuJeuFeature.FixtureData fixtureData, Bang_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -40,7 +40,7 @@ namespace Bang.Tests.Features.GameRules
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("fr-FR"), "Features/GameRules", "Préparation du jeu", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("fr-FR"), "Features", "Préparation du jeu", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,18 +79,18 @@ namespace Bang.Tests.Features.GameRules
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "playerName"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "Jean"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "Max"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "Emilie"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "Martin"});
 #line 5
- testRunner.Given("ces joueurs veulent jouer", ((string)(null)), table1, "Sachant que ");
+ testRunner.Given("ces joueurs veulent jouer", ((string)(null)), table3, "Sachant que ");
 #line hidden
         }
         
@@ -157,12 +157,12 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
-                table2.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Anna"});
 #line 19
- testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table2, "Sachant que ");
+ testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table4, "Sachant que ");
 #line hidden
 #line 22
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
@@ -204,14 +204,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
-                table3.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Anna"});
-                table3.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Eric"});
 #line 29
- testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table3, "Sachant que ");
+ testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table5, "Sachant que ");
 #line hidden
 #line 33
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
@@ -253,16 +253,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "playerName"});
-                table4.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Anna"});
-                table4.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Eric"});
-                table4.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Jane"});
 #line 40
- testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table4, "Sachant que ");
+ testRunner.Given("ces joueurs supplémentaires veulent jouer", ((string)(null)), table6, "Sachant que ");
 #line hidden
 #line 45
  testRunner.When("la partie se prépare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
@@ -375,59 +375,59 @@ this.FeatureBackground();
 #line 62
  testRunner.Then("un personnage est attribué à \"Max\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "characterName",
                             "lives"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Bart Cassidy",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Black Jack",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Calamity Janet",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "El Gringo",
                             "3"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Jesse Jones",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Jourdonnais",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Kit Carlson",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Lucky Duke",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Paul Regret",
                             "3"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Pedro Ramirez",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Rose Doolan",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Sid Ketchum",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Slab le flingueur",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Suzy Lafayette",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Sam le Vautour",
                             "4"});
-                table5.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Willy le Kid",
                             "4"});
 #line 63
- testRunner.And("le nombre de vies de \"Max\" lui est attribué selon son personnage et son rôle", ((string)(null)), table5, "Et ");
+ testRunner.And("le nombre de vies de \"Max\" lui est attribué selon son personnage et son rôle", ((string)(null)), table7, "Et ");
 #line hidden
 #line 81
  testRunner.And("l arme principale de \"Max\" est \"Colt .45\" d\'une portée de 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");

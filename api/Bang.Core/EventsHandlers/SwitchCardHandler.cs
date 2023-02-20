@@ -21,32 +21,32 @@ namespace Bang.Core.NotificationsHandlers
 
         public async Task Handle(SwitchCard notification, CancellationToken cancellationToken)
         {
-            var playerDeck = await this.dbContext.PlayersDecks
+            var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                 .SingleAsync(p => p.PlayerId == notification.PlayerId, cancellationToken);
 
-            var player = playerDeck.Player;
+            var player = hand.Player;
 
             var gameDeck = await this.dbContext.GamesDecks
                 .Include(d => d.Cards)
                 .Include(d => d.Game)
                 .SingleAsync(d => d.GameId == player.GameId, cancellationToken);
 
-            var moveToGameDeck = playerDeck.Cards.Single(c => c.Id == notification.OldCard.Id);
+            var moveToGameDeck = hand.Cards.Single(c => c.Id == notification.OldCard.Id);
             var moveToPlayerHand = gameDeck.Cards.First(c => c.Name == notification.NewCardName);
 
-            playerDeck.Cards.Remove(moveToGameDeck);
+            hand.Cards.Remove(moveToGameDeck);
             gameDeck.Cards.Add(moveToGameDeck);
 
             gameDeck.Cards.Remove(moveToPlayerHand);
-            playerDeck.Cards.Add(moveToPlayerHand);
+            hand.Cards.Add(moveToPlayerHand);
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await this.playerHub
                 .Clients.Group(player.Id.ToString())
-                .SendAsync(HubMessages.Player.CardsInHand, playerDeck.Cards, cancellationToken);
+                .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
     }
 }

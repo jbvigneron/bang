@@ -43,7 +43,7 @@ namespace Bang.Core.EventsHandlers
                         Weapon = this.dbContext.Weapons.First(w => w.Id == WeaponKind.Colt45)
                     };
                 }).ToList(),
-                DiscardPile = new List<GameDiscard>(),
+                DiscardPile = new List<GameDiscardPile>(),
                 CurrentPlayerName = notification.Players.Single(info => info.Role == RoleKind.Sheriff).Name,
             };
 

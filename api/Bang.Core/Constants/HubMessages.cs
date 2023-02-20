@@ -15,7 +15,9 @@
             public const string AllPlayerJoined = "AllPlayerJoined";
             public const string PlayerTurn = "PlayerTurn";
             public const string CardsDrawn = "CardsDrawn";
+            public const string CardPlaced = "CardPlaced";
             public const string WeaponChanged = "WeaponChanged";
+            public const string CardDiscarded = "CardDiscarded";
         }
 
         public class Player
