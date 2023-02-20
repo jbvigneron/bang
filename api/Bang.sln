@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bang.Database", "Bang.Datab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bang.Core", "Bang.Core\Bang.Core.csproj", "{48C62880-776E-4E93-A0A7-71D1CBCAE1CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bang.Models", "Bang.Models\Bang.Models.csproj", "{3F9278D6-3FE3-4FCC-BDEC-8D803134BD2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bang.Models", "Bang.Models\Bang.Models.csproj", "{3F9278D6-3FE3-4FCC-BDEC-8D803134BD2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{BE8B56E2-13BE-4BE1-8765-3A0F20E7A313}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build-api.yml = ..\.github\workflows\build-api.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -25,4 +25,9 @@
 	  <ProjectReference Include="..\Bang.WebApi\Bang.WebApi.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Include="specflow.json" CopyToOutputDirectory="PreserveNewest" />
+		<Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
 </Project>
