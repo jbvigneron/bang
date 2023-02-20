@@ -23,12 +23,12 @@ namespace Bang.Core.EventsHandlers
 
         public async Task Handle(PlayerDrawCards notification, CancellationToken cancellationToken)
         {
-            var playerDeck = await this.dbContext.PlayersDecks
+            var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                 .SingleAsync(p => p.PlayerId == notification.PlayerId, cancellationToken);
 
-            var player = playerDeck.Player;
+            var player = hand.Player;
 
             var gameDeck = await this.dbContext.GamesDecks
                 .Include(d => d.Cards)
@@ -41,7 +41,7 @@ namespace Bang.Core.EventsHandlers
             {
                 var card = gameDeck.Cards.First();
 
-                playerDeck.Cards.Add(card);
+                hand.Cards.Add(card);
                 player.CardsInHand++;
 
                 gameDeck.Cards.Remove(card);
@@ -58,7 +58,7 @@ namespace Bang.Core.EventsHandlers
 
             await this.playerHub
                 .Clients.Group(player.Id.ToString())
-                .SendAsync(HubMessages.Player.CardsInHand, playerDeck.Cards, cancellationToken);
+                .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
     }
 }

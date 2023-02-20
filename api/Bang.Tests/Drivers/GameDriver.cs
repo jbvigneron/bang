@@ -4,6 +4,7 @@ using Bang.Tests.Contexts;
 using Bang.WebApi.Models;
 using Bang.WebApi.Requests;
 using Microsoft.Net.Http.Headers;
+using System.ComponentModel;
 using System.Net.Http.Json;
 using TechTalk.SpecFlow.CommonModels;
 
@@ -122,6 +123,17 @@ namespace Bang.Tests.Drivers
 
             var client = this.browserContext.HttpClients![playerName];
             var request = new PlayCardRequest(card, opponent.Id);
+            var result = await client.PostAsJsonAsync("api/cards/play", request);
+            result.EnsureSuccessStatusCode();
+        }
+
+        public async Task PlayRandomCardAsync(string playerName)
+        {
+            var cards = this.gameContext.CardsInHand[playerName];
+            var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent);
+
+            var client = this.browserContext.HttpClients![playerName];
+            var request = new PlayCardRequest(card);
             var result = await client.PostAsJsonAsync("api/cards/play", request);
             result.EnsureSuccessStatusCode();
         }

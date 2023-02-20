@@ -1,6 +1,6 @@
 ﻿namespace Bang.Models
 {
-    public class PlayerDeck
+    public class PlayerHand
     {
         public Guid Id { get; set; }
         public Guid PlayerId { get; set; }
