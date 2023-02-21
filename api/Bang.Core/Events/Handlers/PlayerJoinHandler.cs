@@ -10,7 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.NotificationsHandlers
+namespace Bang.Core.Events.Handlers
 {
     public class PlayerJoinHandler : INotificationHandler<PlayerJoin>
     {
@@ -27,7 +27,7 @@ namespace Bang.Core.NotificationsHandlers
 
         public async Task Handle(PlayerJoin notification, CancellationToken cancellationToken)
         {
-            var game = await this.dbContext.Games
+            var game = await dbContext.Games
                 .Include(g => g.Players)
                 .FirstAsync(g => g.Id == notification.GameId, cancellationToken);
 
@@ -37,9 +37,9 @@ namespace Bang.Core.NotificationsHandlers
             }
 
             var player = game.Players.First(p => p.Name == notification.PlayerName);
-            player.Character = await this.GetRandomCharacterAsync(cancellationToken);
+            player.Character = await GetRandomCharacterAsync(cancellationToken);
             player.Lives = GetLives(player.Character, player.IsSheriff);
-            player.Weapon = await this.GetColt45Async(cancellationToken);
+            player.Weapon = await GetColt45Async(cancellationToken);
             player.Status = PlayerStatus.Alive;
             player.CardsInGame = new List<Card>();
 
@@ -48,31 +48,31 @@ namespace Bang.Core.NotificationsHandlers
                 game.Status = GameStatus.InProgress;
             }
 
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.gameHub
+            await gameHub
                 .Clients.Group(game.Id.ToString())
                 .SendAsync(HubMessages.Game.PlayerJoin, game.Id, player, cancellationToken);
 
             if (game.Status == GameStatus.InProgress)
             {
-                await this.gameHub
+                await gameHub
                     .Clients.Group(game.Id.ToString())
                     .SendAsync(HubMessages.Game.AllPlayerJoined, game.Id, game, cancellationToken);
 
                 var sheriff = game.GetSheriff();
 
-                await this.gameHub
+                await gameHub
                     .Clients.Group(game.Id.ToString())
                     .SendAsync(HubMessages.Game.PlayerTurn, game.Id, sheriff.Name, cancellationToken);
 
-                await this.playerHub
+                await playerHub
                     .Clients.Group(sheriff.Id.ToString())
                     .SendAsync(HubMessages.Player.YourTurn, cancellationToken);
             }
         }
         private Task<Character> GetRandomCharacterAsync(CancellationToken cancellationToken) =>
-            this.dbContext.Characters.OrderBy(c => Guid.NewGuid()).FirstAsync(cancellationToken);
+            dbContext.Characters.OrderBy(c => Guid.NewGuid()).FirstAsync(cancellationToken);
 
         private static int GetLives(Character character, bool isScheriff)
         {
@@ -82,6 +82,6 @@ namespace Bang.Core.NotificationsHandlers
         }
 
         private Task<Weapon> GetColt45Async(CancellationToken cancellationToken) =>
-            this.dbContext.Weapons.SingleAsync(w => w.Id == WeaponKind.Colt45, cancellationToken);
+            dbContext.Weapons.SingleAsync(w => w.Id == WeaponKind.Colt45, cancellationToken);
     }
 }

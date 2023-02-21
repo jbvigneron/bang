@@ -1,10 +1,9 @@
-﻿using Bang.Core.Queries;
-using Bang.Database;
+﻿using Bang.Database;
 using Bang.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.QueriesHandlers
+namespace Bang.Core.Queries.Handlers
 {
     public class PlayerQueryHandler : IRequestHandler<PlayerQuery, Player>
     {
@@ -17,7 +16,7 @@ namespace Bang.Core.QueriesHandlers
 
         public Task<Player> Handle(PlayerQuery request, CancellationToken cancellationToken)
         {
-            return this.dbContext.Players
+            return dbContext.Players
                 .Include(p => p.Character)
                 .Include(p => p.Role)
                 .Include(p => p.Weapon)

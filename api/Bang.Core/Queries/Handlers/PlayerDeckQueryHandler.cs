@@ -1,10 +1,9 @@
-﻿using Bang.Core.Queries;
-using Bang.Database;
+﻿using Bang.Database;
 using Bang.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.QueriesHandlers
+namespace Bang.Core.Queries.Handlers
 {
     public class PlayerDeckQueryHandler : IRequestHandler<PlayerDeckQuery, IList<Card>>
     {
@@ -17,7 +16,7 @@ namespace Bang.Core.QueriesHandlers
 
         public async Task<IList<Card>> Handle(PlayerDeckQuery request, CancellationToken cancellationToken)
         {
-            var deck = await this.dbContext.PlayersHands
+            var deck = await dbContext.PlayersHands
                 .Include(p => p.Cards)
                 .FirstAsync(g => g.PlayerId == request.PlayerId, cancellationToken);
 

@@ -1,5 +1,4 @@
 ﻿using Bang.Core.Constants;
-using Bang.Core.Events;
 using Bang.Core.Exceptions;
 using Bang.Core.Hubs;
 using Bang.Database;
@@ -9,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.EventsHandlers
+namespace Bang.Core.Events.Handlers
 {
     public class NewGameHandler : INotificationHandler<NewGame>
     {
@@ -45,7 +44,7 @@ namespace Bang.Core.EventsHandlers
                 DiscardPile = new List<GameDiscardPile>()
             };
 
-            this.DetermineAvailablesRoles(notification.PlayerNames.Count());
+            DetermineAvailablesRoles(notification.PlayerNames.Count());
 
             foreach (var playerName in notification.PlayerNames)
             {
@@ -53,7 +52,7 @@ namespace Bang.Core.EventsHandlers
                 {
                     Name = playerName,
                     Status = PlayerStatus.NotReady,
-                    Role = await this.GetRandomRoleAsync(cancellationToken),
+                    Role = await GetRandomRoleAsync(cancellationToken),
                 };
 
                 if (player.Role.Id == RoleKind.Sheriff)
@@ -65,10 +64,10 @@ namespace Bang.Core.EventsHandlers
                 game.Players.Add(player);
             }
 
-            await this.dbContext.Games.AddAsync(game, cancellationToken);
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.Games.AddAsync(game, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.publicHub.Clients.All.SendAsync(HubMessages.Public.NewGame, game, cancellationToken);
+            await publicHub.Clients.All.SendAsync(HubMessages.Public.NewGame, game, cancellationToken);
         }
 
         private void DetermineAvailablesRoles(int numberOfPlayers)
@@ -77,23 +76,23 @@ namespace Bang.Core.EventsHandlers
                 throw new ArgumentOutOfRangeException(nameof(numberOfPlayers), "Le nombre de joueurs doit être compris entre 4 et 7");
 
             if (numberOfPlayers >= 5)
-                this.roles.Add(RoleKind.DeputySheriff);
+                roles.Add(RoleKind.DeputySheriff);
 
             if (numberOfPlayers >= 6)
-                this.roles.Add(RoleKind.Outlaw);
+                roles.Add(RoleKind.Outlaw);
 
             if (numberOfPlayers == 7)
-                this.roles.Add(RoleKind.DeputySheriff);
+                roles.Add(RoleKind.DeputySheriff);
         }
 
         private Task<Role> GetRandomRoleAsync(CancellationToken cancellationToken)
         {
-            var index = new Random().Next(this.roles.Count);
-            var roleId = this.roles[index];
+            var index = new Random().Next(roles.Count);
+            var roleId = roles[index];
 
-            this.roles.RemoveAt(index);
+            roles.RemoveAt(index);
 
-            return this.dbContext.Roles.SingleAsync(r => r.Id == roleId, cancellationToken);
+            return dbContext.Roles.SingleAsync(r => r.Id == roleId, cancellationToken);
         }
     }
 }

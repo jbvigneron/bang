@@ -1,12 +1,11 @@
 ﻿using Bang.Core.Constants;
-using Bang.Core.Events;
 using Bang.Core.Hubs;
 using Bang.Database;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.NotificationsHandlers
+namespace Bang.Core.Events.Handlers
 {
     public class WeaponCardPlayHandler : INotificationHandler<WeaponCardPlay>
     {
@@ -26,7 +25,7 @@ namespace Bang.Core.NotificationsHandlers
         {
             var (playerId, cardId) = notification;
 
-            var hand = await this.dbContext.PlayersHands
+            var hand = await dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                     .ThenInclude(p => p.CardsInGame)
@@ -36,15 +35,15 @@ namespace Bang.Core.NotificationsHandlers
 
             hand.Cards.Remove(card);
             hand.Player.CardsInGame.Add(card);
-            hand.Player.Weapon = await this.dbContext.Weapons.SingleAsync(w => w.Id.ToString() == card.Kind.ToString(), cancellationToken);
+            hand.Player.Weapon = await dbContext.Weapons.SingleAsync(w => w.Id.ToString() == card.Kind.ToString(), cancellationToken);
 
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.gameHub
+            await gameHub
                 .Clients.Group(hand.Player.GameId.ToString())
                 .SendAsync(HubMessages.Game.WeaponChanged, hand.Player.GameId, playerId, hand.Player.Weapon, cancellationToken);
 
-            await this.playerHub
+            await playerHub
                 .Clients.Group(notification.PlayerId.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
