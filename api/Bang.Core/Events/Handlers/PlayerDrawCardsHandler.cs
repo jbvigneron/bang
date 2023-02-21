@@ -1,12 +1,11 @@
 ﻿using Bang.Core.Constants;
-using Bang.Core.Events;
 using Bang.Core.Hubs;
 using Bang.Database;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.EventsHandlers
+namespace Bang.Core.Events.Handlers
 {
     public class PlayerDrawCardsHandler : INotificationHandler<PlayerDrawCards>
     {
@@ -23,14 +22,14 @@ namespace Bang.Core.EventsHandlers
 
         public async Task Handle(PlayerDrawCards notification, CancellationToken cancellationToken)
         {
-            var hand = await this.dbContext.PlayersHands
+            var hand = await dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                 .SingleAsync(p => p.PlayerId == notification.PlayerId, cancellationToken);
 
             var player = hand.Player;
 
-            var gameDeck = await this.dbContext.GamesDecks
+            var gameDeck = await dbContext.GamesDecks
                 .Include(d => d.Cards)
                 .Include(d => d.Game)
                 .SingleAsync(d => d.GameId == player.GameId, cancellationToken);
@@ -50,13 +49,13 @@ namespace Bang.Core.EventsHandlers
 
             player.HasDrawnCards = true;
 
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.gameHub
+            await gameHub
                 .Clients.Group(game.Id.ToString())
                 .SendAsync(HubMessages.Game.CardsDrawn, game.Id, game.DeckCount, player.Name, player.CardsInHand, cancellationToken);
 
-            await this.playerHub
+            await playerHub
                 .Clients.Group(player.Id.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }

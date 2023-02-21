@@ -1,8 +1,7 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Events;
+﻿using Bang.Core.Events;
 using MediatR;
 
-namespace Bang.Core.CommandsHandlers
+namespace Bang.Core.Commands.Handlers
 {
     public class SwitchCardHandler : AsyncRequestHandler<SwitchCardCommand>
     {
@@ -15,7 +14,7 @@ namespace Bang.Core.CommandsHandlers
 
         protected override Task Handle(SwitchCardCommand request, CancellationToken cancellationToken)
         {
-            return this.mediator.Publish(
+            return mediator.Publish(
                 new SwitchCard(request.PlayerId, request.OldCard, request.NewCardName), cancellationToken
             );
         }

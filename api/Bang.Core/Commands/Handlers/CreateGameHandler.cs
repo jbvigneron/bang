@@ -1,8 +1,7 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Events;
+﻿using Bang.Core.Events;
 using MediatR;
 
-namespace Bang.Core.CommandsHandlers
+namespace Bang.Core.Commands.Handlers
 {
     public class CreateGameHandler : IRequestHandler<CreateGameCommand, Guid>
     {
@@ -17,11 +16,11 @@ namespace Bang.Core.CommandsHandlers
         {
             var gameId = Guid.NewGuid();
 
-            await this.mediator.Publish(
+            await mediator.Publish(
                 new NewGame(gameId, request.PlayerNames), cancellationToken
             );
 
-            await this.mediator.Publish(
+            await mediator.Publish(
                 new GameDeckPrepare(gameId), cancellationToken
             );
 

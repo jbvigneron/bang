@@ -1,9 +1,8 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Events;
+﻿using Bang.Core.Events;
 using Bang.Models.Enums;
 using MediatR;
 
-namespace Bang.Core.CommandsHandlers
+namespace Bang.Core.Commands.Handlers
 {
     public class PlayCardHandler : AsyncRequestHandler<PlayCardCommand>
     {
@@ -19,21 +18,22 @@ namespace Bang.Core.CommandsHandlers
             switch (request.Card.Type)
             {
                 case CardType.Brown:
-                    await this.mediator.Publish(
+                    await mediator.Publish(
                         new BrownCardPlay(request.PlayerId, request.Card, request.OpponentId), cancellationToken
                     );
                     break;
                 case CardType.Blue:
-                    await this.mediator.Publish(
+                    await mediator.Publish(
                         new BlueCardPlay(request.PlayerId, request.Card), cancellationToken
                     );
                     break;
                 case CardType.Weapon:
-                    await this.mediator.Publish(
+                    await mediator.Publish(
                         new WeaponCardPlay(request.PlayerId, request.Card), cancellationToken
                     );
                     break;
             }
+
         }
     }
 }

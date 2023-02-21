@@ -1,11 +1,10 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Events;
+﻿using Bang.Core.Events;
 using Bang.Core.Exceptions;
 using Bang.Core.Queries;
 using Bang.Models.Enums;
 using MediatR;
 
-namespace Bang.Core.CommandsHandlers
+namespace Bang.Core.Commands.Handlers
 {
     public class DrawCardsCommandHandler : AsyncRequestHandler<DrawCardsCommand>
     {
@@ -18,14 +17,14 @@ namespace Bang.Core.CommandsHandlers
 
         protected override async Task Handle(DrawCardsCommand request, CancellationToken cancellationToken)
         {
-            var player = await this.mediator.Send(new PlayerQuery(request.PlayerId), cancellationToken);
+            var player = await mediator.Send(new PlayerQuery(request.PlayerId), cancellationToken);
 
             if (player.HasDrawnCards)
             {
                 throw new PlayerException("Vous avez déjà pioché vos cartes.", player);
             }
 
-            var game = await this.mediator.Send(new GameQuery(player.GameId), cancellationToken);
+            var game = await mediator.Send(new GameQuery(player.GameId), cancellationToken);
 
             if (game.Status == GameStatus.WaitingForPlayers)
             {
@@ -42,7 +41,7 @@ namespace Bang.Core.CommandsHandlers
                 throw new PlayerException("Ce n'est pas à vous de jouer.", player);
             }
 
-            await this.mediator.Publish(new PlayerDrawCards(request.PlayerId), cancellationToken);
+            await mediator.Publish(new PlayerDrawCards(request.PlayerId), cancellationToken);
         }
     }
 }
