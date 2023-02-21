@@ -1,9 +1,8 @@
-﻿using Bang.Core.Queries;
-using Bang.Database;
+﻿using Bang.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.QueriesHandlers
+namespace Bang.Core.Queries.Handlers
 {
     public class PlayerIdQueryHandler : IRequestHandler<PlayerIdQuery, Guid>
     {
@@ -16,7 +15,7 @@ namespace Bang.Core.QueriesHandlers
 
         public async Task<Guid> Handle(PlayerIdQuery request, CancellationToken cancellationToken)
         {
-            var game = await this.dbContext.Games
+            var game = await dbContext.Games
                 .Include(g => g.Players)
                 .FirstAsync(g => g.Id == request.GameId, cancellationToken);
 

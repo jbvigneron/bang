@@ -1,5 +1,4 @@
 ﻿using Bang.Core.Constants;
-using Bang.Core.Events;
 using Bang.Core.Hubs;
 using Bang.Database;
 using Bang.Models;
@@ -7,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.EventsHandlers
+namespace Bang.Core.Events.Handlers
 {
     public class GameDeckPrepareHandler : INotificationHandler<GameDeckPrepare>
     {
@@ -22,7 +21,7 @@ namespace Bang.Core.EventsHandlers
 
         public async Task Handle(GameDeckPrepare notification, CancellationToken cancellationToken)
         {
-            var cards = await this.dbContext.Cards.OrderBy(c => Guid.NewGuid()).ToListAsync(cancellationToken);
+            var cards = await dbContext.Cards.OrderBy(c => Guid.NewGuid()).ToListAsync(cancellationToken);
 
             var deck = new GameDeck
             {
@@ -30,14 +29,14 @@ namespace Bang.Core.EventsHandlers
                 Cards = cards
             };
 
-            await this.dbContext.GamesDecks.AddAsync(deck, cancellationToken);
+            await dbContext.GamesDecks.AddAsync(deck, cancellationToken);
 
-            var game = await this.dbContext.Games.SingleAsync(g => g.Id == notification.GameId, cancellationToken);
+            var game = await dbContext.Games.SingleAsync(g => g.Id == notification.GameId, cancellationToken);
             game.DeckCount = cards.Count;
 
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.gameHub
+            await gameHub
                 .Clients.Group(game.Id.ToString())
                 .SendAsync(HubMessages.Game.GameDeckReady, game.Id, cards.Count, cancellationToken);
         }

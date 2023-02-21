@@ -1,9 +1,8 @@
-﻿using Bang.Core.Queries;
-using Bang.Database;
+﻿using Bang.Database;
 using Bang.Models;
 using MediatR;
 
-namespace Bang.Core.QueriesHandlers
+namespace Bang.Core.Queries.Handlers
 {
     public class CharactersQueryHandler : RequestHandler<CharactersQuery, IEnumerable<Character>>
     {
@@ -16,7 +15,7 @@ namespace Bang.Core.QueriesHandlers
 
         protected override IEnumerable<Character> Handle(CharactersQuery request)
         {
-            return this.dbContext.Characters;
+            return dbContext.Characters;
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using Bang.Core.Constants;
-using Bang.Core.Events;
 using Bang.Core.Hubs;
 using Bang.Database;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bang.Core.NotificationsHandlers
+namespace Bang.Core.Events.Handlers
 {
     public class SwitchCardHandler : INotificationHandler<SwitchCard>
     {
@@ -21,14 +20,14 @@ namespace Bang.Core.NotificationsHandlers
 
         public async Task Handle(SwitchCard notification, CancellationToken cancellationToken)
         {
-            var hand = await this.dbContext.PlayersHands
+            var hand = await dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                 .SingleAsync(p => p.PlayerId == notification.PlayerId, cancellationToken);
 
             var player = hand.Player;
 
-            var gameDeck = await this.dbContext.GamesDecks
+            var gameDeck = await dbContext.GamesDecks
                 .Include(d => d.Cards)
                 .Include(d => d.Game)
                 .SingleAsync(d => d.GameId == player.GameId, cancellationToken);
@@ -42,9 +41,9 @@ namespace Bang.Core.NotificationsHandlers
             gameDeck.Cards.Remove(moveToPlayerHand);
             hand.Cards.Add(moveToPlayerHand);
 
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            await this.playerHub
+            await playerHub
                 .Clients.Group(player.Id.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }

@@ -1,9 +1,8 @@
-﻿using Bang.Core.Queries;
-using Bang.Database;
+﻿using Bang.Database;
 using Bang.Models;
 using MediatR;
 
-namespace Bang.Core.QueriesHandlers
+namespace Bang.Core.Queries.Handlers
 {
     public class RolesQueryHandler : RequestHandler<RolesQuery, IEnumerable<Role>>
     {
@@ -16,7 +15,7 @@ namespace Bang.Core.QueriesHandlers
 
         protected override IEnumerable<Role> Handle(RolesQuery request)
         {
-            return this.dbContext.Roles;
+            return dbContext.Roles;
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Events;
+﻿using Bang.Core.Events;
 using Bang.Core.Notifications;
 using Bang.Core.Queries;
 using MediatR;
 
-namespace Bang.Core.CommandsHandlers
+namespace Bang.Core.Commands.Handlers
 {
     public class JoinGameHandler : IRequestHandler<JoinGameCommand, Guid>
     {
@@ -17,15 +16,15 @@ namespace Bang.Core.CommandsHandlers
 
         public async Task<Guid> Handle(JoinGameCommand request, CancellationToken cancellationToken)
         {
-            await this.mediator.Publish(
+            await mediator.Publish(
                 new PlayerJoin(request.GameId, request.PlayerName), cancellationToken
             );
 
-            var playerId = await this.mediator.Send(
+            var playerId = await mediator.Send(
                 new PlayerIdQuery(request.GameId, request.PlayerName), cancellationToken
             );
 
-            await this.mediator.Publish(
+            await mediator.Publish(
                 new PlayerPrepareDeck(playerId), cancellationToken
             );
 
