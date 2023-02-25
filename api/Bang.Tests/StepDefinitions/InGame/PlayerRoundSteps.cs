@@ -5,11 +5,13 @@ namespace Bang.Tests.StepDefinitions.GameRules
     [Binding]
     public class PlayerRoundSteps
     {
+        private readonly AdminDriver adminDriver;
         private readonly GameDriver gameDriver;
         private readonly RulesDriver rulesDriver;
 
-        public PlayerRoundSteps(GameDriver gameDriver, RulesDriver rulesDriver)
+        public PlayerRoundSteps(AdminDriver adminDriver, GameDriver gameDriver, RulesDriver rulesDriver)
         {
+            this.adminDriver = adminDriver;
             this.gameDriver = gameDriver;
             this.rulesDriver = rulesDriver;
         }
@@ -18,7 +20,7 @@ namespace Bang.Tests.StepDefinitions.GameRules
         public async Task GivenUnePartieEstInitieeParCesJoueurs(Table table)
         {
             var players = table.Rows.Select(p => (p["playerName"], p["characterName"], p["role"]));
-            await this.gameDriver.InitPreparedGameAsync(players);
+            await this.adminDriver.InitPreparedGameAsync(players);
 
             foreach (var row in table.Rows)
             {

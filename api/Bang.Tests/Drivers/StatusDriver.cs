@@ -4,11 +4,11 @@ using Bang.Tests.Contexts;
 
 namespace Bang.Tests.Drivers
 {
-    public class StatusDriver
+    public class StateDriver
     {
         private readonly GameContext gameContext;
 
-        public StatusDriver(GameContext gameContext)
+        public StateDriver(GameContext gameContext)
         {
             this.gameContext = gameContext;
         }
