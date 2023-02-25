@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Admin.Commands.Handlers
 {
-    public class ChangeCardHandler : AsyncRequestHandler<ChangeCardCommand>
+    public class ChangeCardCommandHandler : AsyncRequestHandler<ChangeCardCommand>
     {
         private readonly BangDbContext dbContext;
 
-        public ChangeCardHandler(BangDbContext dbContext)
+        public ChangeCardCommandHandler(BangDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

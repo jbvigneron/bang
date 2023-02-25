@@ -1,6 +1,4 @@
-﻿using Bang.Models;
-
-namespace Bang.WebApi.Models
+﻿namespace Bang.WebApi.Models
 {
     public class PlayCardRequest
     {
@@ -8,18 +6,18 @@ namespace Bang.WebApi.Models
         {
         }
 
-        public PlayCardRequest(Card card)
+        public PlayCardRequest(Guid cardId)
         {
-            this.Card = card;
+            this.CardId = cardId;
         }
 
-        public PlayCardRequest(Card card, Guid opponentId)
-            : this(card)
+        public PlayCardRequest(Guid cardId, Guid opponentId)
+            : this(cardId)
         {
             this.OpponentId = opponentId;
         }
 
-        public Card Card { get; set; }
+        public Guid CardId { get; set; }
         public Guid? OpponentId { get; set; }
     }
 }

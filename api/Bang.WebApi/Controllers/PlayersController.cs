@@ -1,10 +1,10 @@
-﻿using Bang.Core.Queries;
+﻿using Bang.Core.Extensions;
+using Bang.Core.Queries;
 using Bang.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using System.Security.Claims;
 
 namespace Bang.WebApi.Controllers
 {
@@ -28,7 +28,7 @@ namespace Bang.WebApi.Controllers
         [ProducesResponseType(typeof(Player), StatusCodes.Status200OK)]
         public Task<Player> GetMeAsync()
         {
-            var playerId = Guid.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var playerId = this.User.GetId();
 
             var query = new PlayerQuery(playerId);
             return mediator.Send(query);

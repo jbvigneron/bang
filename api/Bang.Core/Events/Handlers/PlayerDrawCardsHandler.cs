@@ -22,19 +22,22 @@ namespace Bang.Core.Events.Handlers
 
         public async Task Handle(PlayerDrawCards notification, CancellationToken cancellationToken)
         {
-            var hand = await dbContext.PlayersHands
+            var playerId = notification.PlayerId;
+            var playerName = notification.PlayerName;
+            var gameId = notification.GameId;
+
+            var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
-                .SingleAsync(p => p.PlayerId == notification.PlayerId, cancellationToken);
+                .SingleAsync(p => p.PlayerId == playerId, cancellationToken);
 
-            var player = hand.Player;
-
-            var gameDeck = await dbContext.GamesDecks
+            var gameDeck = await this.dbContext.GamesDecks
                 .Include(d => d.Cards)
                 .Include(d => d.Game)
-                .SingleAsync(d => d.GameId == player.GameId, cancellationToken);
+                .SingleAsync(d => d.GameId == gameId, cancellationToken);
 
             var game = gameDeck.Game;
+            var player = hand.Player;
 
             for (var i = 1; i <= 2; i++)
             {
@@ -49,14 +52,14 @@ namespace Bang.Core.Events.Handlers
 
             player.HasDrawnCards = true;
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await gameHub
-                .Clients.Group(game.Id.ToString())
-                .SendAsync(HubMessages.Game.CardsDrawn, game.Id, game.DeckCount, player.Name, player.CardsInHand, cancellationToken);
+                .Clients.Group(gameId.ToString())
+                .SendAsync(HubMessages.Game.CardsDrawn, gameId, game.DeckCount, playerName, player.CardsInHand, cancellationToken);
 
             await playerHub
-                .Clients.Group(player.Id.ToString())
+                .Clients.Group(playerId.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
     }

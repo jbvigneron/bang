@@ -2,9 +2,9 @@
 
 namespace Bang.Core.Events
 {
-    public class NewGame : INotification
+    public class GameCreate : INotification
     {
-        public NewGame(Guid gameId, IEnumerable<string> playerNames)
+        public GameCreate(Guid gameId, IEnumerable<string> playerNames)
         {
             this.GameId = gameId;
             this.PlayerNames = playerNames;
