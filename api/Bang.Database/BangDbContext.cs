@@ -16,7 +16,7 @@ namespace Bang.Database
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameDeck> GamesDecks { get; set; }
-        public DbSet<GameDiscardPile> GamesDiscardPiles { get; set; }
+        public DbSet<GameDiscard> GamesDiscardPiles { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerHand> PlayersHands { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -67,13 +67,13 @@ namespace Bang.Database
                 .HasMany(e => e.Cards)
                 .WithMany();
 
-            modelBuilder.Entity<GameDiscardPile>()
+            modelBuilder.Entity<GameDiscard>()
                 .HasOne(e => e.Game)
                 .WithMany()
                 .HasForeignKey(e => e.GameId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<GameDiscardPile>()
+            modelBuilder.Entity<GameDiscard>()
                 .HasMany(e => e.Cards)
                 .WithMany();
 
