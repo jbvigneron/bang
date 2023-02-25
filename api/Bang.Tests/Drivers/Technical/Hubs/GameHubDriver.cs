@@ -24,7 +24,7 @@ namespace Bang.Tests.Drivers.Technical.Hubs
         {
             var server = httpClientFactoryContext.Factory!.Server;
 
-            this.connection = SignalRHelper.ConnectToOpenHub(server, "http://localhost/GameHub");
+            this.connection = HubHelper.ConnectToOpenHub(server, "http://localhost/GameHub");
 
             this.connection.On<Guid, Player>(HubMessages.Game.PlayerJoin, (gameId, player) =>
             {
@@ -68,6 +68,6 @@ namespace Bang.Tests.Drivers.Technical.Hubs
             this.connection!.InvokeAsync("Subscribe", gameContext.Current.Id);
 
         public void CheckMessage(string message) =>
-            Assert.Contains(message, this.messages);
+            HubHelper.CheckMessages(this.messages, message);
     }
 }
