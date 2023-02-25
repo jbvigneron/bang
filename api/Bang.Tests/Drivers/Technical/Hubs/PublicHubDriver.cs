@@ -23,7 +23,7 @@ namespace Bang.Tests.Drivers.Technical.Hubs
         public async Task ConnectToHubAsync()
         {
             var server = this.httpClientFactoryContext.Factory!.Server;
-            this.connection = SignalRHelper.ConnectToOpenHub(server, "http://localhost/PublicHub");
+            this.connection = HubHelper.ConnectToOpenHub(server, "http://localhost/PublicHub");
 
             this.connection.On<Game>(HubMessages.Public.GameCreated, game =>
             {
@@ -35,6 +35,6 @@ namespace Bang.Tests.Drivers.Technical.Hubs
         }
 
         public void CheckMessage(string message) =>
-            Assert.Contains(message, messages);
+            HubHelper.CheckMessages(this.messages, message);
     }
 }
