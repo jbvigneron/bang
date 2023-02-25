@@ -2,17 +2,17 @@
 
 namespace Bang.Core.Events
 {
-    public class PlayerDrawCards : INotification
+    public abstract class CardPlay : INotification
     {
-        public PlayerDrawCards(Guid gameId, Guid playerId, string playerName)
+        protected CardPlay(Guid gameId, Guid playerId, Guid cardId)
         {
             this.GameId = gameId;
             this.PlayerId = playerId;
-            this.PlayerName = playerName;
+            this.CardId = cardId;
         }
 
         public Guid GameId { get; }
         public Guid PlayerId { get; }
-        public string PlayerName { get; }
+        public Guid CardId { get; }
     }
 }

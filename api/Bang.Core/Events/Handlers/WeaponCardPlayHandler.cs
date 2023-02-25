@@ -23,9 +23,11 @@ namespace Bang.Core.Events.Handlers
 
         public async Task Handle(WeaponCardPlay notification, CancellationToken cancellationToken)
         {
-            var (playerId, cardId) = notification;
+            var playerId = notification.PlayerId;
+            var gameId = notification.GameId;
+            var cardId = notification.CardId;
 
-            var hand = await dbContext.PlayersHands
+            var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                     .ThenInclude(p => p.CardsInGame)
@@ -35,16 +37,16 @@ namespace Bang.Core.Events.Handlers
 
             hand.Cards.Remove(card);
             hand.Player.CardsInGame.Add(card);
-            hand.Player.Weapon = await dbContext.Weapons.SingleAsync(w => w.Id.ToString() == card.Kind.ToString(), cancellationToken);
+            hand.Player.Weapon = await this.dbContext.Weapons.SingleAsync(w => w.Id.ToString() == card.Kind.ToString(), cancellationToken);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await gameHub
-                .Clients.Group(hand.Player.GameId.ToString())
-                .SendAsync(HubMessages.Game.WeaponChanged, hand.Player.GameId, playerId, hand.Player.Weapon, cancellationToken);
+                .Clients.Group(gameId.ToString())
+                .SendAsync(HubMessages.Game.WeaponChanged, gameId, playerId, hand.Player.Weapon, cancellationToken);
 
             await playerHub
-                .Clients.Group(notification.PlayerId.ToString())
+                .Clients.Group(playerId.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
     }

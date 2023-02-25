@@ -4,12 +4,11 @@
     {
         public class Public
         {
-            public const string NewGame = "NewGame";
+            public const string GameCreated = "GameCreated";
         }
 
         public class Game
         {
-            public const string GameDeckReady = "DeckReady";
             public const string PlayerJoin = "PlayerJoin";
             public const string DeckUpdated = "DeckUpdated";
             public const string AllPlayerJoined = "AllPlayerJoined";

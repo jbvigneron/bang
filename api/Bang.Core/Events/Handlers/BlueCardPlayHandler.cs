@@ -23,9 +23,11 @@ namespace Bang.Core.Events.Handlers
 
         public async Task Handle(BlueCardPlay notification, CancellationToken cancellationToken)
         {
-            var (playerId, cardId) = notification;
+            var playerId = notification.PlayerId;
+            var gameId = notification.GameId;
+            var cardId = notification.CardId;
 
-            var hand = await dbContext.PlayersHands
+            var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
                     .ThenInclude(p => p.CardsInGame)
@@ -36,11 +38,11 @@ namespace Bang.Core.Events.Handlers
             hand.Cards.Remove(card);
             hand.Player.CardsInGame.Add(card);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await gameHub
-                .Clients.Group(hand.Player.GameId.ToString())
-                .SendAsync(HubMessages.Game.CardDiscarded, hand.Player.GameId, playerId, card, cancellationToken);
+                .Clients.Group(gameId.ToString())
+                .SendAsync(HubMessages.Game.CardDiscarded, gameId, playerId, card, cancellationToken);
 
             await playerHub
                 .Clients.Group(playerId.ToString())

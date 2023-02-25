@@ -1,13 +1,15 @@
-﻿using Bang.Models;
+﻿using Bang.Core.Extensions;
+using Bang.Models;
 using MediatR;
+using System.Security.Claims;
 
 namespace Bang.Core.Queries
 {
     public class PlayerDeckQuery : IRequest<IList<Card>>
     {
-        public PlayerDeckQuery(Guid playerId)
+        public PlayerDeckQuery(ClaimsPrincipal user)
         {
-            PlayerId = playerId;
+            this.PlayerId = user.GetId();
         }
 
         public Guid PlayerId { get; }

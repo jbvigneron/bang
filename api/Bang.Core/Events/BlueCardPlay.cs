@@ -1,10 +1,8 @@
-﻿using Bang.Models;
-
-namespace Bang.Core.Events
+﻿namespace Bang.Core.Events
 {
-    public class BlueCardPlay : CardEvent
+    public class BlueCardPlay : CardPlay
     {
-        public BlueCardPlay(Guid playerId, Card card)
-            : base(playerId, card) { }
+        public BlueCardPlay(Guid gameId, Guid playerId, Guid cardId)
+            : base(gameId, playerId, cardId) { }
     }
 }

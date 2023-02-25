@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Admin.Commands.Handlers
 {
-    public class CreatePreparedGameHandler : IRequestHandler<CreatePreparedGameCommand, Guid>
+    public class CreatePreparedGameCommandHandler : IRequestHandler<CreatePreparedGameCommand, Guid>
     {
         private readonly BangDbContext dbContext;
 
-        public CreatePreparedGameHandler(BangDbContext dbContext)
+        public CreatePreparedGameCommandHandler(BangDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

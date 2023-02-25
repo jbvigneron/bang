@@ -2,31 +2,43 @@
 using Bang.Core.Notifications;
 using Bang.Core.Queries;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Bang.Core.Commands.Handlers
 {
     public class JoinGameHandler : IRequestHandler<JoinGameCommand, Guid>
     {
         private readonly IMediator mediator;
+        private readonly ILogger<JoinGameHandler> logger;
 
-        public JoinGameHandler(IMediator mediator)
+        public JoinGameHandler(IMediator mediator, ILogger<JoinGameHandler> logger)
         {
             this.mediator = mediator;
+            this.logger = logger;
         }
 
         public async Task<Guid> Handle(JoinGameCommand request, CancellationToken cancellationToken)
         {
+            var gameId = request.GameId;
+            var playerName = request.PlayerName;
+
+            this.logger.LogInformation("{PlayerName} wants to join game {GameId}", gameId);
+
             await mediator.Publish(
-                new PlayerJoin(request.GameId, request.PlayerName), cancellationToken
+                new PlayerJoin(gameId, playerName), cancellationToken
             );
 
             var playerId = await mediator.Send(
-                new PlayerIdQuery(request.GameId, request.PlayerName), cancellationToken
+                new PlayerIdQuery(gameId, playerName), cancellationToken
             );
 
+            this.logger.LogInformation("{PlayerName} ({PlayerId}) has joined game {GameId}", playerName, playerId, gameId);
+
             await mediator.Publish(
-                new PlayerPrepareDeck(playerId), cancellationToken
+                new PlayerHandSetup(gameId, playerId), cancellationToken
             );
+
+            this.logger.LogInformation("{PlayerName} ({PlayerId}) hand is ready", playerName, playerId);
 
             return playerId;
         }

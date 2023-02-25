@@ -1,13 +1,13 @@
 ﻿using Bang.Core.Commands;
 using Bang.Core.Queries;
 using Bang.Models;
-using Bang.WebApi.Requests;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
 using System.Security.Claims;
+using System.Text;
 
 namespace Bang.WebApi.Controllers
 {
@@ -16,91 +16,34 @@ namespace Bang.WebApi.Controllers
     public class GamesController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IConfiguration configuration;
+        private readonly IWebHostEnvironment environment;
 
-        public GamesController(IMediator mediator)
+        public GamesController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.mediator = mediator;
+            this.configuration = configuration;
+            this.environment = environment;
         }
 
         /// <summary>
         /// Create a new game
         /// </summary>
-        /// <param name="request">
-        ///     2 availables modes :
-        ///     - If "playerNames" property is set, characters and roles are distributed randomly
-        ///     - If "players" property is set, you must define names, characters and roles for all players 
+        /// <param name="playerNames">
+        /// An array with player names.
+        /// The array must contain between 4 and 7 names
         /// </param>
-        /// <remarks>
-        /// 
-        /// 2 availables modes :
-        ///     - If "playerNames" property is set, characters and roles are distributed randomly
-        ///     - If "players" property is set, you must define names, characters and roles for all players 
-        /// 
-        /// Example with playerNames property:
-        /// 
-        ///     POST /game
-        ///     {
-        ///         "playerNames": ["Jean", "Emilie", "Max", "Martin"]
-        ///     }
-        ///     
-        /// Example with players property:
-        /// 
-        ///     POST /game
-        ///     {
-        ///         "players": [{
-        ///             "name": "Jean",
-        ///             "characterId": 3
-        ///             "roleId": 0
-        ///         },
-        ///         {
-        ///             "name": "Emilie",
-        ///             "characterId": 6
-        ///             "roleId": 1
-        ///         },
-        ///         {
-        ///             "name": "Max",
-        ///             "characterId": 9
-        ///             "roleId": 2
-        ///         },
-        ///         {
-        ///             "name": "Martin",
-        ///             "characterId": 5
-        ///             "roleId": 2
-        ///         }]
-        ///     }
-        ///     
-        /// To get availables values for characterId and roleId properties, call these resources:
-        /// - GET api/roles
-        /// - GET api/characters
-        /// </remarks>
         /// <returns>The created game identifier</returns>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateGameAsync([FromBody] CreateGameRequest request)
+        public async Task<IActionResult> CreateGameAsync([FromBody] IEnumerable<string> playerNames)
         {
-            if (request.PlayerNames == null && request.Players == null)
-            {
-                return BadRequest("Please set playerNames or players property");
-            }
-
-            IRequest<Guid>? command = null;
-
-            if (request.PlayerNames != null)
-            {
-                command = new CreateGameCommand(request.PlayerNames);
-            }
-            else if (request.Players != null)
-            {
-                command = new CreatePreparedGameCommand(
-                    request.Players.Select(p => (p.Name, p.CharacterId, p.RoleId))
-                );
-            }
-
-            var gameId = await mediator.Send(command!);
-            return this.Created($"{this.Request.Path}/{gameId}", null);
+            var command = new CreateGameCommand(playerNames);
+            var gameId = await mediator.Send(command);
+            return this.Created($"api/games/{gameId}", null);
         }
 
         /// <summary>
