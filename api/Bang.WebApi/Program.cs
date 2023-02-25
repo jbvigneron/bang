@@ -1,14 +1,15 @@
 using Bang.Core;
 using Bang.Core.Hubs;
 using Bang.Database;
-using Bang.WebApi.Middlewares;
 using Hellang.Middleware.ProblemDetails;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
 using System.Reflection;
+using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -45,15 +46,31 @@ try
 
     builder.Services.RegisterCore();
 
-    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-            options.SlidingExpiration = true;
-            options.EventsType = typeof(CustomCookieAuthenticationEvents);
-        });
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true
+            };
 
-    builder.Services.AddScoped<CustomCookieAuthenticationEvents>();
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    string cookieName = "auth";
+                    context.Token = context.Request.Cookies[cookieName];
+
+                    return Task.CompletedTask;
+                }
+            };
+        });
 
     builder.Services.AddSignalR();
 
