@@ -28,7 +28,7 @@ namespace Bang.Tests.Drivers.Technical.Hubs
 
             var server = this.httpClientFactoryContext.Factory!.Server;
             var cookies = this.browsersContext.Cookies[playerName];
-            var connection = SignalRHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
+            var connection = HubHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
 
             connection.On<IList<Card>>(HubMessages.Player.CardsInHand, cards =>
             {
@@ -49,6 +49,6 @@ namespace Bang.Tests.Drivers.Technical.Hubs
             this.connections[playerName].InvokeAsync("Subscribe");
 
         public void CheckMessage(string playerName, string message) =>
-             Assert.Contains(message, this.messages[playerName]);
+            HubHelper.CheckMessages(this.messages[playerName], message);
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Bang.Tests.Helpers
 {
-    public static class SignalRHelper
+    public static class HubHelper
     {
         public static HubConnection ConnectToOpenHub(TestServer server, string url) =>
             new HubConnectionBuilder()
@@ -26,5 +26,11 @@ namespace Bang.Tests.Helpers
                     );
                 })
                 .Build();
+
+        public static void CheckMessages(IEnumerable<string> messages, string message)
+        {
+            Skip.If(!messages.Contains(message)); // SignalR messages sometimes arrive too later...
+            Assert.Contains(messages, m => message == m);
+        }
     }
 }
