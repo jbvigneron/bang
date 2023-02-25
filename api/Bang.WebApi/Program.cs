@@ -74,6 +74,7 @@ try
 
     builder.Services.AddSignalR();
 
+    builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Bang API v1", Version = "v1" });
@@ -93,17 +94,17 @@ try
     app.UseProblemDetails();
     app.UseSerilogRequestLogging();
 
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
     else
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
     }
 
     app.UseHttpsRedirection();
