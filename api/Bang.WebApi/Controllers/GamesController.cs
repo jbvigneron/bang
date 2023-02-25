@@ -131,14 +131,33 @@ namespace Bang.WebApi.Controllers
             var command = new JoinGameCommand(gameId, playerName);
             var playerId = await mediator.Send(command);
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, playerId.ToString())
+                new Claim(JwtRegisteredClaimNames.Name, playerName),
+                new Claim(JwtRegisteredClaimNames.NameId, playerId.ToString()),
+                new Claim("gameId", gameId.ToString())
             };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var token = new JwtSecurityToken(
+                issuer: this.configuration["Jwt:Issuer"],
+                audience: this.configuration["Jwt:Audience"],
+                claims: claims,
+                signingCredentials: creds
+            );
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwt = tokenHandler.WriteToken(token);
+
+            var cookiesOptions = new CookieOptions {
+                HttpOnly = true,
+                Secure = !environment.IsDevelopment(),
+                IsEssential = true
+            };
+
+            this.HttpContext.Response.Cookies.Append("auth", jwt, cookiesOptions);
         }
     }
 }
