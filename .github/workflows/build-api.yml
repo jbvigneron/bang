@@ -1,53 +1,59 @@
 name: Build API
 
 on:
-  pull_request:
-    branches:
-      - 'main'
-      - 'develop'
-    paths:
-      - 'api/**'
   push:
     branches:
-      - 'main'
-      - 'develop'
-    paths:
-      - 'api/**'
-  workflow_dispatch:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   checks: write
   pull-requests: write
 
+defaults:
+  run:
+    working-directory: api
+    shell: pwsh
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup GitHub repository
-        uses: actions/checkout@v3
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
 
-      - name: Restore dependencies
+      - name: Setup GitHub repository
+        uses: actions/checkout@v3
+
+      - name: Install tools dependencies
+        run: dotnet tool restore
+
+      - name: Install dependencies
         run: dotnet restore
-        working-directory: api
+
+      - name: Begin SonarCloud analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet sonarscanner begin /k:"jbvigneron_bang" /o:"jbvigneron" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
 
       - name: Build
         run: dotnet build --no-restore --configuration Release
-        working-directory: api
         
-      - name: Run tests
-        run: dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=Bang.Tests.trx"
-        working-directory: api
+      - name: Run tests and collect code coverage
+        run: dotnet coverage collect 'dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=Bang.Tests.trx"' -f xml -o "coverage.xml"
 
       - name: Publish tests results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        uses: dorny/test-reporter@v1
         with:
-          trx_files: "api/Bang.Tests/TestResults/*.trx"
-          
+          name: Tests Results
+          path: 'api/Bang.Tests/TestResults/*.trx'
+          reporter: dotnet-trx
+
       - name: Generate Live Documentation
         uses: cryptic-wizard/run-specflow-tests@v1.3.1
         with:
@@ -62,3 +68,10 @@ jobs:
         with:
           name: "Live Documentation"
           path: LivingDoc.html
+
+      - name: End SonarCloud analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
