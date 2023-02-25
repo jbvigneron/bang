@@ -1,4 +1,5 @@
-﻿Fonctionnalité: SignalR
+﻿#language: fr-FR
+Fonctionnalité: SignalR - Hub du jeu
 
 Contexte:
 	Sachant que ces joueurs souhaitent faire une partie
@@ -7,11 +8,8 @@ Contexte:
 		| Max        |
 		| Emilie     |
 		| Martin     |
-	Quand une partie est initialisée
-
-Scénario: Quand une nouvelle partie est créée
-	Alors un message "NewGame" est envoyé au hub public
-	Et le jeu contient 80 cartes
+	Quand la partie est initialisée
+	Quand le hub du jeu est connecté
 
 Scénario: Quand un joueur rejoint la partie
 	Quand "Jean" rejoint la partie
@@ -27,12 +25,7 @@ Scénario: Quand la partie est prête
 	Alors un message "AllPlayerJoined" est envoyé au hub du jeu
 	Et la partie peut commencer
 	Et un message "PlayerTurn" est envoyé au hub du jeu
-	Et un message "YourTurn" est envoyé au shérif
 	Et c'est au tour du shérif
-
-Scénario: Quand les joueurs piochent leurs cartes
-	Quand "Jean" rejoint la partie
-	Alors un message "CardsInHand" est envoyé à "Jean"
 
 Scénario: Quand c'est le tour du premier joueur
 	Quand "Jean" rejoint la partie
@@ -41,4 +34,3 @@ Scénario: Quand c'est le tour du premier joueur
 	Et "Martin" rejoint la partie
 	Alors le shérif pioche de nouvelles cartes
 	Et un message "CardsDrawn" est envoyé au hub du jeu
-	Et un message "CardsInHand" est envoyé au shérif
