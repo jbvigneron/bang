@@ -1,10 +1,10 @@
 ﻿using Bang.Core.Constants;
+using Bang.Core.Extensions;
 using Bang.Core.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
-using System.Security.Claims;
 
 namespace Bang.Core.Hubs
 {
@@ -21,12 +21,10 @@ namespace Bang.Core.Hubs
 
         public async Task Subscribe()
         {
-            var principal = this.Context.User;
-            var playerId = Guid.Parse(principal.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var playerId = this.Context.User.GetId();
+            var cards = await this.mediator.Send(new PlayerDeckQuery(this.Context.User));
 
-            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, playerId.ToString());
-
-            var cards = await this.mediator.Send(new PlayerDeckQuery(playerId));
+            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, this.Context.User.GetId().ToString());
 
             await this.Clients.Group(playerId.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, cards);

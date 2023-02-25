@@ -4,6 +4,7 @@ using Bang.Database;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Bang.Core.Events.Handlers
 {
@@ -12,42 +13,44 @@ namespace Bang.Core.Events.Handlers
         private readonly BangDbContext dbContext;
         private readonly IHubContext<GameHub> gameHub;
         private readonly IHubContext<PlayerHub> playerHub;
+        private ILogger<BrownCardPlayHandler> logger;
 
-        public BrownCardPlayHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
+        public BrownCardPlayHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub, ILogger<BrownCardPlayHandler> logger)
         {
             this.dbContext = dbContext;
 
             this.gameHub = gameHub;
             this.playerHub = playerHub;
+            this.logger = logger;
         }
 
         public async Task Handle(BrownCardPlay notification, CancellationToken cancellationToken)
         {
-            var hand = await dbContext.PlayersHands
-                .Include(d => d.Cards)
-                .Include(d => d.Player)
-                    .ThenInclude(p => p.CardsInGame)
-                .SingleAsync(p => p.PlayerId == notification.PlayerId, cancellationToken);
+            var playerId = notification.PlayerId;
+            var gameId = notification.GameId;
+            var cardId = notification.CardId;
 
-            var discardPile = await dbContext.GamesDiscardPiles
-                .Include(d => d.Game)
-                    .ThenInclude(g => g.Players)
+            var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
-                .SingleAsync(g => g.Game.Players.Any(p => p.Id == notification.PlayerId), cancellationToken);
+                .SingleAsync(p => p.PlayerId == playerId, cancellationToken);
 
-            var card = hand.Cards.First(c => c.Id == notification.Card.Id);
+            var discardPile = await this.dbContext.GamesDiscardPiles
+                .Include(d => d.Cards)
+                .SingleAsync(g => g.GameId == gameId, cancellationToken);
+
+            var card = hand.Cards.First(c => c.Id == cardId);
 
             hand.Cards.Remove(card);
             discardPile.Cards.Add(card);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await gameHub
-                .Clients.Group(discardPile.GameId.ToString())
-                .SendAsync(HubMessages.Game.CardPlaced, discardPile.GameId, hand.PlayerId, card, cancellationToken);
+                .Clients.Group(gameId.ToString())
+                .SendAsync(HubMessages.Game.CardPlaced, gameId, playerId, card, cancellationToken);
 
             await playerHub
-                .Clients.Group(notification.PlayerId.ToString())
+                .Clients.Group(playerId.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
     }

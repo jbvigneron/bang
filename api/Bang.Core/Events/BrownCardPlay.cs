@@ -1,11 +1,9 @@
-﻿using Bang.Models;
-
-namespace Bang.Core.Events
+﻿namespace Bang.Core.Events
 {
-    public class BrownCardPlay : CardEvent
+    public class BrownCardPlay : CardPlay
     {
-        public BrownCardPlay(Guid playerId, Card card, Guid? opponentId)
-            : base(playerId, card)
+        public BrownCardPlay(Guid gameId, Guid playerId, Guid cardId, Guid? opponentId)
+            : base(gameId, playerId, cardId)
         {
             this.OpponentId = opponentId;
         }

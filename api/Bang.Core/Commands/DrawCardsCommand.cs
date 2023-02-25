@@ -1,14 +1,20 @@
-﻿using MediatR;
+﻿using Bang.Core.Extensions;
+using MediatR;
+using System.Security.Claims;
 
 namespace Bang.Core.Commands
 {
     public class DrawCardsCommand : IRequest
     {
-        public DrawCardsCommand(Guid playerId)
+        public DrawCardsCommand(ClaimsPrincipal user)
         {
-            this.PlayerId = playerId;
+            this.PlayerId = user.GetId();
+            this.PlayerName = user.GetName();
+            this.GameId = user.GetGameId();
         }
 
         public Guid PlayerId { get; }
+        public string PlayerName { get; }
+        public Guid GameId { get; }
     }
 }

@@ -8,31 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Events.Handlers
 {
-    public class PlayerPrepareDeckHandler : INotificationHandler<PlayerPrepareDeck>
+    public class PlayerHandSetupHandler : INotificationHandler<PlayerHandSetup>
     {
         private readonly BangDbContext dbContext;
         private readonly IHubContext<GameHub> gameHub;
 
-        public PlayerPrepareDeckHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
+        public PlayerHandSetupHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub)
         {
             this.dbContext = dbContext;
             this.gameHub = gameHub;
         }
 
-        public async Task Handle(PlayerPrepareDeck notification, CancellationToken cancellationToken)
+        public async Task Handle(PlayerHandSetup notification, CancellationToken cancellationToken)
         {
+            var playerId = notification.PlayerId;
+            var gameId = notification.GameId;
+
             var hand = new PlayerHand
             {
-                PlayerId = notification.PlayerId,
+                PlayerId = playerId,
                 Cards = new List<Card>()
             };
 
-            var player = await dbContext.Players.FirstAsync(p => p.Id == notification.PlayerId, cancellationToken);
+            var player = await this.dbContext.Players.FirstAsync(p => p.Id == playerId, cancellationToken);
 
-            var gameDeck = await dbContext.GamesDecks
+            var gameDeck = await this.dbContext.GamesDecks
                 .Include(d => d.Cards)
                 .Include(d => d.Game)
-                .FirstAsync(d => d.Game.Players.Any(p => p.Id == notification.PlayerId), cancellationToken);
+                .FirstAsync(d => d.Game.Players.Any(p => p.Id == playerId), cancellationToken);
 
             var game = gameDeck.Game;
 
@@ -47,12 +50,12 @@ namespace Bang.Core.Events.Handlers
                 game.DeckCount--;
             }
 
-            await dbContext.PlayersHands.AddAsync(hand, cancellationToken);
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await this.dbContext.PlayersHands.AddAsync(hand, cancellationToken);
+            await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await gameHub
-                .Clients.Group(game.Id.ToString())
-                .SendAsync(HubMessages.Game.DeckUpdated, game.Id, game.DeckCount, cancellationToken);
+                .Clients.Group(gameId.ToString())
+                .SendAsync(HubMessages.Game.DeckUpdated, gameId, game.DeckCount, cancellationToken);
         }
     }
 }

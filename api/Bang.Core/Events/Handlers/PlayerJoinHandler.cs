@@ -27,44 +27,46 @@ namespace Bang.Core.Events.Handlers
 
         public async Task Handle(PlayerJoin notification, CancellationToken cancellationToken)
         {
-            var game = await dbContext.Games
+            var gameId = notification.GameId;
+            var playerName = notification.PlayerName;
+
+            var game = await this.dbContext.Games
                 .Include(g => g.Players)
-                .FirstAsync(g => g.Id == notification.GameId, cancellationToken);
+                .FirstAsync(g => g.Id == gameId, cancellationToken);
 
             if (game.Status != GameStatus.WaitingForPlayers)
             {
-                throw new GameException("L'identifiant de la partie est incorrect", notification.GameId);
+                throw new GameException("L'identifiant de la partie est incorrect", gameId);
             }
 
-            var player = game.Players.First(p => p.Name == notification.PlayerName);
+            var player = game.Players.First(p => p.Name == playerName);
             player.Character = await GetRandomCharacterAsync(cancellationToken);
             player.Lives = GetLives(player.Character, player.IsSheriff);
             player.Weapon = await GetColt45Async(cancellationToken);
             player.Status = PlayerStatus.Alive;
-            player.CardsInGame = new List<Card>();
 
             if (game.Players.All(p => p.Status == PlayerStatus.Alive))
             {
                 game.Status = GameStatus.InProgress;
             }
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await gameHub
-                .Clients.Group(game.Id.ToString())
-                .SendAsync(HubMessages.Game.PlayerJoin, game.Id, player, cancellationToken);
+                .Clients.Group(gameId.ToString())
+                .SendAsync(HubMessages.Game.PlayerJoin, gameId, player, cancellationToken);
 
             if (game.Status == GameStatus.InProgress)
             {
                 await gameHub
-                    .Clients.Group(game.Id.ToString())
-                    .SendAsync(HubMessages.Game.AllPlayerJoined, game.Id, game, cancellationToken);
+                    .Clients.Group(gameId.ToString())
+                    .SendAsync(HubMessages.Game.AllPlayerJoined, gameId, game, cancellationToken);
 
                 var sheriff = game.GetSheriff();
 
                 await gameHub
-                    .Clients.Group(game.Id.ToString())
-                    .SendAsync(HubMessages.Game.PlayerTurn, game.Id, sheriff.Name, cancellationToken);
+                    .Clients.Group(gameId.ToString())
+                    .SendAsync(HubMessages.Game.PlayerTurn, gameId, sheriff.Name, cancellationToken);
 
                 await playerHub
                     .Clients.Group(sheriff.Id.ToString())
