@@ -79,18 +79,18 @@ namespace Bang.Tests.Features.Technical.SignalR
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "playerName"});
-            table10.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "Jean"});
-            table10.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "Max"});
-            table10.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "Emilie"});
-            table10.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "Martin"});
 #line 5
- testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table10, "Sachant que ");
+ testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table11, "Sachant que ");
 #line hidden
 #line 11
  testRunner.When("le hub public est connecté", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");

@@ -7,7 +7,7 @@ using System.Net.Http.Json;
 
 namespace Bang.Tests.Drivers
 {
-  public class GameDriver
+    public class GameDriver
     {
         private readonly BrowsersContext browsersContext;
         private readonly GameContext gameContext;

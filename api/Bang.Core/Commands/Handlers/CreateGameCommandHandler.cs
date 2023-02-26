@@ -20,7 +20,7 @@ namespace Bang.Core.Commands.Handlers
             var gameId = Guid.NewGuid();
             var playerNames = request.PlayerNames;
 
-            await mediator.Publish(
+            await this.mediator.Publish(
                 new GameCreate(gameId, playerNames), cancellationToken
             );
 

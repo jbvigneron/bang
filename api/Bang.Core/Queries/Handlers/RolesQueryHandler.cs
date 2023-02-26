@@ -15,7 +15,7 @@ namespace Bang.Core.Queries.Handlers
 
         protected override IEnumerable<Role> Handle(RolesQuery request)
         {
-            return dbContext.Roles;
+            return this.dbContext.Roles;
         }
     }
 }

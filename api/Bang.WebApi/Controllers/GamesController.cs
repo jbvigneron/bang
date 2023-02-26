@@ -42,7 +42,7 @@ namespace Bang.WebApi.Controllers
         public async Task<IActionResult> CreateGameAsync([FromBody] IEnumerable<string> playerNames)
         {
             var command = new CreateGameCommand(playerNames);
-            var gameId = await mediator.Send(command);
+            var gameId = await this.mediator.Send(command);
             return this.Created($"api/games/{gameId}", null);
         }
 
@@ -57,7 +57,7 @@ namespace Bang.WebApi.Controllers
         public async Task<Game> GetAsync([FromRoute] Guid gameId)
         {
             var query = new GameQuery(gameId);
-            var game = await mediator.Send(query);
+            var game = await this.mediator.Send(query);
             return game;
         }
 
@@ -72,7 +72,7 @@ namespace Bang.WebApi.Controllers
         public async Task JoinAsync([FromRoute] Guid gameId, [FromBody] string playerName)
         {
             var command = new JoinGameCommand(gameId, playerName);
-            var playerId = await mediator.Send(command);
+            var playerId = await this.mediator.Send(command);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -96,7 +96,7 @@ namespace Bang.WebApi.Controllers
 
             var cookiesOptions = new CookieOptions {
                 HttpOnly = true,
-                Secure = !environment.IsDevelopment(),
+                Secure = !this.environment.IsDevelopment(),
                 IsEssential = true
             };
 

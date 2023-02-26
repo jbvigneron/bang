@@ -27,8 +27,8 @@ namespace Bang.Tests.Drivers.Hubs
 
             this.connection.On<Game>(HubMessages.Public.GameCreated, game =>
             {
-                messages.Add(HubMessages.Public.GameCreated);
-                gameContext.Current = game;
+                this.messages.Add(HubMessages.Public.GameCreated);
+                this.gameContext.Current = game;
             });
 
             await this.connection.StartAsync();

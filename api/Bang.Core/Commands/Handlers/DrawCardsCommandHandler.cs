@@ -24,7 +24,7 @@ namespace Bang.Core.Commands.Handlers
             var playerId = request.PlayerId;
             var playerName = request.PlayerName;
 
-            var game = await mediator.Send(new GameQuery(gameId), cancellationToken);
+            var game = await this.mediator.Send(new GameQuery(gameId), cancellationToken);
             var player = game.Players.First(p => p.Id == playerId);
 
             if (player.HasDrawnCards)
@@ -47,7 +47,7 @@ namespace Bang.Core.Commands.Handlers
                 throw new PlayerException("Ce n'est pas à vous de jouer.", player);
             }
 
-            await mediator.Publish(
+            await this.mediator.Publish(
                 new PlayerDrawCards(gameId, playerId, playerName), cancellationToken
             );
 

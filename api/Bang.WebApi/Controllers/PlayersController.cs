@@ -31,7 +31,7 @@ namespace Bang.WebApi.Controllers
             var playerId = this.User.GetId();
 
             var query = new PlayerQuery(playerId);
-            return mediator.Send(query);
+            return this.mediator.Send(query);
         }
     }
 }

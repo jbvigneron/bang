@@ -24,7 +24,7 @@ namespace Bang.WebApi.Controllers
         public async Task<IList<Card>> GetCardsAsync()
         {
             var query = new PlayerDeckQuery(this.User);
-            var cards = await mediator.Send(query);
+            var cards = await this.mediator.Send(query);
             return cards;
         }
 
@@ -32,14 +32,14 @@ namespace Bang.WebApi.Controllers
         public Task DrawCardsAsync()
         {
             var command = new DrawCardsCommand(this.User);
-            return mediator.Send(command);
+            return this.mediator.Send(command);
         }
 
         [HttpPost("play")]
         public Task PlayCardAsync([FromBody] PlayCardRequest request)
         {
             var command = new PlayCardCommand(this.User, request.CardId, request.OpponentId);
-            return mediator.Send(command);
+            return this.mediator.Send(command);
         }
     }
 }

@@ -22,14 +22,14 @@ namespace Bang.WebApi.Controllers
         [HttpPost("games")]
         public async Task<IActionResult> CreateGameAsync([FromBody] CreatePreparedGameCommand request)
         {
-            var gameId = await mediator.Send(request);
+            var gameId = await this.mediator.Send(request);
             return this.Created($"api/games/{gameId}", null);
         }
 
         [HttpPost("cards/change")]
         public Task ChangeCardAsync([FromBody] ChangeCardCommand request)
         {
-            return mediator.Send(request);
+            return this.mediator.Send(request);
         }
     }
 }

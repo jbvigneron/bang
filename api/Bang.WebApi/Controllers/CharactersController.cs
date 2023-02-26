@@ -26,7 +26,7 @@ namespace Bang.WebApi.Controllers
         public Task<IEnumerable<Character>> Get()
         {
             var query = new CharactersQuery();
-            return mediator.Send(query);
+            return this.mediator.Send(query);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Bang.Core.Queries.Handlers
 
         protected override IEnumerable<Character> Handle(CharactersQuery request)
         {
-            return dbContext.Characters;
+            return this.dbContext.Characters;
         }
     }
 }

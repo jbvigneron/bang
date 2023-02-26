@@ -8,9 +8,9 @@ namespace Bang.Tests.Drivers
     {
         public HttpClientFactoryDriver()
         {
-            Factory = new TestWebApplicationFactory<Program>();
+      this.Factory = new TestWebApplicationFactory<Program>();
 
-            using (var scope = Factory.Services.GetService<IServiceScopeFactory>()!.CreateScope())
+            using (var scope = this.Factory.Services.GetService<IServiceScopeFactory>()!.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<BangDbContext>();
                 dbContext!.Database.EnsureCreated();

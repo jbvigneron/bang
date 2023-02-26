@@ -40,9 +40,9 @@ namespace Bang.Core.Events.Handlers
             }
 
             var player = game.Players.First(p => p.Name == playerName);
-            player.Character = await GetRandomCharacterAsync(cancellationToken);
+            player.Character = await this.GetRandomCharacterAsync(cancellationToken);
             player.Lives = GetLives(player.Character, player.IsSheriff);
-            player.Weapon = await GetColt45Async(cancellationToken);
+            player.Weapon = await this.GetColt45Async(cancellationToken);
             player.Status = PlayerStatus.Alive;
 
             if (game.Players.All(p => p.Status == PlayerStatus.Alive))
@@ -52,29 +52,29 @@ namespace Bang.Core.Events.Handlers
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            await gameHub
+            await this.gameHub
                 .Clients.Group(gameId.ToString())
                 .SendAsync(HubMessages.Game.PlayerJoin, gameId, player, cancellationToken);
 
             if (game.Status == GameStatus.InProgress)
             {
-                await gameHub
+                await this.gameHub
                     .Clients.Group(gameId.ToString())
                     .SendAsync(HubMessages.Game.AllPlayerJoined, gameId, game, cancellationToken);
 
                 var sheriff = game.GetSheriff();
 
-                await gameHub
+                await this.gameHub
                     .Clients.Group(gameId.ToString())
                     .SendAsync(HubMessages.Game.PlayerTurn, gameId, sheriff.Name, cancellationToken);
 
-                await playerHub
+                await this.playerHub
                     .Clients.Group(sheriff.Id.ToString())
                     .SendAsync(HubMessages.Player.YourTurn, cancellationToken);
             }
         }
         private Task<Character> GetRandomCharacterAsync(CancellationToken cancellationToken) =>
-            dbContext.Characters.OrderBy(c => Guid.NewGuid()).FirstAsync(cancellationToken);
+            this.dbContext.Characters.OrderBy(c => Guid.NewGuid()).FirstAsync(cancellationToken);
 
         private static int GetLives(Character character, bool isScheriff)
         {
@@ -84,6 +84,6 @@ namespace Bang.Core.Events.Handlers
         }
 
         private Task<Weapon> GetColt45Async(CancellationToken cancellationToken) =>
-            dbContext.Weapons.SingleAsync(w => w.Id == WeaponKind.Colt45, cancellationToken);
+            this.dbContext.Weapons.SingleAsync(w => w.Id == WeaponKind.Colt45, cancellationToken);
     }
 }

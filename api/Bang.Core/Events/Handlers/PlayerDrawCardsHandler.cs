@@ -54,11 +54,11 @@ namespace Bang.Core.Events.Handlers
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            await gameHub
+            await this.gameHub
                 .Clients.Group(gameId.ToString())
                 .SendAsync(HubMessages.Game.CardsDrawn, gameId, game.DeckCount, playerName, player.CardsInHand, cancellationToken);
 
-            await playerHub
+            await this.playerHub
                 .Clients.Group(playerId.ToString())
                 .SendAsync(HubMessages.Player.CardsInHand, hand.Cards, cancellationToken);
         }
