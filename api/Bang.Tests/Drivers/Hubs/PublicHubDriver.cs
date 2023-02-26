@@ -4,7 +4,7 @@ using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace Bang.Tests.Drivers.Technical.Hubs
+namespace Bang.Tests.Drivers.Hubs
 {
     public class PublicHubDriver
     {

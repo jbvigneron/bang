@@ -3,24 +3,15 @@
 namespace Bang.Tests.StepDefinitions.GameRules
 {
     [Binding]
-    public class WeaponCardsSteps
+    public class PlayerWeaponCardSteps
     {
-        private readonly AdminDriver adminDriver;
         private readonly GameDriver gameDriver;
         private readonly RulesDriver rulesDriver;
 
-        public WeaponCardsSteps(AdminDriver adminDriver, GameDriver gameDriver, RulesDriver rulesDriver)
+        public PlayerWeaponCardSteps(GameDriver gameDriver, RulesDriver rulesDriver)
         {
-            this.adminDriver = adminDriver;
             this.gameDriver = gameDriver;
             this.rulesDriver = rulesDriver;
-        }
-
-        [Given(@"""([^""]*)"" possède une carte ""([^""]*)"" dans son jeu")]
-        public async Task GivenPossedeUneCarteDansSonJeu(string playerName, string cardName)
-        {
-            await this.adminDriver.ForceCardInPlayerHand(playerName, cardName);
-            await this.gameDriver.UpdatePlayerCardsAsync(playerName);
         }
 
         [When(@"""([^""]*)"" joue une carte ""([^""]*)""")]
