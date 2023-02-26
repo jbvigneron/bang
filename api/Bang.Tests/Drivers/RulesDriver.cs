@@ -84,7 +84,7 @@ namespace Bang.Tests.Drivers
 
         public void CheckPlayerLivesAndCardsCount(string playerName)
         {
-            var handCount = this.gameContext.CardsInHand[playerName].Count();
+            var handCount = this.gameContext.PlayerCardsInHand[playerName].Count();
 
             var player = this.gameContext.Current.Players.Single(p => p.Name == playerName);
             var expected = player.Lives;
@@ -93,8 +93,8 @@ namespace Bang.Tests.Drivers
 
         public void CheckPlayerInHandCards(string playerName, int count)
         {
-            var cardsInHandCount = this.gameContext.CardsInHand[playerName].Count();
-            Assert.Equal(count, cardsInHandCount);
+            var handCount = this.gameContext.PlayerCardsInHand[playerName].Count();
+            Assert.Equal(count, handCount);
         }
 
         public void CheckPlayerInGameCards(string playerName, string cardName)

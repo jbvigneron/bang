@@ -1,6 +1,7 @@
 ﻿using Bang.Core.Commands;
 using Bang.Core.Queries;
 using Bang.Models;
+using Bang.WebApi.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -66,10 +67,11 @@ namespace Bang.WebApi.Controllers
         /// </summary>
         /// <param name="gameId">Game id to join</param>
         /// <param name="playerName">Player name requesting to join</param>
+        /// <param name="authMode">Authentication mode (1 = Cookie, 2 = JWT). Default is cookie</param>
         [HttpPost("{gameId:guid}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task JoinAsync([FromRoute] Guid gameId, [FromBody] string playerName)
+        public async Task<IActionResult> JoinAsync([FromRoute] Guid gameId, [FromBody] string playerName, [FromQuery] AuthMode? authMode = AuthMode.Cookie)
         {
             var command = new JoinGameCommand(gameId, playerName);
             var playerId = await this.mediator.Send(command);
@@ -94,13 +96,20 @@ namespace Bang.WebApi.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwt = tokenHandler.WriteToken(token);
 
-            var cookiesOptions = new CookieOptions {
+            if (authMode == AuthMode.Jwt)
+            {
+                return this.Ok(jwt);
+            }
+
+            var cookiesOptions = new CookieOptions
+            {
                 HttpOnly = true,
                 Secure = !this.environment.IsDevelopment(),
                 IsEssential = true
             };
 
             this.HttpContext.Response.Cookies.Append("auth", jwt, cookiesOptions);
+            return this.Ok();
         }
     }
 }
