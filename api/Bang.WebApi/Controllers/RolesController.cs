@@ -26,7 +26,7 @@ namespace Bang.WebApi.Controllers
         public Task<IEnumerable<Role>> Get()
         {
             var request = new RolesQuery();
-            return mediator.Send(request);
+            return this.mediator.Send(request);
         }
     }
 }

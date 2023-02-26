@@ -53,7 +53,7 @@ namespace Bang.Core.Events.Handlers
             await this.dbContext.PlayersHands.AddAsync(hand, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            await gameHub
+            await this.gameHub
                 .Clients.Group(gameId.ToString())
                 .SendAsync(HubMessages.Game.DeckUpdated, gameId, game.DeckCount, cancellationToken);
         }

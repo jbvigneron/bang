@@ -16,7 +16,7 @@ namespace Bang.Core.Queries.Handlers
 
         public Task<Card> Handle(CardQuery request, CancellationToken cancellationToken)
         {
-            return dbContext.Cards.SingleAsync(c => c.Id == request.CardId, cancellationToken);
+            return this.dbContext.Cards.SingleAsync(c => c.Id == request.CardId, cancellationToken);
         }
     }
 }

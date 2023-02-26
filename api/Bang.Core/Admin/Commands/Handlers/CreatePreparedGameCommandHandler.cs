@@ -28,8 +28,8 @@ namespace Bang.Core.Admin.Commands.Handlers
                 Status = GameStatus.WaitingForPlayers,
                 Players = players.Select(player =>
                 {
-                    var character = dbContext.Characters.First(c => c.Id == player.CharacterId);
-                    var role = dbContext.Roles.First(r => r.Id == player.RoleId);
+                    var character = this.dbContext.Characters.First(c => c.Id == player.CharacterId);
+                    var role = this.dbContext.Roles.First(r => r.Id == player.RoleId);
                     var isSheriff = role.Id == RoleKind.Sheriff;
 
                     return new Player
@@ -40,7 +40,7 @@ namespace Bang.Core.Admin.Commands.Handlers
                         Character = character,
                         Lives = character.Lives + (isSheriff ? 1 : 0),
                         Status = PlayerStatus.NotReady,
-                        Weapon = dbContext.Weapons.First(w => w.Id == WeaponKind.Colt45)
+                        Weapon = this.dbContext.Weapons.First(w => w.Id == WeaponKind.Colt45)
                     };
                 }).ToList(),
                 CurrentPlayerName = players.Single(info => info.RoleId == RoleKind.Sheriff).Name,

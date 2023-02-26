@@ -16,7 +16,7 @@ namespace Bang.Core.Queries.Handlers
 
         public Task<Game> Handle(GameQuery request, CancellationToken cancellationToken)
         {
-            return dbContext.Games
+            return this.dbContext.Games
                 .Include(g => g.Players)
                     .ThenInclude(p => p.Character)
                 .Include(g => g.Players)

@@ -32,21 +32,21 @@ namespace Bang.Core.Commands.Handlers
                     var opponentId = request.OpponentId;
                     this.logger.LogInformation("{PlayerName} ({PlayerId}) play brown card {CardName} (OpponentId: {OpponentId})", playerName, playerId, card.Name, opponentId);
 
-                    await mediator.Publish(
+                    await this.mediator.Publish(
                         new BrownCardPlay(gameId, playerId, cardId, opponentId), cancellationToken
                     );
                     break;
                 case CardType.Blue:
                     this.logger.LogInformation("{PlayerName} ({PlayerId}) play blue card {CardName}", playerName, playerId, card.Name);
 
-                    await mediator.Publish(
+                    await this.mediator.Publish(
                         new BlueCardPlay(gameId, playerId, cardId), cancellationToken
                     );
                     break;
                 case CardType.Weapon:
                     this.logger.LogInformation("{PlayerName} ({PlayerId}) play weapon card {CardName}", playerName, playerId, card.Name);
 
-                    await mediator.Publish(
+                    await this.mediator.Publish(
                         new WeaponCardPlay(gameId, playerId, cardId), cancellationToken
                     );
                     break;

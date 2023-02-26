@@ -7,7 +7,7 @@ namespace Bang.Core.Queries
     {
         public PlayerQuery(Guid playerId)
         {
-            PlayerId = playerId;
+      this.PlayerId = playerId;
         }
 
         public Guid PlayerId { get; }

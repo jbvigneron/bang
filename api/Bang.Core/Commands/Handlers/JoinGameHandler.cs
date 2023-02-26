@@ -24,17 +24,17 @@ namespace Bang.Core.Commands.Handlers
 
             this.logger.LogInformation("{PlayerName} wants to join game {GameId}", gameId);
 
-            await mediator.Publish(
+            await this.mediator.Publish(
                 new PlayerJoin(gameId, playerName), cancellationToken
             );
 
-            var playerId = await mediator.Send(
+            var playerId = await this.mediator.Send(
                 new PlayerIdQuery(gameId, playerName), cancellationToken
             );
 
             this.logger.LogInformation("{PlayerName} ({PlayerId}) has joined game {GameId}", playerName, playerId, gameId);
 
-            await mediator.Publish(
+            await this.mediator.Publish(
                 new PlayerHandSetup(gameId, playerId), cancellationToken
             );
 

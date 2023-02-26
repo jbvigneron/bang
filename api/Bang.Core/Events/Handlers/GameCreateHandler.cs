@@ -57,7 +57,7 @@ namespace Bang.Core.Events.Handlers
                 {
                     Name = playerName,
                     Status = PlayerStatus.NotReady,
-                    Role = await GetRandomRoleAsync(cancellationToken),
+                    Role = await this.GetRandomRoleAsync(cancellationToken),
                 };
 
                 if (player.Role.Id == RoleKind.Sheriff)
@@ -86,7 +86,7 @@ namespace Bang.Core.Events.Handlers
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
-            await publicHub.Clients.All.SendAsync(HubMessages.Public.GameCreated, game, cancellationToken);
+            await this.publicHub.Clients.All.SendAsync(HubMessages.Public.GameCreated, game, cancellationToken);
         }
 
         private void DetermineAvailablesRoles(int numberOfPlayers)
@@ -111,7 +111,7 @@ namespace Bang.Core.Events.Handlers
 
             this.roles.RemoveAt(index);
 
-            return dbContext.Roles.SingleAsync(r => r.Id == roleId, cancellationToken);
+            return this.dbContext.Roles.SingleAsync(r => r.Id == roleId, cancellationToken);
         }
     }
 }
