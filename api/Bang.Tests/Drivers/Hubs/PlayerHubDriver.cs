@@ -33,7 +33,7 @@ namespace Bang.Tests.Drivers.Hubs
             connection.On<IList<Card>>(HubMessages.Player.CardsInHand, cards =>
             {
                 this.messages[playerName].Add(HubMessages.Player.CardsInHand);
-                this.gameContext.CardsInHand[playerName] = cards;
+                this.gameContext.PlayerCardsInHand[playerName] = cards;
             });
 
             connection.On(HubMessages.Player.YourTurn, () =>

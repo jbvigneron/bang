@@ -1,8 +1,9 @@
-﻿using Bang.Core.Extensions;
-using Bang.Models;
+﻿using Bang.Models;
 using Bang.Tests.Contexts;
+using Bang.WebApi.Enums;
 using Bang.WebApi.Models;
 using Microsoft.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace Bang.Tests.Drivers
@@ -35,77 +36,74 @@ namespace Bang.Tests.Drivers
             );
         }
 
-        public async Task JoinGameAsync(string playerName)
+        public async Task JoinGameAsync(string playerName, AuthMode? authMode = AuthMode.Cookie)
         {
             var gameId = this.gameContext.Current.Id;
 
             var client = this.browsersContext.HttpClients![playerName];
-            var result = await client.PostAsJsonAsync($"api/games/{gameId}", playerName);
-            result.EnsureSuccessStatusCode();
+            var response = await client.PostAsJsonAsync($"api/games/{gameId}?authMode={authMode}", playerName);
+            response.EnsureSuccessStatusCode();
 
-            result.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string> cookies);
-            this.browsersContext.Cookies[playerName] = cookies!;
+            if (authMode == AuthMode.Jwt)
+            {
+                var jwt = await response.Content.ReadAsStringAsync();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+            }
+            else
+            {
+                response.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string> cookies);
+                this.browsersContext.Cookies[playerName] = cookies!;
+            }
         }
 
         public async Task AllJoinGameAsync()
         {
-            var gameId = this.gameContext.Current.Id;
-
-            foreach (var client in this.browsersContext.HttpClients)
+            foreach (var playerName in this.browsersContext.HttpClients!.Keys)
             {
-                var result = await client.Value.PostAsJsonAsync($"api/games/{gameId}", client.Key);
-                result.EnsureSuccessStatusCode();
-
-                result.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string> cookies);
-                this.browsersContext.Cookies[client.Key] = cookies!;
+                await this.JoinGameAsync(playerName);
             }
         }
 
         public async Task DrawCardsAsync(string playerName)
         {
             var client = this.browsersContext.HttpClients![playerName];
-            var result = await client.PostAsync("api/cards/draw", null);
-            result.EnsureSuccessStatusCode();
+            var response = await client.PostAsync("api/cards/draw", null);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task PlayCardAsync(string playerName, string cardName)
         {
-            var cards = this.gameContext.CardsInHand[playerName];
+            var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.First(b => b.Name == cardName);
 
             var client = this.browsersContext.HttpClients![playerName];
             var request = new PlayCardRequest(card.Id);
-            var result = await client.PostAsJsonAsync("api/cards/play", request);
-            result.EnsureSuccessStatusCode();
+            var response = await client.PostAsJsonAsync("api/cards/play", request);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task PlayCardAsync(string playerName, string cardName, string opponentName)
         {
-            var cards = this.gameContext.CardsInHand[playerName];
+            var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.First(b => b.Name == cardName);
 
             var opponent = this.gameContext.Current.Players.FirstOrDefault(p => p.Name == opponentName);
 
             var client = this.browsersContext.HttpClients![playerName];
             var request = new PlayCardRequest(card.Id, opponent.Id);
-            var result = await client.PostAsJsonAsync("api/cards/play", request);
-            result.EnsureSuccessStatusCode();
+            var response = await client.PostAsJsonAsync("api/cards/play", request);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task PlayRandomCardAsync(string playerName)
         {
-            var cards = this.gameContext.CardsInHand[playerName];
+            var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent);
 
             var client = this.browsersContext.HttpClients![playerName];
             var request = new PlayCardRequest(card.Id);
-            var result = await client.PostAsJsonAsync("api/cards/play", request);
-            result.EnsureSuccessStatusCode();
-        }
-
-        public string GetSheriffName()
-        {
-            return this.gameContext.Current.GetSheriff().Name;
+            var response = await client.PostAsJsonAsync("api/cards/play", request);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateGameAsync()
@@ -115,11 +113,20 @@ namespace Bang.Tests.Drivers
             this.gameContext.Current = await client.GetFromJsonAsync<Game>($"api/games/{gameId}");
         }
 
+        public async Task UpdatePlayerAsync(string playerName)
+        {
+            var client = this.browsersContext.HttpClients[playerName];
+            var player = await client.GetFromJsonAsync<Player>("api/players/me");
+            this.gameContext.Players[playerName] = player;
+        }
+
         public async Task UpdatePlayerCardsAsync(string playerName)
         {
             var client = this.browsersContext.HttpClients![playerName];
             var cards = await client.GetFromJsonAsync<IList<Card>>("api/cards/mine");
-            this.gameContext.CardsInHand[playerName] = cards!;
+            this.gameContext.PlayerCardsInHand[playerName] = cards!;
         }
+        public void IsPlayerExisting(string playerName) =>
+            Assert.True(this.gameContext.Players.ContainsKey(playerName));
     }
 }

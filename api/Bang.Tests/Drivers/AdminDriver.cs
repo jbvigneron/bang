@@ -56,7 +56,7 @@ namespace Bang.Tests.Drivers
         public async Task ForceCardInPlayerHand(string playerName, string cardName)
         {
             var playerId = this.gameContext.Current.Players.Single(p => p.Name == playerName).Id;
-            var cards = this.gameContext.CardsInHand[playerName];
+            var cards = this.gameContext.PlayerCardsInHand[playerName];
             var playerHasTheCard = cards.Any(c => c.Name == cardName);
 
             if (!playerHasTheCard)
@@ -64,9 +64,8 @@ namespace Bang.Tests.Drivers
                 var cardToChangeId = cards.First(c => c.Name != cardName).Id;
 
                 var request = new ChangeCardCommand(playerId, cardToChangeId, cardName);
-                var result = await this.client.PostAsJsonAsync("api/admin/cards/change", request);
-                var respo = await result.Content.ReadAsStringAsync();
-                result.EnsureSuccessStatusCode();
+                var response = await this.client.PostAsJsonAsync("api/admin/cards/change", request);
+                response.EnsureSuccessStatusCode();
             }
         }
     }
