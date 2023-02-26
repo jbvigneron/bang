@@ -1,28 +1,19 @@
+using Bang.Models.Enums;
 using Bang.Tests.Drivers;
-using Bang.Tests.Drivers.Technical.Hubs;
+using Bang.Tests.Drivers.Hubs;
 
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {
     [Binding]
     public sealed class PlayerHubSteps
     {
-        private readonly GameDriver gameDriver;
         private readonly PlayerHubDriver playerHubDriver;
+        private readonly StateDriver stateDriver;
 
-        public PlayerHubSteps(
-            GameDriver gameDriver,
-            PlayerHubDriver playerHubDriver)
+        public PlayerHubSteps(PlayerHubDriver playerHubDriver, StateDriver stateDriver)
         {
-            this.gameDriver = gameDriver;
             this.playerHubDriver = playerHubDriver;
-        }
-
-        [When(@"le hub du jeu du shérif est connecté")]
-        public async Task WhenLeHubDuJeuDuSherifEstConnecte()
-        {
-            var sheriffName = gameDriver.GetSheriffName();
-            await this.playerHubDriver.ConnectToHubAsync(sheriffName);
-            await this.playerHubDriver.SubscribeToMessagesAsync(sheriffName);
+            this.stateDriver = stateDriver;
         }
 
         [When(@"le hub de ""([^""]*)"" est connecté")]
@@ -32,17 +23,28 @@ namespace Bang.Tests.StepDefinitions.Technical.SignalR
             await this.playerHubDriver.SubscribeToMessagesAsync(playerName);
         }
 
-        [Then(@"un message ""([^""]*)"" est envoyé au shérif")]
-        public void ThenUnMessageEstEnvoyeAuScherif(string message)
-        {
-            var sheriffName = gameDriver.GetSheriffName();
-            this.playerHubDriver.CheckMessage(sheriffName, message);
-        }
-
         [Then(@"un message ""([^""]*)"" est envoyé à ""([^""]*)""")]
         public void ThenUnMessageEstEnvoyeA(string message, string playerName)
         {
             this.playerHubDriver.CheckMessage(playerName, message);
+        }
+
+        [Then(@"""([^""]*)"" est prêt")]
+        public void ThenEstPret(string playerName)
+        {
+            this.stateDriver.CheckPlayerStatus(playerName, PlayerStatus.Alive);
+        }
+
+        [Then(@"la partie peut commencer")]
+        public void ThenLaPartiePeutCommencer()
+        {
+            this.stateDriver.CheckGameStatus(GameStatus.InProgress);
+        }
+
+        [Then(@"c'est au tour de ""([^""]*)""")]
+        public void ThenCestAuTourDe(string playerName)
+        {
+            this.stateDriver.CheckIsPlayerTurn(playerName);
         }
     }
 }

@@ -1,4 +1,4 @@
-using Bang.Tests.Drivers.Technical.Hubs;
+using Bang.Tests.Drivers.Hubs;
 
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {

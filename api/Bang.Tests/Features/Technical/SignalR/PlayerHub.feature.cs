@@ -79,21 +79,40 @@ namespace Bang.Tests.Features.Technical.SignalR
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                        "playerName"});
-            table9.AddRow(new string[] {
-                        "Jean"});
-            table9.AddRow(new string[] {
-                        "Max"});
-            table9.AddRow(new string[] {
-                        "Emilie"});
-            table9.AddRow(new string[] {
-                        "Martin"});
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "playerName",
+                        "characterName",
+                        "role"});
+            table10.AddRow(new string[] {
+                        "Jean",
+                        "Bart Cassidy",
+                        "Schérif"});
+            table10.AddRow(new string[] {
+                        "Max",
+                        "Rose Doolan",
+                        "Renégat"});
+            table10.AddRow(new string[] {
+                        "Emilie",
+                        "Willy le Kid",
+                        "Hors-la-loi"});
+            table10.AddRow(new string[] {
+                        "Martin",
+                        "Sam le Vautour",
+                        "Hors-la-loi"});
 #line 5
- testRunner.Given("ces joueurs souhaitent faire une partie", ((string)(null)), table9, "Sachant que ");
+ testRunner.Given("une partie est créée avec ces joueurs", ((string)(null)), table10, "Sachant qu\'");
 #line hidden
 #line 11
- testRunner.When("la partie est initialisée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+ testRunner.When("\"Jean\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 12
+ testRunner.And("\"Max\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 13
+ testRunner.And("\"Emilie\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 14
+ testRunner.And("\"Martin\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
         }
         
@@ -102,15 +121,15 @@ namespace Bang.Tests.Features.Technical.SignalR
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Quand c\'est le tour du premier joueur")]
+        [Xunit.SkippableFactAttribute(DisplayName="Quand c\'est au tour du premier joueur")]
         [Xunit.TraitAttribute("FeatureTitle", "SignalR - Hub du joueur")]
-        [Xunit.TraitAttribute("Description", "Quand c\'est le tour du premier joueur")]
-        public void QuandCestLeTourDuPremierJoueur()
+        [Xunit.TraitAttribute("Description", "Quand c\'est au tour du premier joueur")]
+        public void QuandCestAuTourDuPremierJoueur()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Quand c\'est le tour du premier joueur", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Quand c\'est au tour du premier joueur", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -122,63 +141,14 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
 #line 4
 this.FeatureBackground();
-#line hidden
-#line 14
- testRunner.When("\"Jean\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 15
- testRunner.And("\"Max\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-#line 16
- testRunner.And("\"Emilie\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 17
- testRunner.And("\"Martin\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.When("le hub de \"Jean\" est connecté", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
 #line 18
- testRunner.And("le hub du jeu du shérif est connecté", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+ testRunner.And("c\'est au tour de \"Jean\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 19
- testRunner.Then("c\'est au tour du shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-#line 20
- testRunner.And("le shérif pioche de nouvelles cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-#line 21
- testRunner.And("un message \"CardsInHand\" est envoyé au shérif", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Quand les joueurs piochent leurs cartes")]
-        [Xunit.TraitAttribute("FeatureTitle", "SignalR - Hub du joueur")]
-        [Xunit.TraitAttribute("Description", "Quand les joueurs piochent leurs cartes")]
-        public void QuandLesJoueursPiochentLeursCartes()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Quand les joueurs piochent leurs cartes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 4
-this.FeatureBackground();
-#line hidden
-#line 24
- testRunner.When("\"Jean\" rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 25
- testRunner.And("le hub de \"Jean\" est connecté", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
-#line hidden
-#line 26
  testRunner.Then("un message \"CardsInHand\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }

@@ -1,4 +1,5 @@
-using Bang.Tests.Drivers.Technical.Hubs;
+using Bang.Tests.Drivers;
+using Bang.Tests.Drivers.Hubs;
 
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {
@@ -6,10 +7,26 @@ namespace Bang.Tests.StepDefinitions.Technical.SignalR
     public sealed class PublicHubSteps
     {
         private readonly PublicHubDriver publicHubDriver;
+        private readonly GameDriver gameDriver;
 
-        public PublicHubSteps(PublicHubDriver publicHubDriver)
+        private IEnumerable<string> playerNames;
+
+        public PublicHubSteps(PublicHubDriver publicHubDriver, GameDriver gameDriver)
         {
             this.publicHubDriver = publicHubDriver;
+            this.gameDriver = gameDriver;
+        }
+
+        [Given(@"ces joueurs souhaitent faire une partie")]
+        public void GivenCesJoueursSouhaitentFaireUnePartie(Table table)
+        {
+            this.playerNames = table.Rows.Select(r => r["playerName"]);
+        }
+
+        [When(@"la partie est initialisée")]
+        public Task WhenUnePartieEstInitialisee()
+        {
+            return this.gameDriver.InitGameAsync(this.playerNames);
         }
 
         [When(@"le hub public est connecté")]

@@ -1,14 +1,13 @@
 ﻿using Bang.Core.Extensions;
 using Bang.Models;
 using Bang.Tests.Contexts;
-using Bang.Tests.Drivers.Technical;
 using Bang.WebApi.Models;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace Bang.Tests.Drivers
 {
-    public class GameDriver
+  public class GameDriver
     {
         private readonly BrowsersContext browsersContext;
         private readonly GameContext gameContext;
@@ -46,6 +45,20 @@ namespace Bang.Tests.Drivers
 
             result.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string> cookies);
             this.browsersContext.Cookies[playerName] = cookies!;
+        }
+
+        public async Task AllJoinGameAsync()
+        {
+            var gameId = this.gameContext.Current.Id;
+
+            foreach (var client in this.browsersContext.HttpClients)
+            {
+                var result = await client.Value.PostAsJsonAsync($"api/games/{gameId}", client.Key);
+                result.EnsureSuccessStatusCode();
+
+                result.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string> cookies);
+                this.browsersContext.Cookies[client.Key] = cookies!;
+            }
         }
 
         public async Task DrawCardsAsync(string playerName)

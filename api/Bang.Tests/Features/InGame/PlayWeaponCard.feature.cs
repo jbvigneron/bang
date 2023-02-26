@@ -19,7 +19,7 @@ namespace Bang.Tests.Features.InGame
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class TourDunJoueur_CartesArmeFeature : object, Xunit.IClassFixture<TourDunJoueur_CartesArmeFeature.FixtureData>, System.IDisposable
+    public partial class JouerUneCarteDeTypeArmeFeature : object, Xunit.IClassFixture<JouerUneCarteDeTypeArmeFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Bang.Tests.Features.InGame
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "WeaponCards.feature"
+#line 1 "PlayWeaponCard.feature"
 #line hidden
         
-        public TourDunJoueur_CartesArmeFeature(TourDunJoueur_CartesArmeFeature.FixtureData fixtureData, Bang_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public JouerUneCarteDeTypeArmeFeature(JouerUneCarteDeTypeArmeFeature.FixtureData fixtureData, Bang_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Bang.Tests.Features.InGame
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("fr-FR"), "Features/InGame", "Tour d\'un joueur - Cartes Arme", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("fr-FR"), "Features/InGame", "Jouer une carte de type Arme", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -100,9 +100,12 @@ namespace Bang.Tests.Features.InGame
                         "Sam le Vautour",
                         "Hors-la-loi"});
 #line 5
- testRunner.Given("une partie est lancée avec ces joueurs", ((string)(null)), table2, "Sachant qu\'");
+ testRunner.Given("une partie est créée avec ces joueurs", ((string)(null)), table2, "Sachant qu\'");
 #line hidden
 #line 11
+ testRunner.And("tous les joueurs ont rejoint la partie", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et que ");
+#line hidden
+#line 12
  testRunner.When("c\'est au tour de \"Jean\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
         }
@@ -113,7 +116,7 @@ namespace Bang.Tests.Features.InGame
         }
         
         [Xunit.SkippableTheoryAttribute(DisplayName="S\'équiper d\'une nouvelle arme")]
-        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur - Cartes Arme")]
+        [Xunit.TraitAttribute("FeatureTitle", "Jouer une carte de type Arme")]
         [Xunit.TraitAttribute("Description", "S\'équiper d\'une nouvelle arme")]
         [Xunit.InlineDataAttribute("Volcanic", "1", new string[0])]
         [Xunit.InlineDataAttribute("Schofield", "2", new string[0])]
@@ -127,7 +130,7 @@ namespace Bang.Tests.Features.InGame
             argumentsOfScenario.Add("weaponName", weaponName);
             argumentsOfScenario.Add("range", range);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("S\'équiper d\'une nouvelle arme", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -140,16 +143,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-#line 14
+#line 15
  testRunner.Given(string.Format("\"Jean\" possède une carte \"{0}\" dans son jeu", weaponName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Etant donné que ");
 #line hidden
-#line 15
+#line 16
  testRunner.When(string.Format("\"Jean\" joue une carte \"{0}\"", weaponName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
-#line 16
+#line 17
  testRunner.Then(string.Format("\"Jean\" place sa carte \"{0}\" devant lui", weaponName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
-#line 17
+#line 18
  testRunner.And(string.Format("\"Jean\" est armé d\'une \"{0}\" ayant une portée de {1}", weaponName, range), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
             }
@@ -163,12 +166,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                TourDunJoueur_CartesArmeFeature.FeatureSetup();
+                JouerUneCarteDeTypeArmeFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                TourDunJoueur_CartesArmeFeature.FeatureTearDown();
+                JouerUneCarteDeTypeArmeFeature.FeatureTearDown();
             }
         }
     }

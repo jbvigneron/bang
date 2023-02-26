@@ -2,7 +2,7 @@
 using Bang.Tests.Support;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bang.Tests.Drivers.Technical
+namespace Bang.Tests.Drivers
 {
     public class HttpClientFactoryDriver
     {

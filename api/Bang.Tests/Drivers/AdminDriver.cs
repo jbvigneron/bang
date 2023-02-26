@@ -2,7 +2,6 @@
 using Bang.Core.Admin.Models;
 using Bang.Models;
 using Bang.Tests.Contexts;
-using Bang.Tests.Drivers.Technical;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
