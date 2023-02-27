@@ -8,7 +8,7 @@ namespace Bang.Core
     {
         public static IServiceCollection RegisterCore(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
             return services;
         }

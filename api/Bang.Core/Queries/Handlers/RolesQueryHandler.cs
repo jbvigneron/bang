@@ -1,10 +1,11 @@
 ﻿using Bang.Database;
 using Bang.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Queries.Handlers
 {
-    public class RolesQueryHandler : RequestHandler<RolesQuery, IEnumerable<Role>>
+    public class RolesQueryHandler : IRequestHandler<RolesQuery, Role[]>
     {
         private readonly BangDbContext dbContext;
 
@@ -13,9 +14,9 @@ namespace Bang.Core.Queries.Handlers
             this.dbContext = dbContext;
         }
 
-        protected override IEnumerable<Role> Handle(RolesQuery request)
+        public Task<Role[]> Handle(RolesQuery request, CancellationToken cancellationToken)
         {
-            return this.dbContext.Roles;
+            return this.dbContext.Roles.ToArrayAsync(cancellationToken);
         }
     }
 }

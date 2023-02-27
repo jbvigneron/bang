@@ -22,8 +22,8 @@ namespace Bang.WebApi.Controllers
         /// </summary>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(IEnumerable<Character>), StatusCodes.Status200OK)]
-        public Task<IEnumerable<Character>> Get()
+        [ProducesResponseType(typeof(Character[]), StatusCodes.Status200OK)]
+        public Task<Character[]> Get()
         {
             var query = new CharactersQuery();
             return this.mediator.Send(query);

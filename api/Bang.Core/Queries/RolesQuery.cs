@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Bang.Core.Queries
 {
-    public class RolesQuery : IRequest<IEnumerable<Role>>
+    public class RolesQuery : IRequest<Role[]>
     {
     }
 }

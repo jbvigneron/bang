@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Admin.Commands.Handlers
 {
-    public class ChangeCardCommandHandler : AsyncRequestHandler<ChangeCardCommand>
+    public class ChangeCardCommandHandler : IRequestHandler<ChangeCardCommand>
     {
         private readonly BangDbContext dbContext;
 
@@ -14,7 +14,7 @@ namespace Bang.Core.Admin.Commands.Handlers
             this.dbContext = dbContext;
         }
 
-        protected override async Task Handle(ChangeCardCommand request, CancellationToken cancellationToken)
+        public async Task Handle(ChangeCardCommand request, CancellationToken cancellationToken)
         {
             var playerId = request.PlayerId;
             var oldCardId = request.OldCardId;

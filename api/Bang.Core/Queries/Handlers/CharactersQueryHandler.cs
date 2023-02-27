@@ -1,10 +1,11 @@
 ﻿using Bang.Database;
 using Bang.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Queries.Handlers
 {
-    public class CharactersQueryHandler : RequestHandler<CharactersQuery, IEnumerable<Character>>
+    public class CharactersQueryHandler : IRequestHandler<CharactersQuery, Character[]>
     {
         private readonly BangDbContext dbContext;
 
@@ -13,9 +14,9 @@ namespace Bang.Core.Queries.Handlers
             this.dbContext = dbContext;
         }
 
-        protected override IEnumerable<Character> Handle(CharactersQuery request)
+        public Task<Character[]> Handle(CharactersQuery request, CancellationToken cancellationToken)
         {
-            return this.dbContext.Characters;
+            return this.dbContext.Characters.ToArrayAsync(cancellationToken);
         }
     }
 }

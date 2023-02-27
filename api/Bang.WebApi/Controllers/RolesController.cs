@@ -22,8 +22,8 @@ namespace Bang.WebApi.Controllers
         /// </summary>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(IEnumerable<Role>), StatusCodes.Status200OK)]
-        public Task<IEnumerable<Role>> Get()
+        [ProducesResponseType(typeof(Role[]), StatusCodes.Status200OK)]
+        public Task<Role[]> Get()
         {
             var request = new RolesQuery();
             return this.mediator.Send(request);

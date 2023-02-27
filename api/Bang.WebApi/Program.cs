@@ -14,7 +14,6 @@ using System.Text;
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.Debug()
-    .WriteTo.File("log.txt")
     .Enrich.FromLogContext()
     .Enrich.WithCorrelationId()
     .Enrich.WithExceptionDetails()
@@ -78,12 +77,6 @@ try
     builder.Services.AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Bang API v1", Version = "v1" });
-
-        options.AddSignalRSwaggerGen(options =>
-        {
-            var assemblyCore = Assembly.Load("Bang.Core");
-            options.ScanAssembly(assemblyCore);
-        });
 
         var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
         options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
