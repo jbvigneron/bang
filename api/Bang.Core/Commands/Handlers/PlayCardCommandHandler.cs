@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bang.Core.Commands.Handlers
 {
-    public class PlayCardCommandHandler : AsyncRequestHandler<PlayCardCommand>
+    public class PlayCardCommandHandler : IRequestHandler<PlayCardCommand>
     {
         private readonly IMediator mediator;
         private readonly ILogger<PlayCardCommandHandler> logger;
@@ -17,7 +17,7 @@ namespace Bang.Core.Commands.Handlers
             this.logger = logger;
         }
 
-        protected override async Task Handle(PlayCardCommand request, CancellationToken cancellationToken)
+        public async Task Handle(PlayCardCommand request, CancellationToken cancellationToken)
         {
             var playerId = request.PlayerId;
             var playerName = request.PlayerName;
