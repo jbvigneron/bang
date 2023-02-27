@@ -39,13 +39,13 @@ namespace Bang.Core.Events.Handlers
                 throw new GameException("L'identifiant de la partie est incorrect", gameId);
             }
 
-            var player = game.Players.First(p => p.Name == playerName);
+            var player = game.Players!.First(p => p.Name == playerName);
             player.Character = await this.GetRandomCharacterAsync(cancellationToken);
             player.Lives = GetLives(player.Character, player.IsSheriff);
             player.Weapon = await this.GetColt45Async(cancellationToken);
             player.Status = PlayerStatus.Alive;
 
-            if (game.Players.All(p => p.Status == PlayerStatus.Alive))
+            if (game.Players!.All(p => p.Status == PlayerStatus.Alive))
             {
                 game.Status = GameStatus.InProgress;
             }

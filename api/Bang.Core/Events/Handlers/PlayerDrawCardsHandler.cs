@@ -41,22 +41,22 @@ namespace Bang.Core.Events.Handlers
 
             for (var i = 1; i <= 2; i++)
             {
-                var card = gameDeck.Cards.First();
+                var card = gameDeck.Cards!.First();
 
-                hand.Cards.Add(card);
-                player.CardsInHand++;
+                hand.Cards!.Add(card);
+                player!.CardsInHand++;
 
-                gameDeck.Cards.Remove(card);
-                game.DeckCount--;
+                gameDeck.Cards!.Remove(card);
+                game!.DeckCount--;
             }
 
-            player.HasDrawnCards = true;
+            player!.HasDrawnCards = true;
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
             await this.gameHub
                 .Clients.Group(gameId.ToString())
-                .SendAsync(HubMessages.Game.CardsDrawn, gameId, game.DeckCount, playerName, player.CardsInHand, cancellationToken);
+                .SendAsync(HubMessages.Game.CardsDrawn, gameId, game!.DeckCount, playerName, player.CardsInHand, cancellationToken);
 
             await this.playerHub
                 .Clients.Group(playerId.ToString())

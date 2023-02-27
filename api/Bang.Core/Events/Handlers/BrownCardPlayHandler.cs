@@ -4,7 +4,6 @@ using Bang.Database;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Bang.Core.Events.Handlers
 {
@@ -13,15 +12,13 @@ namespace Bang.Core.Events.Handlers
         private readonly BangDbContext dbContext;
         private readonly IHubContext<GameHub> gameHub;
         private readonly IHubContext<PlayerHub> playerHub;
-        private ILogger<BrownCardPlayHandler> logger;
 
-        public BrownCardPlayHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub, ILogger<BrownCardPlayHandler> logger)
+        public BrownCardPlayHandler(BangDbContext dbContext, IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
         {
             this.dbContext = dbContext;
 
             this.gameHub = gameHub;
             this.playerHub = playerHub;
-            this.logger = logger;
         }
 
         public async Task Handle(BrownCardPlay notification, CancellationToken cancellationToken)
@@ -38,10 +35,10 @@ namespace Bang.Core.Events.Handlers
                 .Include(d => d.Cards)
                 .SingleAsync(g => g.GameId == gameId, cancellationToken);
 
-            var card = hand.Cards.First(c => c.Id == cardId);
+            var card = hand.Cards!.First(c => c.Id == cardId);
 
-            hand.Cards.Remove(card);
-            discardPile.Cards.Add(card);
+            hand.Cards!.Remove(card);
+            discardPile.Cards!.Add(card);
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 

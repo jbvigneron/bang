@@ -10,6 +10,6 @@ namespace Bang.Core.Admin.Commands
             this.Players = players;
         }
 
-        public IEnumerable<PlayersInfos>? Players { get; set; }
+        public IEnumerable<PlayersInfos> Players { get; }
     }
 }

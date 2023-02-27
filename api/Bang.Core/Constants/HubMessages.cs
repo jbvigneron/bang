@@ -2,12 +2,12 @@
 {
     public static class HubMessages
     {
-        public class Public
+        public static class Public
         {
             public const string GameCreated = "GameCreated";
         }
 
-        public class Game
+        public static class Game
         {
             public const string PlayerJoin = "PlayerJoin";
             public const string DeckUpdated = "DeckUpdated";
@@ -19,7 +19,7 @@
             public const string CardDiscarded = "CardDiscarded";
         }
 
-        public class Player
+        public static class Player
         {
             public const string YourTurn = "YourTurn";
             public const string CardsInHand = "CardsInHand";

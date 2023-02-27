@@ -20,7 +20,7 @@ namespace Bang.Core.Queries.Handlers
                 .Include(p => p.Cards)
                 .FirstAsync(g => g.PlayerId == request.PlayerId, cancellationToken);
 
-            return deck.Cards.ToList();
+            return deck.Cards!.ToList();
         }
     }
 }

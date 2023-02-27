@@ -6,7 +6,7 @@ namespace Bang.Models
     {
         public Guid Id { get; set; }
         public CardKind Kind { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public CardType Type { get; set; }
         public string? Description { get; set; }
         public CardValue Value { get; set; }

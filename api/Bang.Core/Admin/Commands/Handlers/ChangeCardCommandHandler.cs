@@ -25,7 +25,7 @@ namespace Bang.Core.Admin.Commands.Handlers
                 .Include(d => d.Player)
                 .SingleAsync(p => p.PlayerId == playerId, cancellationToken);
 
-            var oldCard = playerHand.Cards.Single(c => c.Id == oldCardId);
+            var oldCard = playerHand.Cards!.Single(c => c.Id == oldCardId);
 
             Card newCard;
             ICollection<Card> sourceDeck;
@@ -35,24 +35,24 @@ namespace Bang.Core.Admin.Commands.Handlers
                 var gameDeck = await this.dbContext.GamesDecks
                     .Include(d => d.Cards)
                     .Include(d => d.Game)
-                    .FirstAsync(d => d.GameId == playerHand.Player.GameId && d.Cards.Any(c => c.Name == newCardName), cancellationToken);
+                    .FirstAsync(d => d.GameId == playerHand.Player!.GameId && d.Cards!.Any(c => c.Name == newCardName), cancellationToken);
 
-                newCard = gameDeck.Cards.First(c => c.Name == newCardName);
-                sourceDeck = gameDeck.Cards;
+                newCard = gameDeck.Cards!.First(c => c.Name == newCardName);
+                sourceDeck = gameDeck.Cards!;
             }
             else
             {
                 var otherPlayerHand = await this.dbContext.PlayersHands
                     .Include(d => d.Cards)
                     .Include(d => d.Player)
-                    .FirstAsync(d => d.PlayerId != playerId && d.Cards.Any(c => c.Name == newCardName), cancellationToken);
+                    .FirstAsync(d => d.PlayerId != playerId && d.Cards!.Any(c => c.Name == newCardName), cancellationToken);
 
-                newCard = otherPlayerHand.Cards.First(c => c.Name == newCardName);
-                sourceDeck = otherPlayerHand.Cards;
+                newCard = otherPlayerHand.Cards!.First(c => c.Name == newCardName);
+                sourceDeck = otherPlayerHand.Cards!;
             }
 
-            sourceDeck.Add(oldCard);
-            playerHand.Cards.Add(newCard);
+            sourceDeck!.Add(oldCard);
+            playerHand.Cards!.Add(newCard);
 
             sourceDeck.Remove(newCard);
             playerHand.Cards.Remove(oldCard);
@@ -61,6 +61,6 @@ namespace Bang.Core.Admin.Commands.Handlers
         }
 
         private bool IsCardInGameDeck(PlayerHand hand, string cardName) =>
-            this.dbContext.GamesDecks.Any(d => d.GameId == hand.Player.GameId && d.Cards.Any(c => c.Name == cardName));
+            this.dbContext.GamesDecks.Any(d => d.GameId == hand.Player!.GameId && d.Cards!.Any(c => c.Name == cardName));
     }
 }

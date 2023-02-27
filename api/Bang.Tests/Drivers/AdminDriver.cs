@@ -49,13 +49,13 @@ namespace Bang.Tests.Drivers
 
             this.browsersContext.HttpClients = players.ToDictionary(
                 player => player.PlayerName,
-                _ => this.httpClientFactoryContext.Factory.CreateClient()
+                _ => this.httpClientFactoryContext.Factory!.CreateClient()
             );
         }
 
         public async Task ForceCardInPlayerHand(string playerName, string cardName)
         {
-            var playerId = this.gameContext.Current.Players.Single(p => p.Name == playerName).Id;
+            var playerId = this.gameContext.Current!.Players!.Single(p => p.Name == playerName).Id;
             var cards = this.gameContext.PlayerCardsInHand[playerName];
             var playerHasTheCard = cards.Any(c => c.Name == cardName);
 

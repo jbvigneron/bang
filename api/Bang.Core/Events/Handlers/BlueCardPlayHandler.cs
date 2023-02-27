@@ -29,14 +29,14 @@ namespace Bang.Core.Events.Handlers
 
             var hand = await this.dbContext.PlayersHands
                 .Include(d => d.Cards)
-                .Include(d => d.Player)
+                .Include(d => d.Player!)
                     .ThenInclude(p => p.CardsInGame)
                 .SingleAsync(p => p.PlayerId == playerId, cancellationToken);
 
-            var card = hand.Cards.First(c => c.Id == cardId);
+            var card = hand.Cards!.First(c => c.Id == cardId);
 
-            hand.Cards.Remove(card);
-            hand.Player.CardsInGame.Add(card);
+            hand.Cards!.Remove(card);
+            hand.Player!.CardsInGame!.Add(card);
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 

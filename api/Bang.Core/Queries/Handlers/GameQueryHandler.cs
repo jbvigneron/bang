@@ -17,13 +17,13 @@ namespace Bang.Core.Queries.Handlers
         public Task<Game> Handle(GameQuery request, CancellationToken cancellationToken)
         {
             return this.dbContext.Games
-                .Include(g => g.Players)
+                .Include(g => g.Players!)
                     .ThenInclude(p => p.Character)
-                .Include(g => g.Players)
+                .Include(g => g.Players!)
                     .ThenInclude(p => p.Weapon)
-                .Include(g => g.Players)
+                .Include(g => g.Players!)
                     .ThenInclude(p => p.Role)
-                .Include(g => g.Players)
+                .Include(g => g.Players!)
                     .ThenInclude(p => p.CardsInGame)
                 .FirstAsync(g => g.Id == request.GameId, cancellationToken);
         }
