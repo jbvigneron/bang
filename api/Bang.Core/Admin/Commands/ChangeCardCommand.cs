@@ -1,14 +1,9 @@
-﻿using Bang.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace Bang.Core.Admin.Commands
 {
     public class ChangeCardCommand : IRequest
     {
-        public ChangeCardCommand()
-        {
-        }
-
         public ChangeCardCommand(Guid playerId, Guid oldCardId, string newCardName)
         {
             this.PlayerId = playerId;
@@ -16,8 +11,8 @@ namespace Bang.Core.Admin.Commands
             this.NewCardName = newCardName;
         }
 
-        public Guid PlayerId { get; set; }
-        public Guid OldCardId { get; set; }
-        public string NewCardName { get; set; }
+        public Guid PlayerId { get; }
+        public Guid OldCardId { get; }
+        public string NewCardName { get; }
     }
 }

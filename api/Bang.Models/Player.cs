@@ -6,7 +6,7 @@ namespace Bang.Models
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public PlayerStatus Status { get; set; }
 
@@ -26,6 +26,6 @@ namespace Bang.Models
 
         public int CardsInHand { get; set; }
 
-        public virtual ICollection<Card> CardsInGame { get; set; }
+        public virtual ICollection<Card>? CardsInGame { get; set; }
     }
 }

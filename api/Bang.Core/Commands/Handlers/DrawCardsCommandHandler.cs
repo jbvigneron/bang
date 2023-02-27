@@ -25,7 +25,7 @@ namespace Bang.Core.Commands.Handlers
             var playerName = request.PlayerName;
 
             var game = await this.mediator.Send(new GameQuery(gameId), cancellationToken);
-            var player = game.Players.First(p => p.Id == playerId);
+            var player = game.Players!.First(p => p.Id == playerId);
 
             if (player.HasDrawnCards)
             {

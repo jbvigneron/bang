@@ -19,7 +19,7 @@ namespace Bang.Core.Queries.Handlers
                 .Include(g => g.Players)
                 .FirstAsync(g => g.Id == request.GameId, cancellationToken);
 
-            var player = game.Players.First(p => p.Name == request.PlayerName);
+            var player = game.Players!.First(p => p.Name == request.PlayerName);
             return player.Id;
         }
     }
