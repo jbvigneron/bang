@@ -47,7 +47,7 @@ namespace Bang.Core.Commands.Handlers
                     this.logger.LogInformation("{PlayerName} ({PlayerId}) play weapon card {CardName}", playerName, playerId, card.Name);
 
                     await this.mediator.Publish(
-                        new WeaponCardPlay(gameId, playerId, cardId), cancellationToken
+                        new BlueCardPlay(gameId, playerId, cardId), cancellationToken
                     );
                     break;
             }
