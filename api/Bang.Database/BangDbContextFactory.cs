@@ -10,8 +10,6 @@ namespace Bang.Database
         public BangDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BangDbContext>();
-            //optionsBuilder.UseSqlite("Data Source=../bang.db");
-
             return new BangDbContext(optionsBuilder.Options);
         }
     }
