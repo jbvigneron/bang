@@ -59,8 +59,8 @@ namespace Bang.Core.Admin.Commands.Handlers
             };
 
             await this.dbContext.Games.AddAsync(game, cancellationToken);
-            await this.dbContext.GamesDecks.AddAsync(deck, cancellationToken);
-            await this.dbContext.GamesDiscardPiles.AddAsync(discard, cancellationToken);
+            await this.dbContext.Decks.AddAsync(deck, cancellationToken);
+            await this.dbContext.DiscardPiles.AddAsync(discard, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);
 
             return gameId;

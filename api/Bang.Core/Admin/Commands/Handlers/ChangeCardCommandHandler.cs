@@ -32,7 +32,7 @@ namespace Bang.Core.Admin.Commands.Handlers
 
             if (this.IsCardInGameDeck(playerHand, newCardName))
             {
-                var gameDeck = await this.dbContext.GamesDecks
+                var gameDeck = await this.dbContext.Decks
                     .Include(d => d.Cards)
                     .Include(d => d.Game)
                     .FirstAsync(d => d.GameId == playerHand.Player!.GameId && d.Cards!.Any(c => c.Name == newCardName), cancellationToken);
@@ -61,6 +61,6 @@ namespace Bang.Core.Admin.Commands.Handlers
         }
 
         private bool IsCardInGameDeck(PlayerHand hand, string cardName) =>
-            this.dbContext.GamesDecks.Any(d => d.GameId == hand.Player!.GameId && d.Cards!.Any(c => c.Name == cardName));
+            this.dbContext.Decks.Any(d => d.GameId == hand.Player!.GameId && d.Cards!.Any(c => c.Name == cardName));
     }
 }

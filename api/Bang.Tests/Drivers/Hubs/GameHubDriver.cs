@@ -26,20 +26,14 @@ namespace Bang.Tests.Drivers.Hubs
 
             this.connection = HubHelper.ConnectToOpenHub(server, "http://localhost/GameHub");
 
-            this.connection.On<Guid, Player>(HubMessages.Game.PlayerJoin, (gameId, player) =>
+            this.connection.On<Guid, Player>(HubMessages.Game.PlayerJoined, (gameId, player) =>
             {
-                this.messages.Add(HubMessages.Game.PlayerJoin);
+                this.messages.Add(HubMessages.Game.PlayerJoined);
                 var players = this.gameContext.Current!.Players;
 
                 for (int i = 0; i < players!.Count; i++)
                     if (players[i].Id == player.Id)
                         players[i] = player;
-            });
-
-            this.connection.On<Guid, int>(HubMessages.Game.DeckUpdated, (gameId, deckCount) =>
-            {
-                this.messages.Add(HubMessages.Game.DeckUpdated);
-                this.gameContext.Current!.DeckCount = deckCount;
             });
 
             this.connection.On<Guid, Game>(HubMessages.Game.AllPlayerJoined, (gameId, game) =>

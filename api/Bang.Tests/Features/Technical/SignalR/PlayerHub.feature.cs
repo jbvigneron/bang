@@ -149,7 +149,7 @@ this.FeatureBackground();
  testRunner.And("c\'est au tour de \"Jean\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
 #line hidden
 #line 19
- testRunner.Then("un message \"CardsInHand\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+ testRunner.Then("un message \"YourHand\" est envoyé à \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }
             this.ScenarioCleanup();

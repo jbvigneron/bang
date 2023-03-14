@@ -2,7 +2,7 @@
 
 namespace Bang.Core.Commands
 {
-    public class JoinGameCommand : IRequest<Guid>
+    public sealed class JoinGameCommand : IRequest<Guid>
     {
         public JoinGameCommand(Guid gameId, string playerName)
         {
