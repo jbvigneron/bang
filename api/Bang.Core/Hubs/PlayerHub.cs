@@ -20,12 +20,11 @@ namespace Bang.Core.Hubs
         public async Task Subscribe()
         {
             var playerId = this.Context.User.GetId();
-            var cards = await this.mediator.Send(new PlayerDeckQuery(this.Context.User));
-
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, this.Context.User.GetId().ToString());
 
+            var cards = await this.mediator.Send(new PlayerDeckQuery(this.Context.User));
             await this.Clients.Group(playerId.ToString())
-                .SendAsync(HubMessages.Player.CardsInHand, cards);
+                .SendAsync(HubMessages.Player.YourHand, cards);
         }
     }
 }

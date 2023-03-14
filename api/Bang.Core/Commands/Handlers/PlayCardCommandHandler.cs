@@ -1,57 +1,50 @@
-﻿using Bang.Core.Events;
-using Bang.Core.Queries;
+﻿using Bang.Core.Extensions;
+using Bang.Database;
 using Bang.Models.Enums;
 using MediatR;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bang.Core.Commands.Handlers
 {
     public class PlayCardCommandHandler : IRequestHandler<PlayCardCommand>
     {
+        private readonly BangDbContext dbContext;
         private readonly IMediator mediator;
-        private readonly ILogger<PlayCardCommandHandler> logger;
 
-        public PlayCardCommandHandler(IMediator mediator, ILogger<PlayCardCommandHandler> logger)
+        public PlayCardCommandHandler(BangDbContext dbContext, IMediator mediator)
         {
+            this.dbContext = dbContext;
             this.mediator = mediator;
-            this.logger = logger;
         }
 
-        public async Task Handle(PlayCardCommand request, CancellationToken cancellationToken)
+        public Task Handle(PlayCardCommand request, CancellationToken cancellationToken)
         {
-            var playerId = request.PlayerId;
-            var playerName = request.PlayerName;
-            var gameId = request.GameId;
+            var user = request.User;
             var cardId = request.CardId;
+            var opponentId = request.OpponentId;
 
-            var card = await this.mediator.Send(new CardQuery(cardId), cancellationToken);
+            var hand = this.dbContext.PlayersHands
+                .Include(h => h.Cards)
+                .Single(h => h.PlayerId == user.GetId());
 
-            switch (card.Type)
+            var card = hand.Cards!.Single(c => c.Id == cardId);
+
+            return card.Type switch
             {
-                case CardType.Brown:
-                    var opponentId = request.OpponentId;
-                    this.logger.LogInformation("{PlayerName} ({PlayerId}) play brown card {CardName} (OpponentId: {OpponentId})", playerName, playerId, card.Name, opponentId);
-
-                    await this.mediator.Publish(
-                        new BrownCardPlay(gameId, playerId, cardId, opponentId), cancellationToken
-                    );
-                    break;
-                case CardType.Blue:
-                    this.logger.LogInformation("{PlayerName} ({PlayerId}) play blue card {CardName}", playerName, playerId, card.Name);
-
-                    await this.mediator.Publish(
-                        new BlueCardPlay(gameId, playerId, cardId), cancellationToken
-                    );
-                    break;
-                case CardType.Weapon:
-                    this.logger.LogInformation("{PlayerName} ({PlayerId}) play weapon card {CardName}", playerName, playerId, card.Name);
-
-                    await this.mediator.Publish(
-                        new BlueCardPlay(gameId, playerId, cardId), cancellationToken
-                    );
-                    break;
-            }
-
+                CardType.Brown =>
+                    this.mediator.Send(
+                        new PlayBrownCardCommand(user, card, opponentId), cancellationToken
+                    ),
+                CardType.Blue =>
+                    this.mediator.Send(
+                        new PlayBlueCardCommand(user, card, opponentId), cancellationToken
+                    ),
+                CardType.Weapon =>
+                this.mediator.Send(
+                        new PlayWeaponCardCommand(user, card), cancellationToken
+                    ),
+                _ => throw new ArgumentOutOfRangeException(nameof(request), "Le type de la carte n'est pas valide"),
+            };
         }
     }
 }

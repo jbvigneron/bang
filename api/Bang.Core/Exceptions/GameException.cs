@@ -6,12 +6,16 @@ namespace Bang.Core.Exceptions
     [Serializable]
     public class GameException : Exception
     {
-        public GameException(string message, Game game) : base(message)
+        public GameException(string message) : base(message)
+        {
+        }
+
+        public GameException(string message, Game game) : this(message)
         {
             this.Game = game;
         }
 
-        public GameException(string message, Guid gameId) : base(message)
+        public GameException(string message, Guid gameId) : this(message)
         {
             this.GameId = gameId;
         }

@@ -30,9 +30,9 @@ namespace Bang.Tests.Drivers.Hubs
             var cookies = this.browsersContext.Cookies[playerName];
             var connection = HubHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
 
-            connection.On<IList<Card>>(HubMessages.Player.CardsInHand, cards =>
+            connection.On<IList<Card>>(HubMessages.Player.YourHand, cards =>
             {
-                this.messages[playerName].Add(HubMessages.Player.CardsInHand);
+                this.messages[playerName].Add(HubMessages.Player.YourHand);
                 this.gameContext.PlayerCardsInHand[playerName] = cards;
             });
 

@@ -1,19 +1,20 @@
-﻿using MediatR;
+﻿using Bang.Models;
+using MediatR;
 using System.Security.Claims;
 
 namespace Bang.Core.Commands
 {
-    public sealed class PlayCardCommand : IRequest
+    public sealed class PlayBrownCardCommand : IRequest
     {
-        public PlayCardCommand(ClaimsPrincipal user, Guid cardId, Guid? opponentId = null)
+        public PlayBrownCardCommand(ClaimsPrincipal user, Card card, Guid? opponentId)
         {
             this.User = user;
-            this.CardId = cardId;
+            this.Card = card;
             this.OpponentId = opponentId;
         }
 
         public ClaimsPrincipal User { get; }
-        public Guid CardId { get; }
+        public Card Card { get; }
         public Guid? OpponentId { get; }
     }
 }

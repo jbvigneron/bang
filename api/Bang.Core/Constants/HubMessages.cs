@@ -9,8 +9,7 @@
 
         public static class Game
         {
-            public const string PlayerJoin = "PlayerJoin";
-            public const string DeckUpdated = "DeckUpdated";
+            public const string PlayerJoined = "PlayerJoined";
             public const string AllPlayerJoined = "AllPlayerJoined";
             public const string PlayerTurn = "PlayerTurn";
             public const string CardsDrawn = "CardsDrawn";
@@ -22,7 +21,7 @@
         public static class Player
         {
             public const string YourTurn = "YourTurn";
-            public const string CardsInHand = "CardsInHand";
+            public const string YourHand = "YourHand";
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Bang.Database
         public DbSet<Card> Cards { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Game> Games { get; set; }
-        public DbSet<GameDeck> GamesDecks { get; set; }
-        public DbSet<GameDiscard> GamesDiscardPiles { get; set; }
+        public DbSet<GameDeck> Decks { get; set; }
+        public DbSet<GameDiscard> DiscardPiles { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerHand> PlayersHands { get; set; }
         public DbSet<Role> Roles { get; set; }
