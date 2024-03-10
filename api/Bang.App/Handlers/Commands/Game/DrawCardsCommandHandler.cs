@@ -63,7 +63,7 @@ namespace Bang.App.Handlers.Commands.Game
                 new CardsDrawn(game, player, cards), cancellationToken
             );
 
-            this.logger.LogInformation("Player {@Player} draw cards", player);
+            this.logger.LogInformation("Player {PlayerName} draw cards: {@Cards}", player, cards);
         }
     }
 }

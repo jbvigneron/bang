@@ -41,7 +41,7 @@ namespace Bang.App.Handlers.Commands.Game
             if (request.OpponentId.HasValue)
             {
                 var opponent = this.playerRepository.Get(request.OpponentId.Value);
-                this.logger.LogInformation("Player {PlayerName} plays brown card {CardName} to {@Opponent}", playerHand.Player.Name, card.Name, opponent);
+                this.logger.LogInformation("Player {PlayerName} plays brown card {CardName} to {OpponentName}", playerHand.Player.Name, card.Name, opponent.Name);
             }
             else
             {
