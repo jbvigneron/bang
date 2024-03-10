@@ -1,10 +1,12 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Queries;
-using Bang.Models;
-using Bang.WebApi.Models;
+﻿using Bang.App.Commands.Game;
+using Bang.App.Queries;
+using Bang.Domain.Entities;
+using Bang.WebApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Bang.WebApi.Controllers
 {
@@ -21,9 +23,9 @@ namespace Bang.WebApi.Controllers
         }
 
         [HttpGet("mine")]
-        public async Task<IList<Card>> GetCardsAsync()
+        public async Task<IEnumerable<Card>> GetCardsAsync()
         {
-            var query = new PlayerDeckQuery(this.User);
+            var query = new PlayerHandQuery(this.User);
             var cards = await this.mediator.Send(query);
             return cards;
         }

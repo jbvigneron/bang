@@ -1,15 +1,22 @@
-using Bang.Core;
-using Bang.Core.Hubs;
-using Bang.Database;
+using Bang.App.Extensions;
+using Bang.App.Hubs;
+using Bang.Persistence.Database;
+using Bang.Persistence.Database.Extensions;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
+using System;
+using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -43,7 +50,8 @@ try
                    options.UseInMemoryDatabase("BangDb")
     );
 
-    builder.Services.RegisterCore();
+    builder.Services.AddApp();
+    builder.Services.AddRepositories();
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
@@ -123,4 +131,5 @@ finally
     Log.CloseAndFlush();
 }
 
-public partial class Program { }
+public partial class Program
+{ }

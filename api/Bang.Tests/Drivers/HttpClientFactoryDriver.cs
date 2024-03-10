@@ -1,4 +1,4 @@
-﻿using Bang.Database;
+﻿using Bang.Persistence.Database;
 using Bang.Tests.Support;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,15 +8,15 @@ namespace Bang.Tests.Drivers
     {
         public HttpClientFactoryDriver()
         {
-      this.Factory = new TestWebApplicationFactory<Program>();
+            this.Factory = new TestWebApplicationFactory<Program>();
 
-            using (var scope = this.Factory.Services.GetService<IServiceScopeFactory>()!.CreateScope())
+            using (var scope = this.Factory.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<BangDbContext>();
-                dbContext!.Database.EnsureCreated();
+                dbContext.Database.EnsureCreated();
             }
         }
 
-        public TestWebApplicationFactory<Program>? Factory { get; }
+        public TestWebApplicationFactory<Program> Factory { get; }
     }
 }

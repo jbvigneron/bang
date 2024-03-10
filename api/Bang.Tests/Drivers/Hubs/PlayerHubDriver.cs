@@ -1,8 +1,10 @@
-﻿using Bang.Core.Constants;
-using Bang.Models;
+﻿using Bang.Domain.Constants;
+using Bang.Domain.Entities;
 using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.Drivers.Hubs
 {
@@ -26,19 +28,19 @@ namespace Bang.Tests.Drivers.Hubs
         {
             this.messages.Add(playerName, new List<string>());
 
-            var server = this.httpClientFactoryContext.Factory!.Server;
+            var server = this.httpClientFactoryContext.Factory.Server;
             var cookies = this.browsersContext.Cookies[playerName];
             var connection = HubHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
 
-            connection.On<IList<Card>>(HubMessages.Player.YourHand, cards =>
+            connection.On<IList<Card>>(Events.Player.YourHand, cards =>
             {
-                this.messages[playerName].Add(HubMessages.Player.YourHand);
+                this.messages[playerName].Add(Events.Player.YourHand);
                 this.gameContext.PlayerCardsInHand[playerName] = cards;
             });
 
-            connection.On(HubMessages.Player.YourTurn, () =>
+            connection.On(Events.Player.YourTurn, () =>
             {
-                this.messages[playerName].Add(HubMessages.Player.YourTurn);
+                this.messages[playerName].Add(Events.Player.YourTurn);
             });
 
             await connection.StartAsync();

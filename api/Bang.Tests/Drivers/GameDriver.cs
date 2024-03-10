@@ -1,10 +1,15 @@
-﻿using Bang.Models;
+﻿using Bang.Domain.Entities;
+using Bang.Domain.Enums;
 using Bang.Tests.Contexts;
 using Bang.WebApi.Enums;
-using Bang.WebApi.Models;
+using Bang.WebApi.Requests;
 using Microsoft.Net.Http.Headers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.Drivers
 {
@@ -23,12 +28,12 @@ namespace Bang.Tests.Drivers
 
         public async Task InitGameAsync(IEnumerable<string> playerNames)
         {
-            var client = this.httpClientFactoryContext.Factory!.CreateClient();
+            var client = this.httpClientFactoryContext.Factory.CreateClient();
             var response = await client.PostAsJsonAsync("api/games", playerNames);
             response.EnsureSuccessStatusCode();
 
             var createdGame = response.Headers.Location;
-            this.gameContext.Current = await client.GetFromJsonAsync<Game>(createdGame!);
+            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>(createdGame);
 
             this.browsersContext.HttpClients = playerNames.ToDictionary(
                 name => name,
@@ -38,7 +43,7 @@ namespace Bang.Tests.Drivers
 
         public async Task JoinGameAsync(string playerName, AuthMode? authMode = AuthMode.Cookie)
         {
-            var gameId = this.gameContext.Current!.Id;
+            var gameId = this.gameContext.Current.Id;
 
             var client = this.browsersContext.HttpClients![playerName];
             var response = await client.PostAsJsonAsync($"api/games/{gameId}?authMode={authMode}", playerName);
@@ -58,7 +63,7 @@ namespace Bang.Tests.Drivers
 
         public async Task AllJoinGameAsync()
         {
-            foreach (var playerName in this.browsersContext.HttpClients!.Keys)
+            foreach (var playerName in this.browsersContext.HttpClients.Keys)
             {
                 await this.JoinGameAsync(playerName);
             }
@@ -87,18 +92,18 @@ namespace Bang.Tests.Drivers
             var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.First(b => b.Name == cardName);
 
-            var opponent = this.gameContext.Current!.Players!.FirstOrDefault(p => p.Name == opponentName);
+            var opponent = this.gameContext.Current.Players.FirstOrDefault(p => p.Name == opponentName);
 
             var client = this.browsersContext.HttpClients![playerName];
-            var request = new PlayCardRequest(card.Id, opponent!.Id);
+            var request = new PlayCardRequest(card.Id, opponent.Id);
             var response = await client.PostAsJsonAsync("api/cards/play", request);
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task PlayRandomCardAsync(string playerName)
+        public async Task PlayRandomBlueCardAsync(string playerName)
         {
             var cards = this.gameContext.PlayerCardsInHand[playerName];
-            var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent);
+            var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent && c.Type == CardType.Blue);
 
             var client = this.browsersContext.HttpClients![playerName];
             var request = new PlayCardRequest(card.Id);
@@ -108,9 +113,9 @@ namespace Bang.Tests.Drivers
 
         public async Task UpdateGameAsync()
         {
-            var gameId = this.gameContext.Current!.Id;
-            var client = this.httpClientFactoryContext.Factory!.CreateClient();
-            this.gameContext.Current = await client.GetFromJsonAsync<Game>($"api/games/{gameId}");
+            var gameId = this.gameContext.Current.Id;
+            var client = this.httpClientFactoryContext.Factory.CreateClient();
+            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>($"api/games/{gameId}");
         }
 
         public async Task UpdatePlayerAsync(string playerName)
@@ -126,7 +131,8 @@ namespace Bang.Tests.Drivers
             var cards = await client.GetFromJsonAsync<IList<Card>>("api/cards/mine");
             this.gameContext.PlayerCardsInHand[playerName] = cards!;
         }
+
         public void IsPlayerExisting(string playerName) =>
-            Assert.True(this.gameContext.Players!.ContainsKey(playerName));
+            Assert.True(this.gameContext.Players.ContainsKey(playerName));
     }
 }

@@ -1,10 +1,12 @@
-﻿using Bang.Core.Extensions;
-using Bang.Core.Queries;
-using Bang.Models;
+﻿using Bang.App.Extensions;
+using Bang.App.Queries;
+using Bang.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace Bang.WebApi.Controllers
 {
