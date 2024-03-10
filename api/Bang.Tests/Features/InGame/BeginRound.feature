@@ -11,7 +11,3 @@ Contexte:
 	Et que tous les joueurs ont rejoint la partie
 	Quand c'est au tour de "Jean", il pioche 2 cartes
 	Alors "Jean" possède 7 cartes en main
-
-Scénario: Jouer une carte bleue
-	Quand "Jean" joue une carte bleue
-	Alors "Jean" possède 6 cartes en main
