@@ -41,7 +41,7 @@ namespace Bang.App.Handlers.Commands.Admin
 
             if (this.deckRepository.IsCardInDeck(player.GameId, newCardName))
             {
-                this.logger.LogInformation("Card {@OldCard} is in game deck {GameId}", oldCard, player.GameId);
+                this.logger.LogInformation("Card {OldCardName} is in deck of game {GameId}", oldCard.Name, player.GameId);
 
                 var deck = this.deckRepository.Get(player.GameId);
                 var newCard = deck.Cards.First(c => c.Name == newCardName);
@@ -50,7 +50,7 @@ namespace Bang.App.Handlers.Commands.Admin
             }
             else
             {
-                this.logger.LogInformation("Card {@OldCard} is not present in game deck {GameId}", oldCard, player.GameId);
+                this.logger.LogInformation("Card {OldCardName} is not present in game deck {GameId}", oldCard.Name, player.GameId);
 
                 var game = this.gameRepository.Get(player.GameId);
                 var otherPlayers = game.Players.Where(p => p.Id != player.Id);
@@ -61,7 +61,7 @@ namespace Bang.App.Handlers.Commands.Admin
 
                     if (hand.Cards.Any(c => c.Name == newCardName))
                     {
-                        this.logger.LogInformation("Card {@OldCard} is in hand of player {PlayerName}", oldCard, player.GameId);
+                        this.logger.LogInformation("Card {OldCardName} is in hand of player {PlayerName}", oldCard.Name, player.GameId);
 
                         var newCard = hand.Cards.First(c => c.Name == newCardName);
                         this.playerRepository.SwitchCard(playerHand, hand, oldCard, newCard);

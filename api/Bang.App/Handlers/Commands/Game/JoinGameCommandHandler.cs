@@ -70,7 +70,7 @@ namespace Bang.App.Handlers.Commands.Game
                 new PlayerJoined(game, player), cancellationToken
             );
 
-            this.logger.LogInformation("Player {@Player} has joined game {GameId}", player, gameId);
+            this.logger.LogInformation("Player {PlayerName} has joined game {GameId}", player.Name, gameId);
 
             return player.Id;
         }
