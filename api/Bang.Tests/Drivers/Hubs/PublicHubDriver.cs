@@ -1,5 +1,5 @@
-﻿using Bang.Core.Constants;
-using Bang.Models;
+﻿using Bang.Domain.Constants;
+using Bang.Domain.Entities;
 using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -27,9 +27,9 @@ namespace Bang.Tests.Drivers.Hubs
             var server = this.httpClientFactoryContext.Factory.Server;
             this.connection = HubHelper.ConnectToOpenHub(server, "http://localhost/PublicHub");
 
-            this.connection.On<Game>(HubMessages.Public.GameCreated, game =>
+            this.connection.On<CurrentGame>(Events.Public.GameCreated, game =>
             {
-                this.messages.Add(HubMessages.Public.GameCreated);
+                this.messages.Add(Events.Public.GameCreated);
                 this.gameContext.Current = game;
             });
 

@@ -1,7 +1,7 @@
 ﻿using Bang.Tests.Drivers;
 using System.Threading.Tasks;
 
-namespace Bang.Tests.StepDefinitions.GameRules
+namespace Bang.Tests.StepDefinitions.InGame
 {
     [Binding]
     public class BeginRoundSteps
@@ -15,10 +15,10 @@ namespace Bang.Tests.StepDefinitions.GameRules
             this.rulesDriver = rulesDriver;
         }
 
-        [When(@"""([^""]*)"" joue une carte")]
-        public async Task WhenJoueUneCarte(string playerName)
+        [When(@"""([^""]*)"" joue une carte bleue")]
+        public async Task WhenJoueUneCarteBleue(string playerName)
         {
-            await this.gameDriver.PlayRandomCardAsync(playerName);
+            await this.gameDriver.PlayRandomBlueCardAsync(playerName);
 
             await this.gameDriver.UpdateGameAsync();
             await this.gameDriver.UpdatePlayerCardsAsync(playerName);

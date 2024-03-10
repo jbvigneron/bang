@@ -1,6 +1,7 @@
-using Bang.Core;
-using Bang.Core.Hubs;
-using Bang.Database;
+using Bang.App.Extensions;
+using Bang.App.Hubs;
+using Bang.Persistence.Database;
+using Bang.Persistence.Database.Extensions;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +50,8 @@ try
                    options.UseInMemoryDatabase("BangDb")
     );
 
-    builder.Services.RegisterCore();
+    builder.Services.AddApp();
+    builder.Services.AddRepositories();
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>

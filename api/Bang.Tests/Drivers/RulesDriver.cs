@@ -1,7 +1,7 @@
-﻿using Bang.Core.Extensions;
-using Bang.Models.Enums;
+﻿using Bang.Domain.Enums;
 using Bang.Tests.Contexts;
 using System.Linq;
+using Bang.App.Extensions;
 
 namespace Bang.Tests.Drivers
 {

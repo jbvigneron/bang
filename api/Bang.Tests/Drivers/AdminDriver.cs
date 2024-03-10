@@ -1,6 +1,5 @@
-﻿using Bang.Core.Admin.Commands;
-using Bang.Core.Admin.Models;
-using Bang.Models;
+﻿using Bang.App.Commands.Admin;
+using Bang.Domain.Entities;
 using Bang.Tests.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using static Bang.App.Commands.Admin.CreatePreparedGameCommand;
 
 namespace Bang.Tests.Drivers
 {
@@ -19,6 +19,7 @@ namespace Bang.Tests.Drivers
 
         private readonly HttpClientFactoryDriver httpClientFactoryContext;
         private readonly HttpClient client;
+        private const string jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuY29tIiwiYXVkIjoiaHR0cHM6Ly90ZXN0LmNvbSIsInJvbGUiOiJJbnRlZ3JhdGlvblRlc3RzIn0.5hBBgFTAgQ2PQozK6l8PPmQjrn55GT8jH91X3S63uHY";
 
         public AdminDriver(GameContext gameContext, BrowsersContext browsersContext, HttpClientFactoryDriver httpClientFactoryContext)
         {
@@ -27,8 +28,7 @@ namespace Bang.Tests.Drivers
 
             this.httpClientFactoryContext = httpClientFactoryContext;
             this.client = this.httpClientFactoryContext.Factory.CreateClient();
-            var token = this.httpClientFactoryContext.Factory.CreateIntegrationTestToken();
-            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
+            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, jwt);
         }
 
         public async Task InitPreparedGameAsync(IEnumerable<(string PlayerName, string CharacterName, string RoleName)> players)
@@ -49,7 +49,7 @@ namespace Bang.Tests.Drivers
             response.EnsureSuccessStatusCode();
 
             var createdGame = response.Headers.Location;
-            this.gameContext.Current = await this.client.GetFromJsonAsync<Game>(createdGame);
+            this.gameContext.Current = await this.client.GetFromJsonAsync<CurrentGame>(createdGame);
 
             this.browsersContext.HttpClients = players.ToDictionary(
                 player => player.PlayerName,

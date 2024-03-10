@@ -1,6 +1,6 @@
-﻿using Bang.Core.Extensions;
-using Bang.Core.Queries;
-using Bang.Models;
+﻿using Bang.App.Extensions;
+using Bang.App.Queries;
+using Bang.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

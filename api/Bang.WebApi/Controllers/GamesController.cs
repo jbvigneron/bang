@@ -1,6 +1,6 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Queries;
-using Bang.Models;
+﻿using Bang.App.Commands.Game;
+using Bang.App.Queries;
+using Bang.Domain.Entities;
 using Bang.WebApi.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -63,8 +63,8 @@ namespace Bang.WebApi.Controllers
         /// <returns>The associated game</returns>
         [HttpGet("{gameId:guid}")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(Game), StatusCodes.Status200OK)]
-        public async Task<Game> GetAsync([FromRoute] Guid gameId)
+        [ProducesResponseType(typeof(CurrentGame), StatusCodes.Status200OK)]
+        public async Task<CurrentGame> GetAsync([FromRoute] Guid gameId)
         {
             var query = new GameQuery(gameId);
             var game = await this.mediator.Send(query);

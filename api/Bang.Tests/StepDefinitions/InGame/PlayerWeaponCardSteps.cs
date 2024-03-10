@@ -1,7 +1,7 @@
 ﻿using Bang.Tests.Drivers;
 using System.Threading.Tasks;
 
-namespace Bang.Tests.StepDefinitions.GameRules
+namespace Bang.Tests.StepDefinitions.InGame
 {
     [Binding]
     public class PlayerWeaponCardSteps

@@ -1,7 +1,8 @@
-﻿using Bang.Models;
+﻿using Bang.Domain.Entities;
+using Bang.Domain.Enums;
 using Bang.Tests.Contexts;
 using Bang.WebApi.Enums;
-using Bang.WebApi.Models;
+using Bang.WebApi.Requests;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Bang.Tests.Drivers
             response.EnsureSuccessStatusCode();
 
             var createdGame = response.Headers.Location;
-            this.gameContext.Current = await client.GetFromJsonAsync<Game>(createdGame);
+            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>(createdGame);
 
             this.browsersContext.HttpClients = playerNames.ToDictionary(
                 name => name,
@@ -40,7 +41,7 @@ namespace Bang.Tests.Drivers
             );
         }
 
-        public async Task JoinGameAsync(string playerName, AuthMode authMode = AuthMode.Cookie)
+        public async Task JoinGameAsync(string playerName, AuthMode? authMode = AuthMode.Cookie)
         {
             var gameId = this.gameContext.Current.Id;
 
@@ -99,10 +100,10 @@ namespace Bang.Tests.Drivers
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task PlayRandomCardAsync(string playerName)
+        public async Task PlayRandomBlueCardAsync(string playerName)
         {
             var cards = this.gameContext.PlayerCardsInHand[playerName];
-            var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent);
+            var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent && c.Type == CardType.Blue);
 
             var client = this.browsersContext.HttpClients![playerName];
             var request = new PlayCardRequest(card.Id);
@@ -114,7 +115,7 @@ namespace Bang.Tests.Drivers
         {
             var gameId = this.gameContext.Current.Id;
             var client = this.httpClientFactoryContext.Factory.CreateClient();
-            this.gameContext.Current = await client.GetFromJsonAsync<Game>($"api/games/{gameId}");
+            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>($"api/games/{gameId}");
         }
 
         public async Task UpdatePlayerAsync(string playerName)

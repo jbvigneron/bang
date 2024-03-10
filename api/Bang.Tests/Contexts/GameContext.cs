@@ -1,4 +1,4 @@
-﻿using Bang.Models;
+﻿using Bang.Domain.Entities;
 using System.Collections.Generic;
 
 namespace Bang.Tests.Contexts
@@ -11,7 +11,7 @@ namespace Bang.Tests.Contexts
             this.PlayerCardsInHand = new Dictionary<string, IList<Card>>();
         }
 
-        public Game Current { get; set; }
+        public CurrentGame Current { get; set; }
         public IDictionary<string, Player> Players { get; }
         public IDictionary<string, IList<Card>> PlayerCardsInHand { get; }
     }
