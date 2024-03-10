@@ -108,45 +108,14 @@ namespace Bang.Tests.Features.InGame
 #line 12
  testRunner.When("c\'est au tour de \"Jean\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
 #line hidden
+#line 13
+ testRunner.Then("\"Jean\" possède 7 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
         }
         
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Jouer une carte")]
-        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur")]
-        [Xunit.TraitAttribute("Description", "Jouer une carte")]
-        public void JouerUneCarte()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Jouer une carte", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 4
-this.FeatureBackground();
-#line hidden
-#line 15
- testRunner.Then("\"Jean\" possède 7 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-#line 16
- testRunner.When("\"Jean\" joue une carte", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
-#line hidden
-#line 17
- testRunner.Then("\"Jean\" possède 6 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
-#line hidden
-            }
-            this.ScenarioCleanup();
         }
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]

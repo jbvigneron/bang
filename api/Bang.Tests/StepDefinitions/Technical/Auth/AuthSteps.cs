@@ -1,5 +1,6 @@
 ﻿using Bang.Tests.Drivers;
 using Bang.WebApi.Enums;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.StepDefinitions.Technical.Auth
 {

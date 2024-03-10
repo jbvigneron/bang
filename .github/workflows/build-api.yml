@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Setup GitHub repository
         uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
       - name: Generate Live Documentation
         uses: cryptic-wizard/run-specflow-tests@v1.3.1
         with:
-          test-assembly-path: api/Bang.Tests/bin/Release/net6.0
+          test-assembly-path: api/Bang.Tests/bin/Release/net8.0
           test-assembly-dll: Bang.Tests.dll
           no-build: true
           output-html: LivingDoc.html

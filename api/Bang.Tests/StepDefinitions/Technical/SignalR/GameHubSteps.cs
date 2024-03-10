@@ -1,4 +1,5 @@
 using Bang.Tests.Drivers.Hubs;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {

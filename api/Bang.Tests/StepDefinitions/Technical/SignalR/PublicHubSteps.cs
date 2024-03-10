@@ -1,5 +1,8 @@
 using Bang.Tests.Drivers;
 using Bang.Tests.Drivers.Hubs;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {
@@ -9,7 +12,7 @@ namespace Bang.Tests.StepDefinitions.Technical.SignalR
         private readonly PublicHubDriver publicHubDriver;
         private readonly GameDriver gameDriver;
 
-        private IEnumerable<string>? playerNames;
+        private IEnumerable<string> playerNames;
 
         public PublicHubSteps(PublicHubDriver publicHubDriver, GameDriver gameDriver)
         {
