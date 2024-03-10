@@ -1,8 +1,11 @@
-﻿using Bang.Core.Queries;
-using Bang.Models;
+﻿using Bang.Domain.Entities;
+using Bang.Domain.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace Bang.WebApi.Controllers
 {
@@ -23,7 +26,7 @@ namespace Bang.WebApi.Controllers
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Character[]), StatusCodes.Status200OK)]
-        public Task<Character[]> Get()
+        public Task<IEnumerable<Character>> Get()
         {
             var query = new CharactersQuery();
             return this.mediator.Send(query);

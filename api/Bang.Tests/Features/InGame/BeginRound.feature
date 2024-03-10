@@ -10,8 +10,8 @@ Contexte:
 		| Martin     | Sam le Vautour | Hors-la-loi |
 	Et que tous les joueurs ont rejoint la partie
 	Quand c'est au tour de "Jean", il pioche 2 cartes
-
-Scénario: Jouer une carte
 	Alors "Jean" possède 7 cartes en main
-	Quand "Jean" joue une carte
+
+Scénario: Jouer une carte bleue
+	Quand "Jean" joue une carte bleue
 	Alors "Jean" possède 6 cartes en main

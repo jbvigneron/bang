@@ -1,14 +1,21 @@
-﻿using Bang.Core.Commands;
-using Bang.Core.Queries;
-using Bang.Models;
+﻿using Bang.Domain.Commands.Game;
+using Bang.Domain.Entities;
+using Bang.Domain.Queries;
 using Bang.WebApi.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bang.WebApi.Controllers
 {
@@ -54,8 +61,8 @@ namespace Bang.WebApi.Controllers
         /// <returns>The associated game</returns>
         [HttpGet("{gameId:guid}")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(Game), StatusCodes.Status200OK)]
-        public async Task<Game> GetAsync([FromRoute] Guid gameId)
+        [ProducesResponseType(typeof(CurrentGame), StatusCodes.Status200OK)]
+        public async Task<CurrentGame> GetAsync([FromRoute] Guid gameId)
         {
             var query = new GameQuery(gameId);
             var game = await this.mediator.Send(query);
@@ -81,9 +88,9 @@ namespace Bang.WebApi.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Name, playerName),
-                new Claim(JwtRegisteredClaimNames.NameId, playerId.ToString()),
-                new Claim("gameId", gameId.ToString())
+                new(ClaimTypes.Name, playerName),
+                new(ClaimTypes.NameIdentifier, playerId.ToString()),
+                new(Domain.Constants.JwtConstants.GameId, gameId.ToString())
             };
 
             var token = new JwtSecurityToken(

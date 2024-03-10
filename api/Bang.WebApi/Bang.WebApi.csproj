@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>041908b8-2b30-4c02-9693-47621b1019dc</UserSecretsId>
 		<DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -28,7 +26,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Bang.Core\Bang.Core.csproj" />
-		<ProjectReference Include="..\Bang.Database\Bang.Database.csproj" />
+		<ProjectReference Include="..\Bang.App\Bang.App.csproj" />
+		<ProjectReference Include="..\Bang.Persistence.Database\Bang.Persistence.Database.csproj" />
 	</ItemGroup>
 </Project>

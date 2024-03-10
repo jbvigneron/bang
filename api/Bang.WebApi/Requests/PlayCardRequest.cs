@@ -1,4 +1,6 @@
-﻿namespace Bang.WebApi.Models
+﻿using System;
+
+namespace Bang.WebApi.Requests
 {
     public class PlayCardRequest
     {
