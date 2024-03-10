@@ -5,11 +5,7 @@
 		<DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
-		<CodeAnalysisRuleSet>..\.sonarlint\jbvigneron_bangcsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
-	<ItemGroup>
-	  <AdditionalFiles Include="..\.sonarlint\jbvigneron_bang\CSharp\SonarLint.xml" Link="SonarLint.xml" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1" />
