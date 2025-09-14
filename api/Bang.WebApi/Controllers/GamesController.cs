@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
+using JwtConstants = Bang.Core.Constants.JwtConstants;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace Bang.WebApi.Controllers
 {
@@ -81,9 +83,9 @@ namespace Bang.WebApi.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Name, playerName),
-                new Claim(JwtRegisteredClaimNames.NameId, playerId.ToString()),
-                new Claim("gameId", gameId.ToString())
+                new(JwtRegisteredClaimNames.Sub, playerId.ToString()),
+                new(JwtRegisteredClaimNames.Name, playerName),
+                new(JwtConstants.GameId, gameId.ToString())
             };
 
             var token = new JwtSecurityToken(
