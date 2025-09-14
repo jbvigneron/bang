@@ -1,5 +1,6 @@
-﻿using Bang.Core.Constants;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
 using System.Security.Claims;
+using JwtConstants = Bang.Core.Constants.JwtConstants;
 
 namespace Bang.Core.Extensions
 {
@@ -9,7 +10,7 @@ namespace Bang.Core.Extensions
             Guid.Parse(user.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
         public static string GetName(this ClaimsPrincipal user) =>
-            user.FindFirst(ClaimTypes.Name)!.Value;
+            user.FindFirst(JwtRegisteredClaimNames.Name)!.Value;
 
         public static Guid GetGameId(this ClaimsPrincipal user) =>
             Guid.Parse(user.FindFirst(JwtConstants.GameId)!.Value);

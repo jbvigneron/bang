@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Setup GitHub repository
         uses: actions/checkout@v3
@@ -55,19 +55,14 @@ jobs:
           reporter: dotnet-trx
 
       - name: Generate Live Documentation
-        uses: cryptic-wizard/run-specflow-tests@v1.3.1
-        with:
-          test-assembly-path: api/Bang.Tests/bin/Release/net6.0
-          test-assembly-dll: Bang.Tests.dll
-          no-build: true
-          output-html: LivingDoc.html
-          upload-artifact: false
+        run: |
+            dotnet livingdoc test-assembly Bang.Tests/bin/Release/net8.0/Bang.Tests.dll -o LivingDoc.html -t Bang.Tests/bin/Release/net8.0/TestExecution.json
 
       - name: Publish Live Documentation
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4
         with:
           name: "Live Documentation"
-          path: LivingDoc.html
+          path: api/LivingDoc.html
 
       - name: End SonarCloud analysis
         env:
