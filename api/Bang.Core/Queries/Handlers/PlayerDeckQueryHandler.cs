@@ -2,6 +2,9 @@
 using Bang.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Queries.Handlers
 {
@@ -20,7 +23,7 @@ namespace Bang.Core.Queries.Handlers
                 .Include(p => p.Cards)
                 .FirstAsync(g => g.PlayerId == request.PlayerId, cancellationToken);
 
-            return deck.Cards!.ToList();
+            return [.. deck.Cards];
         }
     }
 }

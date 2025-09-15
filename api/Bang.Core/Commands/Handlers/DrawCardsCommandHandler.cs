@@ -4,6 +4,9 @@ using Bang.Core.Queries;
 using Bang.Models.Enums;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Commands.Handlers
 {
@@ -25,7 +28,7 @@ namespace Bang.Core.Commands.Handlers
             var playerName = request.PlayerName;
 
             var game = await this.mediator.Send(new GameQuery(gameId), cancellationToken);
-            var player = game.Players!.First(p => p.Id == playerId);
+            var player = game.Players.First(p => p.Id == playerId);
 
             if (player.HasDrawnCards)
             {

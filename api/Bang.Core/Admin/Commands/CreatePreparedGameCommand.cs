@@ -1,5 +1,7 @@
 ﻿using Bang.Core.Admin.Models;
 using MediatR;
+using System;
+using System.Collections.Generic;
 
 namespace Bang.Core.Admin.Commands
 {

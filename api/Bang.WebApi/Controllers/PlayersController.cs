@@ -3,8 +3,10 @@ using Bang.Core.Queries;
 using Bang.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace Bang.WebApi.Controllers
 {

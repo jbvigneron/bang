@@ -3,6 +3,9 @@ using Bang.Core.Notifications;
 using Bang.Core.Queries;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Commands.Handlers
 {
@@ -22,7 +25,7 @@ namespace Bang.Core.Commands.Handlers
             var gameId = request.GameId;
             var playerName = request.PlayerName;
 
-            this.logger.LogInformation("{PlayerName} wants to join game {GameId}", gameId);
+            this.logger.LogInformation("{PlayerName} wants to join game {GameId}", playerName, gameId);
 
             await this.mediator.Publish(
                 new PlayerJoin(gameId, playerName), cancellationToken

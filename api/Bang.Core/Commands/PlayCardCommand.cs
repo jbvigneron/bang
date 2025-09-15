@@ -1,12 +1,13 @@
 ﻿using Bang.Core.Extensions;
 using MediatR;
+using System;
 using System.Security.Claims;
 
 namespace Bang.Core.Commands
 {
     public class PlayCardCommand : IRequest
     {
-        public PlayCardCommand(ClaimsPrincipal user, Guid cardId, Guid? opponentId)
+        public PlayCardCommand(ClaimsPrincipal user, Guid cardId, Guid opponentId)
         {
             this.PlayerId = user.GetId();
             this.PlayerName = user.GetName();
@@ -19,6 +20,6 @@ namespace Bang.Core.Commands
         public string PlayerName { get; }
         public Guid GameId { get; }
         public Guid CardId { get; }
-        public Guid? OpponentId { get; }
+        public Guid OpponentId { get; }
     }
 }

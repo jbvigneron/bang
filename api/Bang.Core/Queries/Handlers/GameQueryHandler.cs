@@ -2,6 +2,8 @@
 using Bang.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Queries.Handlers
 {

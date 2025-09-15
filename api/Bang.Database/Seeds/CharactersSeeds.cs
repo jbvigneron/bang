@@ -1,12 +1,13 @@
-﻿using Bang.Models.Enums;
-using Bang.Models;
+﻿using Bang.Models;
+using Bang.Models.Enums;
+using System.Collections.Generic;
 
 namespace Bang.Database.Seeds
 {
     public static class CharactersSeeds
     {
-        public static IEnumerable<Character> Fill() => new[]
-        {
+        public static IEnumerable<Character> Fill() =>
+        [
             new Character
             {
                 Id = CharacterKind.BartCassidy,
@@ -119,6 +120,6 @@ namespace Bang.Database.Seeds
                 Description = "il peut jouer autant de cartes *BANG !* qu’il le désire pendant son tour.",
                 Lives = 4
             }
-        };
+        ];
     }
 }

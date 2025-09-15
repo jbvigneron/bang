@@ -3,12 +3,19 @@ using Bang.Core.Queries;
 using Bang.Models;
 using Bang.WebApi.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using JwtConstants = Bang.Core.Constants.JwtConstants;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
@@ -73,7 +80,7 @@ namespace Bang.WebApi.Controllers
         [HttpPost("{gameId:guid}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> JoinAsync([FromRoute] Guid gameId, [FromBody] string playerName, [FromQuery] AuthMode? authMode = AuthMode.Cookie)
+        public async Task<IActionResult> JoinAsync([FromRoute] Guid gameId, [FromBody] string playerName, [FromQuery] AuthMode authMode = AuthMode.Cookie)
         {
             var command = new JoinGameCommand(gameId, playerName);
             var playerId = await this.mediator.Send(command);

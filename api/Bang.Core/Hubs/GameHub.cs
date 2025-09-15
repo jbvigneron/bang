@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Hubs
 {

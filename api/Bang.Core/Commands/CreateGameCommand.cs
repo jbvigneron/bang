@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using System;
+using System.Collections.Generic;
 
 namespace Bang.Core.Commands
 {

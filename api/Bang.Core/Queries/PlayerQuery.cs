@@ -1,5 +1,6 @@
 ﻿using Bang.Models;
 using MediatR;
+using System;
 
 namespace Bang.Core.Queries
 {
@@ -7,7 +8,7 @@ namespace Bang.Core.Queries
     {
         public PlayerQuery(Guid playerId)
         {
-      this.PlayerId = playerId;
+            this.PlayerId = playerId;
         }
 
         public Guid PlayerId { get; }

@@ -3,8 +3,12 @@ using Bang.Core.Admin.Models;
 using Bang.Models;
 using Bang.Tests.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.Drivers
 {
@@ -23,7 +27,7 @@ namespace Bang.Tests.Drivers
             this.browsersContext = browsersContext;
 
             this.httpClientFactoryContext = httpClientFactoryContext;
-            this.client = this.httpClientFactoryContext.Factory!.CreateClient();
+            this.client = this.httpClientFactoryContext.Factory.CreateClient();
             this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, jwt);
         }
 
@@ -36,8 +40,8 @@ namespace Bang.Tests.Drivers
                 players.Select(p => new PlayersInfos
                 {
                     Name = p.PlayerName,
-                    CharacterId = characters!.Single(c => c.Name == p.CharacterName).Id,
-                    RoleId = roles!.Single(r => r.Name == p.RoleName).Id
+                    CharacterId = characters.Single(c => c.Name == p.CharacterName).Id,
+                    RoleId = roles.Single(r => r.Name == p.RoleName).Id
                 })
             );
 
@@ -49,13 +53,13 @@ namespace Bang.Tests.Drivers
 
             this.browsersContext.HttpClients = players.ToDictionary(
                 player => player.PlayerName,
-                _ => this.httpClientFactoryContext.Factory!.CreateClient()
+                _ => this.httpClientFactoryContext.Factory.CreateClient()
             );
         }
 
         public async Task ForceCardInPlayerHand(string playerName, string cardName)
         {
-            var playerId = this.gameContext.Current!.Players!.Single(p => p.Name == playerName).Id;
+            var playerId = this.gameContext.Current.Players.Single(p => p.Name == playerName).Id;
             var cards = this.gameContext.PlayerCardsInHand[playerName];
             var playerHasTheCard = cards.Any(c => c.Name == cardName);
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Net.Http.Headers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bang.Tests.Helpers
 {

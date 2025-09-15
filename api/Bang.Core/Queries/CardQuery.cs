@@ -1,5 +1,6 @@
 ﻿using Bang.Models;
 using MediatR;
+using System;
 
 namespace Bang.Core.Queries
 {

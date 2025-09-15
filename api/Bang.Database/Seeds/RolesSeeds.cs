@@ -1,12 +1,13 @@
 ﻿using Bang.Models;
 using Bang.Models.Enums;
+using System.Collections.Generic;
 
 namespace Bang.Database.Seeds
 {
     public static class RolesSeeds
     {
-        public static IEnumerable<Role> Fill() => new[]
-        {
+        public static IEnumerable<Role> Fill() =>
+        [
             new Role
             {
                 Id = RoleKind.Sheriff,
@@ -27,6 +28,6 @@ namespace Bang.Database.Seeds
                 Id = RoleKind.DeputySheriff,
                 Name = "Adjoint",
             },
-        };
+        ];
     }
 }

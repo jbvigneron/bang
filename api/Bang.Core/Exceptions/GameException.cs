@@ -1,5 +1,5 @@
 ﻿using Bang.Models;
-using System.Runtime.Serialization;
+using System;
 
 namespace Bang.Core.Exceptions
 {
@@ -16,14 +16,7 @@ namespace Bang.Core.Exceptions
             this.GameId = gameId;
         }
 
-        protected GameException(SerializationInfo serializationInfo, StreamingContext streamingContext)
-            : base(serializationInfo, streamingContext)
-        {
-            serializationInfo.AddValue("Game", this.Game);
-            serializationInfo.AddValue("GameId", this.GameId);
-        }
-
-        public Game? Game { get; }
-        public Guid? GameId { get; }
+        public Game Game { get; }
+        public Guid GameId { get; }
     }
 }
