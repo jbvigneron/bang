@@ -4,6 +4,7 @@ using Bang.Core.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Hubs
 {

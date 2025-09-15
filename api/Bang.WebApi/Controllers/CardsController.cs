@@ -5,6 +5,8 @@ using Bang.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Bang.WebApi.Controllers
 {

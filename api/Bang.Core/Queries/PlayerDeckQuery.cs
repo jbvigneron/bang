@@ -1,6 +1,8 @@
 ﻿using Bang.Core.Extensions;
 using Bang.Models;
 using MediatR;
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace Bang.Core.Queries

@@ -1,4 +1,6 @@
 using Bang.Tests.Drivers;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.StepDefinitions
 {

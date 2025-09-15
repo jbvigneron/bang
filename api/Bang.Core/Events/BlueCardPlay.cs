@@ -1,4 +1,6 @@
-﻿namespace Bang.Core.Events
+﻿using System;
+
+namespace Bang.Core.Events
 {
     public class BlueCardPlay : CardPlay
     {

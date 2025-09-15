@@ -3,6 +3,8 @@ using Bang.Core.Queries;
 using Bang.Models.Enums;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Commands.Handlers
 {
@@ -36,6 +38,7 @@ namespace Bang.Core.Commands.Handlers
                         new BrownCardPlay(gameId, playerId, cardId, opponentId), cancellationToken
                     );
                     break;
+
                 case CardType.Blue:
                     this.logger.LogInformation("{PlayerName} ({PlayerId}) play blue card {CardName}", playerName, playerId, card.Name);
 
@@ -43,6 +46,7 @@ namespace Bang.Core.Commands.Handlers
                         new BlueCardPlay(gameId, playerId, cardId), cancellationToken
                     );
                     break;
+
                 case CardType.Weapon:
                     this.logger.LogInformation("{PlayerName} ({PlayerId}) play weapon card {CardName}", playerName, playerId, card.Name);
 
@@ -51,7 +55,6 @@ namespace Bang.Core.Commands.Handlers
                     );
                     break;
             }
-
         }
     }
 }

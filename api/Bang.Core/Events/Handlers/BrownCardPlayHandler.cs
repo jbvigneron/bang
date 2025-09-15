@@ -4,6 +4,9 @@ using Bang.Database;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Events.Handlers
 {
@@ -35,10 +38,10 @@ namespace Bang.Core.Events.Handlers
                 .Include(d => d.Cards)
                 .SingleAsync(g => g.GameId == gameId, cancellationToken);
 
-            var card = hand.Cards!.First(c => c.Id == cardId);
+            var card = hand.Cards.First(c => c.Id == cardId);
 
-            hand.Cards!.Remove(card);
-            discardPile.Cards!.Add(card);
+            hand.Cards.Remove(card);
+            discardPile.Cards.Add(card);
 
             await this.dbContext.SaveChangesAsync(cancellationToken);
 

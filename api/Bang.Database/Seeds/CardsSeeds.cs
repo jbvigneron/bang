@@ -1,5 +1,8 @@
-﻿using Bang.Models.Enums;
-using Bang.Models;
+﻿using Bang.Models;
+using Bang.Models.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bang.Database.Seeds
 {
@@ -139,7 +142,7 @@ namespace Bang.Database.Seeds
                 RequireOpponent = requireOpponent
             };
 
-        private static Card Weapon(CardKind kind, string name, string? description, int range, int value, CardSymbol symbol)
+        private static Card Weapon(CardKind kind, string name, string description, int range, int value, CardSymbol symbol)
             => new()
             {
                 Id = Guid.NewGuid(),

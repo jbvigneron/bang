@@ -1,4 +1,6 @@
-﻿namespace Bang.WebApi.Models
+﻿using System;
+
+namespace Bang.WebApi.Models
 {
     public class PlayCardRequest
     {
@@ -18,6 +20,6 @@
         }
 
         public Guid CardId { get; set; }
-        public Guid? OpponentId { get; set; }
+        public Guid OpponentId { get; set; }
     }
 }

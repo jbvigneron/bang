@@ -7,6 +7,11 @@ using Bang.Models.Enums;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Events.Handlers
 {
@@ -15,13 +20,13 @@ namespace Bang.Core.Events.Handlers
         private readonly BangDbContext dbContext;
         private readonly IHubContext<PublicHub> publicHub;
 
-        private readonly List<RoleKind> roles = new()
-        {
+        private readonly List<RoleKind> roles =
+        [
             RoleKind.Sheriff,
             RoleKind.Renegade,
             RoleKind.Outlaw,
             RoleKind.Outlaw
-        };
+        ];
 
         public GameCreateHandler(BangDbContext dbContext, IHubContext<PublicHub> publicHub)
         {
@@ -45,7 +50,7 @@ namespace Bang.Core.Events.Handlers
             {
                 Id = gameId,
                 Status = GameStatus.WaitingForPlayers,
-                Players = new List<Player>(),
+                Players = [],
                 DeckCount = cards.Count
             };
 

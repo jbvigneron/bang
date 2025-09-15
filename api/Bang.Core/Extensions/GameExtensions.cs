@@ -1,4 +1,5 @@
 ﻿using Bang.Models;
+using System.Linq;
 
 namespace Bang.Core.Extensions
 {
@@ -6,7 +7,7 @@ namespace Bang.Core.Extensions
     {
         public static Player GetSheriff(this Game game)
         {
-            return game.Players!.First(p => p.IsSheriff);
+            return game.Players.First(p => p.IsSheriff);
         }
     }
 }

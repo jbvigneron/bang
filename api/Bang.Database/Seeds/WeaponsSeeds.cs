@@ -1,12 +1,13 @@
-﻿using Bang.Models.Enums;
-using Bang.Models;
+﻿using Bang.Models;
+using Bang.Models.Enums;
+using System.Collections.Generic;
 
 namespace Bang.Database.Seeds
 {
     public static class WeaponsSeeds
     {
-        public static IEnumerable<Weapon> Fill() => new[]
-        {
+        public static IEnumerable<Weapon> Fill() =>
+        [
             new Weapon
             {
                 Id = WeaponKind.Colt45,
@@ -43,6 +44,6 @@ namespace Bang.Database.Seeds
                 Name = "Winchester",
                 Range = 5
             },
-        };
+        ];
     }
 }

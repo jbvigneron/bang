@@ -3,6 +3,10 @@ using Bang.Models;
 using Bang.Models.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Admin.Commands.Handlers
 {
@@ -26,7 +30,7 @@ namespace Bang.Core.Admin.Commands.Handlers
             {
                 Id = gameId,
                 Status = GameStatus.WaitingForPlayers,
-                Players = players.Select(player =>
+                Players = [.. players.Select(player =>
                 {
                     var character = this.dbContext.Characters.First(c => c.Id == player.CharacterId);
                     var role = this.dbContext.Roles.First(r => r.Id == player.RoleId);
@@ -42,7 +46,8 @@ namespace Bang.Core.Admin.Commands.Handlers
                         Status = PlayerStatus.NotReady,
                         Weapon = this.dbContext.Weapons.First(w => w.Id == WeaponKind.Colt45)
                     };
-                }).ToList(),
+                })],
+
                 CurrentPlayerName = players.Single(info => info.RoleId == RoleKind.Sheriff).Name,
                 DeckCount = cards.Count,
             };

@@ -1,5 +1,6 @@
 ﻿using Bang.Core.Extensions;
 using MediatR;
+using System;
 using System.Security.Claims;
 
 namespace Bang.Core.Commands

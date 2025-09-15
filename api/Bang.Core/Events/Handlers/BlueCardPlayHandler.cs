@@ -5,6 +5,9 @@ using Bang.Models.Enums;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bang.Core.Events.Handlers
 {
@@ -34,10 +37,10 @@ namespace Bang.Core.Events.Handlers
                     .ThenInclude(p => p.CardsInGame)
                 .SingleAsync(p => p.PlayerId == playerId, cancellationToken);
 
-            var card = hand.Cards!.First(c => c.Id == cardId);
+            var card = hand.Cards.First(c => c.Id == cardId);
 
-            hand.Cards!.Remove(card);
-            hand.Player!.CardsInGame!.Add(card);
+            hand.Cards.Remove(card);
+            hand.Player.CardsInGame.Add(card);
 
             if (card.Type == CardType.Weapon)
             {

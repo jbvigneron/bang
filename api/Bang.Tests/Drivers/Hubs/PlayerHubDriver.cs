@@ -3,6 +3,8 @@ using Bang.Models;
 using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Bang.Tests.Drivers.Hubs
 {
@@ -24,9 +26,9 @@ namespace Bang.Tests.Drivers.Hubs
 
         public async Task ConnectToHubAsync(string playerName)
         {
-            this.messages.Add(playerName, new List<string>());
+            this.messages.Add(playerName, []);
 
-            var server = this.httpClientFactoryContext.Factory!.Server;
+            var server = this.httpClientFactoryContext.Factory.Server;
             var cookies = this.browsersContext.Cookies[playerName];
             var connection = HubHelper.ConnectToProtectedHub(server, "http://localhost/PlayerHub", cookies);
 

@@ -1,5 +1,5 @@
 ﻿using Bang.Models;
-using System.Runtime.Serialization;
+using System;
 
 namespace Bang.Core.Exceptions
 {
@@ -11,12 +11,6 @@ namespace Bang.Core.Exceptions
             this.Player = player;
         }
 
-        protected PlayerException(SerializationInfo serializationInfo, StreamingContext streamingContext)
-            : base(serializationInfo, streamingContext)
-        {
-            serializationInfo.AddValue("Player", this.Player);
-        }
-
-        public Player? Player { get; }
+        public Player Player { get; }
     }
 }

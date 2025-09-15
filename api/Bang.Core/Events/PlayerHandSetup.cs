@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 
 namespace Bang.Core.Events
 {
@@ -9,6 +10,7 @@ namespace Bang.Core.Events
             this.GameId = gameId;
             this.PlayerId = playerId;
         }
+
         public Guid GameId { get; }
         public Guid PlayerId { get; }
     }
