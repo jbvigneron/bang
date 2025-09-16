@@ -16,4 +16,4 @@ Contexte:
 Scénario: Quand c'est au tour du premier joueur
 	Quand le hub de "Jean" est connecté
 	Et c'est au tour de "Jean", il pioche 2 cartes
-	Alors un message "CardsInHand" est envoyé à "Jean"
+	Alors un message "YourHand" est envoyé à "Jean"

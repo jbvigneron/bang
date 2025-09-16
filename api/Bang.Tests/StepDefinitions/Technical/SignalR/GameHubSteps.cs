@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {
     [Binding]
-    public sealed class GameHubSteps
+    public class GameHubSteps
     {
         private readonly GameHubDriver gameHubDriver;
 
