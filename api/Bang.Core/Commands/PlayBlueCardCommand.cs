@@ -1,11 +1,10 @@
 ﻿using Bang.Models;
 using MediatR;
-using System;
 using System.Security.Claims;
 
 namespace Bang.Core.Commands
 {
-    public class PlayBlueCardCommand : IRequest
+    public sealed class PlayBlueCardCommand : IRequest
     {
         public PlayBlueCardCommand(ClaimsPrincipal user, Card card, Guid? opponentId)
         {

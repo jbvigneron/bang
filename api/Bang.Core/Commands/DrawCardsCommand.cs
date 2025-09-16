@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace Bang.Core.Commands
 {
-    public class DrawCardsCommand : IRequest
+    public sealed class DrawCardsCommand : IRequest
     {
         public DrawCardsCommand(ClaimsPrincipal user)
         {

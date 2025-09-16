@@ -6,11 +6,6 @@ using Bang.Models.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Bang.Core.Commands.Handlers
 {
@@ -30,7 +25,7 @@ namespace Bang.Core.Commands.Handlers
         public async Task Handle(DrawCardsCommand request, CancellationToken cancellationToken)
         {
             var game = this.GetGame(request.GameId);
-            var player = game.Players.First(p => p.Id == request.PlayerId);
+            var player = game.Players!.First(p => p.Id == request.PlayerId);
 
             CheckCurrentStatus(game, player);
             var cards = DrawCards(game, player);
@@ -84,16 +79,16 @@ namespace Bang.Core.Commands.Handlers
 
             for (var i = 1; i <= 2; i++)
             {
-                var card = deck.Cards.First();
+                var card = deck.Cards!.First();
 
-                hand.Cards.Add(card);
-                player.CardsInHand++;
+                hand.Cards!.Add(card);
+                player!.CardsInHand++;
 
-                deck.Cards.Remove(card);
-                game.DeckCount--;
+                deck.Cards!.Remove(card);
+                game!.DeckCount--;
             }
 
-            player.HasDrawnCards = true;
+            player!.HasDrawnCards = true;
             return hand.Cards!;
         }
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bang.Core.Commands
 {
-    public class CreateGameCommand : IRequest<Guid>
+    public sealed class CreateGameCommand : IRequest<Guid>
     {
         public CreateGameCommand(IEnumerable<string> playerNames)
         {

@@ -1,10 +1,9 @@
 ﻿using Bang.Models;
 using MediatR;
-using System;
 
 namespace Bang.Core.Events
 {
-    public class WeaponChanged : INotification
+    public sealed class WeaponChanged : INotification
     {
         public WeaponChanged(Guid gameId, Guid playerId, Weapon weapon)
         {

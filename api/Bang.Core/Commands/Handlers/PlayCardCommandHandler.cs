@@ -3,10 +3,6 @@ using Bang.Database;
 using Bang.Models.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Bang.Core.Commands.Handlers
 {
@@ -31,7 +27,7 @@ namespace Bang.Core.Commands.Handlers
                 .Include(h => h.Cards)
                 .Single(h => h.PlayerId == user.GetId());
 
-            var card = hand.Cards.Single(c => c.Id == cardId);
+            var card = hand.Cards!.Single(c => c.Id == cardId);
 
             return card.Type switch
             {

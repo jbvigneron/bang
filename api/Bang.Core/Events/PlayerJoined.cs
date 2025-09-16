@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Bang.Core.Notifications
 {
-    public class PlayerJoined : INotification
+    public sealed class PlayerJoined : INotification
     {
         public PlayerJoined(Game game, Player player)
         {

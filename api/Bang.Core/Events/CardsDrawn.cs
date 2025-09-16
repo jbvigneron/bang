@@ -1,10 +1,9 @@
 ﻿using Bang.Models;
 using MediatR;
-using System.Collections.Generic;
 
 namespace Bang.Core.Events
 {
-    public class CardsDrawn : INotification
+    public sealed class CardsDrawn : INotification
     {
         public CardsDrawn(Game game, Player player, IEnumerable<Card> cards)
         {

@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace Bang.Core.Commands
 {
-    public class PlayWeaponCardCommand : IRequest
+    public sealed class PlayWeaponCardCommand : IRequest
     {
         public PlayWeaponCardCommand(ClaimsPrincipal user, Card card)
         {

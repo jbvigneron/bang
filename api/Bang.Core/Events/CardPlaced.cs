@@ -1,10 +1,9 @@
 ﻿using Bang.Models;
 using MediatR;
-using System;
 
 namespace Bang.Core.Events
 {
-    public class CardPlaced : INotification
+    public sealed class CardPlaced : INotification
     {
         public CardPlaced(Guid gameId, Guid playerId, Guid targetPlayerId, Card card)
         {

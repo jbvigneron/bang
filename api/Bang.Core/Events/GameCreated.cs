@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Bang.Core.Events
 {
-    public class GameCreated : INotification
+    public sealed class GameCreated : INotification
     {
         public GameCreated(Game game)
         {
