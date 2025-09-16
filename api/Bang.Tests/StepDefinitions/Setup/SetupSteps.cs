@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Bang.Tests.StepDefinitions.Setup
 {
     [Binding]
-    public sealed class SetupSteps
+    public class SetupSteps
     {
         private readonly GameDriver gameDriver;
         private readonly RulesDriver rulesDriver;

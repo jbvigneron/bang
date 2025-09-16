@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {
     [Binding]
-    public sealed class PublicHubSteps
+    public class PublicHubSteps
     {
         private readonly PublicHubDriver publicHubDriver;
         private readonly GameDriver gameDriver;
@@ -29,7 +29,7 @@ namespace Bang.Tests.StepDefinitions.Technical.SignalR
         [When(@"la partie est initialisée")]
         public Task WhenUnePartieEstInitialisee()
         {
-            return this.gameDriver.InitGameAsync(this.playerNames!);
+            return this.gameDriver.InitGameAsync(this.playerNames);
         }
 
         [When(@"le hub public est connecté")]

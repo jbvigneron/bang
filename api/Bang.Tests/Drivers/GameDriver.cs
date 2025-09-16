@@ -32,7 +32,7 @@ namespace Bang.Tests.Drivers
             response.EnsureSuccessStatusCode();
 
             var createdGame = response.Headers.Location;
-            this.gameContext.Current = await client.GetFromJsonAsync<Game>(createdGame!);
+            this.gameContext.Current = await client.GetFromJsonAsync<Game>(createdGame);
 
             this.browsersContext.HttpClients = playerNames.ToDictionary(
                 name => name,

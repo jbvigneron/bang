@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Bang.Tests.StepDefinitions.Technical.SignalR
 {
     [Binding]
-    public sealed class PlayerHubSteps
+    public class PlayerHubSteps
     {
         private readonly PlayerHubDriver playerHubDriver;
         private readonly StateDriver stateDriver;

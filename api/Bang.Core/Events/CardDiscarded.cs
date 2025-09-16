@@ -1,17 +1,20 @@
-﻿using MediatR;
+﻿using Bang.Models;
+using MediatR;
 using System;
 
 namespace Bang.Core.Events
 {
-    public class PlayerHandSetup : INotification
+    public class CardDiscarded : INotification
     {
-        public PlayerHandSetup(Guid gameId, Guid playerId)
+        public CardDiscarded(Guid gameId, Guid playerId, Card card)
         {
             this.GameId = gameId;
             this.PlayerId = playerId;
+            this.Card = card;
         }
 
         public Guid GameId { get; }
         public Guid PlayerId { get; }
+        public Card Card { get; }
     }
 }

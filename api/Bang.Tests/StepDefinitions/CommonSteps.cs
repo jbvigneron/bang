@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Bang.Tests.StepDefinitions
 {
     [Binding]
-    public sealed class CommonSteps
+    public class CommonSteps
     {
         private readonly AdminDriver adminDriver;
         private readonly GameDriver gameDriver;
