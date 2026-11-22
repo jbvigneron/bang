@@ -85,7 +85,8 @@ namespace Bang.WebApi.Controllers
             var command = new JoinGameCommand(gameId, playerName);
             var playerId = await this.mediator.Send(command);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(this.configuration["Jwt:Key"])); // NOSONAR: runtime secret; no key value is committed.
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
