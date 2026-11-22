@@ -20,6 +20,6 @@ namespace Bang.WebApi.Models
         }
 
         public Guid CardId { get; set; }
-        public Guid OpponentId { get; set; }
+        public Guid? OpponentId { get; set; }
     }
 }
