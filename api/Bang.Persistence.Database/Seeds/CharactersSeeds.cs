@@ -7,7 +7,8 @@ namespace Bang.Persistence.Database.Seeds
     public static class CharactersSeeds
     {
         public static IEnumerable<Character> Fill() =>
-        [
+        new[]
+        {
             new Character
             {
                 Id = CharacterKind.BartCassidy,
@@ -120,6 +121,6 @@ namespace Bang.Persistence.Database.Seeds
                 Description = "il peut jouer autant de cartes *BANG !* qu’il le désire pendant son tour.",
                 Lives = 4
             }
-        ];
+        };
     }
 }

@@ -140,9 +140,12 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 16
- testRunner.When("\"Jean\" joue une carte bleue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+ testRunner.Given("\"Jean\" possède une carte \"Lunette\" dans son jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Etant donné que ");
 #line hidden
 #line 17
+ testRunner.When("\"Jean\" joue une carte bleue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 18
  testRunner.Then("\"Jean\" possède 6 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
 #line hidden
             }

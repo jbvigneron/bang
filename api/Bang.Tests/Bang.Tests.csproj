@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,7 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Bang.Database\Bang.Database.csproj" />
+		<ProjectReference Include="..\Bang.App\Bang.App.csproj" />
+		<ProjectReference Include="..\Bang.Domain\Bang.Domain.csproj" />
+		<ProjectReference Include="..\Bang.Persistence.Database\Bang.Persistence.Database.csproj" />
 		<ProjectReference Include="..\Bang.WebApi\Bang.WebApi.csproj" />
 	</ItemGroup>
 

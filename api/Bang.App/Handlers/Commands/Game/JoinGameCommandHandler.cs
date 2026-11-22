@@ -47,7 +47,7 @@ namespace Bang.App.Handlers.Commands.Game
         {
             var gameId = request.GameId;
             var playerName = request.PlayerName;
-            this.logger.LogInformation("Player {PlayerName} wants to join game {GameId}", gameId);
+            this.logger.LogInformation("Player {PlayerName} wants to join game {GameId}", playerName, gameId);
 
             var game = this.gameRepository.Get(gameId);
 

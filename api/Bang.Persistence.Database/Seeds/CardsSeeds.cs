@@ -107,18 +107,18 @@ namespace Bang.Persistence.Database.Seeds
         );
 
         public static IEnumerable<Card> Weapons() => Concat(
-            Weapon(CardKind.Carabina, "Carabine", null, 4, (int)CardValue.Ace, CardSymbol.Club),
+            Weapon(CardKind.Carabina, "Carabine", string.Empty, 4, (int)CardValue.Ace, CardSymbol.Club),
 
-            Weapon(CardKind.Remington, "Remington", null, 3, (int)CardValue.King, CardSymbol.Club),
+            Weapon(CardKind.Remington, "Remington", string.Empty, 3, (int)CardValue.King, CardSymbol.Club),
 
-            Weapon(CardKind.Schofield, "Schofield", null, 2, (int)CardValue.King, CardSymbol.Spade),
-            Weapon(CardKind.Schofield, "Schofield", null, 2, (int)CardValue.Jack, CardSymbol.Club),
-            Weapon(CardKind.Schofield, "Schofield", null, 2, (int)CardValue.Queen, CardSymbol.Club),
+            Weapon(CardKind.Schofield, "Schofield", string.Empty, 2, (int)CardValue.King, CardSymbol.Spade),
+            Weapon(CardKind.Schofield, "Schofield", string.Empty, 2, (int)CardValue.Jack, CardSymbol.Club),
+            Weapon(CardKind.Schofield, "Schofield", string.Empty, 2, (int)CardValue.Queen, CardSymbol.Club),
 
             Weapon(CardKind.Volcanic, "Volcanic", "Vous pouvez jouer autant de BANG! que vous voulez.", 1, 10, CardSymbol.Spade),
             Weapon(CardKind.Volcanic, "Volcanic", "Vous pouvez jouer autant de BANG! que vous voulez.", 1, 10, CardSymbol.Club),
 
-            Weapon(CardKind.Winchester, "Winchester", null, 5, 8, CardSymbol.Spade)
+            Weapon(CardKind.Winchester, "Winchester", string.Empty, 5, 8, CardSymbol.Spade)
         );
 
         private static IEnumerable<T> Concat<T>(params T[] sequences) => sequences;

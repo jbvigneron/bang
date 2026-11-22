@@ -16,7 +16,7 @@ using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using JwtConstants = Bang.Core.Constants.JwtConstants;
+using JwtConstants = Bang.App.Constants.JwtConstants;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace Bang.WebApi.Controllers

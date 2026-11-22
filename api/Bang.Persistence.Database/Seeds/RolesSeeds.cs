@@ -7,7 +7,8 @@ namespace Bang.Persistence.Database.Seeds
     public static class RolesSeeds
     {
         public static IEnumerable<Role> Fill() =>
-        [
+        new[]
+        {
             new Role
             {
                 Id = RoleKind.Sheriff,
@@ -28,6 +29,6 @@ namespace Bang.Persistence.Database.Seeds
                 Id = RoleKind.DeputySheriff,
                 Name = "Adjoint",
             },
-        ];
+        };
     }
 }

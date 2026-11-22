@@ -7,7 +7,8 @@ namespace Bang.Persistence.Database.Seeds
     public static class WeaponsSeeds
     {
         public static IEnumerable<Weapon> Fill() =>
-        [
+        new[]
+        {
             new Weapon
             {
                 Id = WeaponKind.Colt45,
@@ -44,6 +45,6 @@ namespace Bang.Persistence.Database.Seeds
                 Name = "Winchester",
                 Range = 5
             },
-        ];
+        };
     }
 }

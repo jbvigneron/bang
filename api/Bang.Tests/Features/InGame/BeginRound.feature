@@ -13,5 +13,6 @@ Contexte:
 	Alors "Jean" possède 7 cartes en main
 
 Scénario: Jouer une carte bleue
+	Etant donné que "Jean" possède une carte "Lunette" dans son jeu
 	Quand "Jean" joue une carte bleue
 	Alors "Jean" possède 6 cartes en main
