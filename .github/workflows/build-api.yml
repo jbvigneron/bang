@@ -45,7 +45,19 @@ jobs:
         run: dotnet build --no-restore --configuration Release
         
       - name: Run tests and collect code coverage
-        run: dotnet coverage collect 'dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=Bang.Tests.trx"' -f xml -o "coverage.xml"
+        run: |
+          $bytes = New-Object byte[] 64
+          $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+          try {
+            $rng.GetBytes($bytes)
+            $env:Jwt__Key = [Convert]::ToBase64String($bytes)
+            dotnet coverage collect 'dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=Bang.Tests.trx"' -f xml -o "coverage.xml"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          } finally {
+            $rng.Dispose()
+            [Array]::Clear($bytes, 0, $bytes.Length)
+            Remove-Item Env:Jwt__Key -ErrorAction SilentlyContinue
+          }
 
       - name: Publish tests results
         uses: dorny/test-reporter@v1

@@ -10,7 +10,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Bang.Tests.Support
@@ -18,17 +17,10 @@ namespace Bang.Tests.Support
     public class TestWebApplicationFactory<TProgram>
     : WebApplicationFactory<TProgram> where TProgram : class
     {
-        private static readonly string jwtKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-
-        static TestWebApplicationFactory()
-        {
-            Environment.SetEnvironmentVariable("Jwt__Key", jwtKey);
-        }
-
         public string CreateIntegrationTestToken()
         {
             var configuration = this.Services.GetRequiredService<IConfiguration>();
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             var claims = new[] { new Claim("role", Roles.IntegrationTests) };
             var token = new JwtSecurityToken(
