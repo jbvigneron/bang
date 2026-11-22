@@ -71,7 +71,7 @@ namespace Bang.Core.Commands.Handlers
 
         private void SetPlayerInfos(Player player)
         {
-            player.Character = this.GetRandomCharacter();
+            player.Character ??= this.GetRandomCharacter();
             player.Lives = GetLives(player.Character, player.IsSheriff);
             player.Weapon = this.GetColt45();
             player.Status = PlayerStatus.Alive;
