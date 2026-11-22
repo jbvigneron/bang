@@ -19,7 +19,6 @@ namespace Bang.Tests.Drivers
 
         private readonly HttpClientFactoryDriver httpClientFactoryContext;
         private readonly HttpClient client;
-        private const string jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Rlc3QuY29tIiwiYXVkIjoiaHR0cHM6Ly90ZXN0LmNvbSIsInJvbGUiOiJJbnRlZ3JhdGlvblRlc3RzIn0.5hBBgFTAgQ2PQozK6l8PPmQjrn55GT8jH91X3S63uHY";
 
         public AdminDriver(GameContext gameContext, BrowsersContext browsersContext, HttpClientFactoryDriver httpClientFactoryContext)
         {
@@ -28,7 +27,8 @@ namespace Bang.Tests.Drivers
 
             this.httpClientFactoryContext = httpClientFactoryContext;
             this.client = this.httpClientFactoryContext.Factory.CreateClient();
-            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, jwt);
+            var token = this.httpClientFactoryContext.Factory.CreateIntegrationTestToken();
+            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
         }
 
         public async Task InitPreparedGameAsync(IEnumerable<(string PlayerName, string CharacterName, string RoleName)> players)

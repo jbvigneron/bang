@@ -36,20 +36,18 @@ namespace Bang.App.Handlers.Commands.Game
 
             var playerHand = this.playerRepository.GetHand(playerId);
 
-            if (card.RequireOpponent && !request.OpponentId.HasValue)
-            {
-                throw new GameException("Veuillez cibler un adversaire pour cette carte.");
-            }
-
             this.playerRepository.PlayBlueCard(playerHand, card);
 
             if (card.RequireOpponent)
             {
-                var opponent = this.playerRepository.Get(request.OpponentId.Value);
+                var opponentId = request.OpponentId
+                    ?? throw new GameException("Veuillez cibler un adversaire pour cette carte.");
+                var opponent = this.playerRepository.Get(opponentId);
                 this.logger.LogInformation("Player {PlayerName} plays brown card {CardName} to {OpponentName}", playerHand.Player.Name, card.Name, opponent.Name);
 
                 await this.mediator.Publish(
-                    new CardPlaced(gameId, playerId, opponent.Id, card)
+                    new CardPlaced(gameId, playerId, opponent.Id, card),
+                    cancellationToken
                 );
             }
             else
@@ -57,7 +55,8 @@ namespace Bang.App.Handlers.Commands.Game
                 this.logger.LogInformation("Player {PlayerName} plays brown card {CardName}", playerHand.Player.Name, card.Name);
 
                 await this.mediator.Publish(
-                    new CardPlaced(gameId, playerId, playerId, card)
+                    new CardPlaced(gameId, playerId, playerId, card),
+                    cancellationToken
                 );
             }
         }

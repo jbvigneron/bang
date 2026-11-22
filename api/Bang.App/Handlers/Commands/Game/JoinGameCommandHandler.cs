@@ -57,7 +57,7 @@ namespace Bang.App.Handlers.Commands.Game
             }
 
             var player = game.Players.First(p => p.Name == playerName);
-            player.Character = this.charactersRepository.GetRandom();
+            player.Character ??= this.charactersRepository.GetRandom();
             player.Lives = this.GetLives(player.Character, player.IsSheriff);
             player.Weapon = this.weaponsRepository.GetFirstWeapon();
             player.Status = PlayerStatus.Alive;

@@ -39,7 +39,8 @@ namespace Bang.App.Handlers.Commands.Game
             this.logger.LogInformation("Player {PlayerName} uses weapon {WeaponName}", playerHand.Player.Name, card.Name);
 
             await this.mediator.Publish(
-                new WeaponChanged(gameId, playerId, newWeapon)
+                new WeaponChanged(gameId, playerId, newWeapon),
+                cancellationToken
             );
         }
     }

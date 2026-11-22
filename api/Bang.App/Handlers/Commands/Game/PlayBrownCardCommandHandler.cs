@@ -49,7 +49,8 @@ namespace Bang.App.Handlers.Commands.Game
             }
 
             await this.mediator.Publish(
-                new CardDiscarded(gameId, playerId, card)
+                new CardDiscarded(gameId, playerId, card),
+                cancellationToken
             );
         }
     }

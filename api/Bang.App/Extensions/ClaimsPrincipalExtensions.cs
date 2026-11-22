@@ -1,7 +1,7 @@
-﻿using Bang.App.Constants;
-using Microsoft.IdentityModel.JsonWebTokens;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Security.Claims;
+using JwtConstants = Bang.App.Constants.JwtConstants;
 
 namespace Bang.App.Extensions
 {
