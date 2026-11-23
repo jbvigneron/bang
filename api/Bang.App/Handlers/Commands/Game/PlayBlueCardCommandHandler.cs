@@ -2,7 +2,6 @@
 using Bang.App.Events;
 using Bang.App.Extensions;
 using Bang.App.Repositories;
-using Bang.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -40,8 +39,7 @@ namespace Bang.App.Handlers.Commands.Game
 
             if (card.RequireOpponent)
             {
-                var opponentId = request.OpponentId
-                    ?? throw new GameException("Veuillez cibler un adversaire pour cette carte.");
+                var opponentId = request.OpponentId!.Value;
                 var opponent = this.playerRepository.Get(opponentId);
                 this.logger.LogInformation("Player {PlayerName} plays brown card {CardName} to {OpponentName}", playerHand.Player.Name, card.Name, opponent.Name);
 

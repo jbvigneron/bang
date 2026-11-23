@@ -1,7 +1,5 @@
 using Bang.App.Extensions;
 using MediatR;
-using Bang.App.Extensions;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;

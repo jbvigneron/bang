@@ -3,7 +3,6 @@ using Bang.App.Events;
 using Bang.App.Repositories;
 using Bang.Domain.Entities;
 using Bang.Domain.Enums;
-using Bang.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -36,11 +35,6 @@ namespace Bang.App.Handlers.Commands.Game
 
         public async Task<Guid> Handle(CreateGameCommand request, CancellationToken cancellationToken)
         {
-            if (request.PlayerNames.Distinct().Count() != request.PlayerNames.Count())
-            {
-                throw new GameException("Les joueurs doivent avoir des noms différents");
-            }
-
             var players = this.AssignRoles(request.PlayerNames);
             var firstPlayer = this.GetFirstPlayer(players);
 
@@ -82,9 +76,6 @@ namespace Bang.App.Handlers.Commands.Game
 
         private IList<RoleKind> GetAvailablesRoles(int playersCount)
         {
-            if (playersCount < 4 || playersCount > 7)
-                throw new ArgumentOutOfRangeException(nameof(playersCount), "Le nombre de joueurs doit être compris entre 4 et 7");
-
             var availableRoles = new List<RoleKind> {
                 RoleKind.Sheriff,
                 RoleKind.Renegade,

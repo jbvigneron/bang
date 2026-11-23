@@ -531,6 +531,92 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Partie avec moins de 4 joueurs refusée")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Partie avec moins de 4 joueurs refusée")]
+        public void PartieAvecMoinsDe4JoueursRefusee()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partie avec moins de 4 joueurs refusée", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 102
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                            "playerName"});
+                table8.AddRow(new string[] {
+                            "Jean"});
+                table8.AddRow(new string[] {
+                            "Max"});
+                table8.AddRow(new string[] {
+                            "Emilie"});
+#line 103
+ testRunner.Given("ces joueurs veulent jouer", ((string)(null)), table8, "Sachant que ");
+#line hidden
+#line 108
+ testRunner.When("la partie est créée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 109
+ testRunner.Then("la création est refusée pour données invalides", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Partie avec des noms de joueurs identiques refusée")]
+        [Xunit.TraitAttribute("FeatureTitle", "Préparation du jeu")]
+        [Xunit.TraitAttribute("Description", "Partie avec des noms de joueurs identiques refusée")]
+        public void PartieAvecDesNomsDeJoueursIdentiquesRefusee()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partie avec des noms de joueurs identiques refusée", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 111
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "playerName"});
+                table9.AddRow(new string[] {
+                            "Jean"});
+                table9.AddRow(new string[] {
+                            "Jean"});
+                table9.AddRow(new string[] {
+                            "Emilie"});
+                table9.AddRow(new string[] {
+                            "Martin"});
+#line 112
+ testRunner.Given("ces joueurs veulent jouer", ((string)(null)), table9, "Sachant que ");
+#line hidden
+#line 118
+ testRunner.When("la partie est créée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 119
+ testRunner.Then("la création est refusée pour données invalides", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

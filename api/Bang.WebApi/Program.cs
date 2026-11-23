@@ -4,9 +4,12 @@ using Bang.Persistence.Database;
 using Bang.Persistence.Database.Extensions;
 using Bang.WebApi.Hubs;
 using Bang.WebApi.SignalR;
+using FluentValidation;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +19,7 @@ using Serilog;
 using Serilog.Exceptions;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +50,15 @@ try
             var environment = context.RequestServices.GetRequiredService<IHostEnvironment>();
             return environment.IsDevelopment();
         };
+
+        opts.Map<ValidationException>((context, ex) => new ValidationProblemDetails(
+            ex.Errors
+                .GroupBy(e => e.PropertyName)
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray()))
+        {
+            Status = StatusCodes.Status400BadRequest,
+            Title = "La requête est invalide"
+        });
     });
 
     builder.Services.AddDbContext<BangDbContext>(options =>
@@ -100,8 +113,6 @@ try
 
     if (app.Environment.IsDevelopment())
     {
-        app.UseDeveloperExceptionPage();
-
         app.UseSwagger();
         app.UseSwaggerUI();
     }

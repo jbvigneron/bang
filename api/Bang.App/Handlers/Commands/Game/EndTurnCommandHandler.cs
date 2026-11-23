@@ -43,7 +43,7 @@ namespace Bang.App.Handlers.Commands.Game
 
             var hand = this.playerRepository.GetHand(player.Id);
             var requiredDiscards = Math.Max(0, hand.Cards.Count - player.Lives);
-            var cardIds = (request.CardIds ?? Enumerable.Empty<Guid>()).Distinct().ToList();
+            var cardIds = request.CardIds.Distinct().ToList();
 
             if (cardIds.Count != requiredDiscards)
             {
