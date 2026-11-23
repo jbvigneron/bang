@@ -1,5 +1,5 @@
-﻿using Bang.Core.Constants;
-using Bang.Models;
+﻿using Bang.Domain.Constants;
+using Bang.Domain.Entities;
 using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -13,7 +13,6 @@ namespace Bang.Tests.Drivers.Hubs
         private readonly GameContext gameContext;
         private readonly HttpClientFactoryDriver httpClientFactoryContext;
 
-        private HubConnection connection;
         private readonly IList<string> messages = new List<string>();
 
         public PublicHubDriver(GameContext gameContext, HttpClientFactoryDriver httpClientFactoryContext)
@@ -25,15 +24,15 @@ namespace Bang.Tests.Drivers.Hubs
         public async Task ConnectToHubAsync()
         {
             var server = this.httpClientFactoryContext.Factory.Server;
-            this.connection = HubHelper.ConnectToOpenHub(server, "http://localhost/PublicHub");
+            var connection = HubHelper.ConnectToOpenHub(server, "http://localhost/PublicHub");
 
-            this.connection.On<Game>(HubMessages.Public.GameCreated, game =>
+            connection.On<CurrentGame>(Events.Public.GameCreated, game =>
             {
-                this.messages.Add(HubMessages.Public.GameCreated);
+                this.messages.Add(Events.Public.GameCreated);
                 this.gameContext.Current = game;
             });
 
-            await this.connection.StartAsync();
+            await connection.StartAsync();
         }
 
         public void CheckMessage(string message) =>

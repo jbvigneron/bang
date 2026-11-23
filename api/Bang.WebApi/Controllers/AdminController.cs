@@ -1,4 +1,4 @@
-﻿using Bang.Core.Admin.Commands;
+﻿using Bang.App.Commands.Admin;
 using Bang.WebApi.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

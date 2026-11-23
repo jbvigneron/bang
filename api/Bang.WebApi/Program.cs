@@ -1,6 +1,9 @@
-using Bang.Core;
-using Bang.Core.Hubs;
-using Bang.Database;
+using Bang.App.Extensions;
+using Bang.App.Notifications;
+using Bang.Persistence.Database;
+using Bang.Persistence.Database.Extensions;
+using Bang.WebApi.Hubs;
+using Bang.WebApi.SignalR;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +52,8 @@ try
                    options.UseInMemoryDatabase("BangDb")
     );
 
-    builder.Services.RegisterCore();
+    builder.Services.AddApp();
+    builder.Services.AddRepositories();
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
@@ -78,6 +82,7 @@ try
         });
 
     builder.Services.AddSignalR();
+    builder.Services.AddScoped<IRealtimeNotificationPublisher, SignalRRealtimeNotificationPublisher>();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>

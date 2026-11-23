@@ -1,5 +1,5 @@
-﻿using Bang.Core.Constants;
-using Bang.Models;
+﻿using Bang.Domain.Constants;
+using Bang.Domain.Entities;
 using Bang.Tests.Contexts;
 using Bang.Tests.Helpers;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -28,11 +28,12 @@ namespace Bang.Tests.Drivers.Hubs
         {
             var server = this.httpClientFactoryContext.Factory.Server;
 
-            this.connection = HubHelper.ConnectToOpenHub(server, "http://localhost/GameHub");
+            var connection = HubHelper.ConnectToOpenHub(server, "http://localhost/GameHub");
+            this.connection = connection;
 
-            this.connection.On<Guid, Player>(HubMessages.Game.PlayerJoined, (gameId, player) =>
+            connection.On<Guid, Player>(Events.Game.PlayerJoined, (gameId, player) =>
             {
-                this.messages.Add(HubMessages.Game.PlayerJoined);
+                this.messages.Add(Events.Game.PlayerJoined);
                 var players = this.gameContext.Current.Players;
 
                 for (int i = 0; i < players.Count; i++)
@@ -40,30 +41,31 @@ namespace Bang.Tests.Drivers.Hubs
                         players[i] = player;
             });
 
-            this.connection.On<Guid, Game>(HubMessages.Game.AllPlayerJoined, (gameId, game) =>
+            connection.On<Guid, CurrentGame>(Events.Game.AllPlayerJoined, (gameId, game) =>
             {
-                this.messages.Add(HubMessages.Game.AllPlayerJoined);
+                this.messages.Add(Events.Game.AllPlayerJoined);
                 this.gameContext.Current = game;
             });
 
-            this.connection.On<Guid, string>(HubMessages.Game.PlayerTurn, (gameId, name) =>
+            connection.On<Guid, string>(Events.Game.PlayerTurn, (gameId, name) =>
             {
-                this.messages.Add(HubMessages.Game.PlayerTurn);
+                this.messages.Add(Events.Game.PlayerTurn);
                 this.gameContext.Current.CurrentPlayerName = name;
             });
 
-            this.connection.On<Guid, int, string, int>(HubMessages.Game.CardsDrawn, (gameId, gameDeckCount, playerName, cardsInHand) =>
+            connection.On<Guid, int, string, int>(Events.Game.CardsDrawn, (gameId, gameDeckCount, playerName, cardsInHand) =>
             {
-                this.messages.Add(HubMessages.Game.CardsDrawn);
+                this.messages.Add(Events.Game.CardsDrawn);
                 this.gameContext.Current.DeckCount = gameDeckCount;
                 this.gameContext.Current.Players.Single(p => p.Name == playerName).CardsInHand = cardsInHand;
             });
 
-            await this.connection.StartAsync();
+            await connection.StartAsync();
         }
 
         public Task SubscribeToMessagesAsync() =>
-            this.connection.InvokeAsync("Subscribe", this.gameContext.Current.Id);
+            (this.connection ?? throw new InvalidOperationException("The game hub is not connected."))
+                .InvokeAsync("Subscribe", this.gameContext.Current.Id);
 
         public void CheckMessage(string message) =>
             HubHelper.CheckMessages(this.messages, message);

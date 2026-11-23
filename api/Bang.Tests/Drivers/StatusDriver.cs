@@ -1,4 +1,4 @@
-﻿using Bang.Models.Enums;
+﻿using Bang.Domain.Enums;
 using Bang.Tests.Contexts;
 using System.Linq;
 

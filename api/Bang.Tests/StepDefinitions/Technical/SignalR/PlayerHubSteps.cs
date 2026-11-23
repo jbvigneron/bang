@@ -1,4 +1,4 @@
-using Bang.Models.Enums;
+using Bang.Domain.Enums;
 using Bang.Tests.Drivers;
 using Bang.Tests.Drivers.Hubs;
 using System.Threading.Tasks;

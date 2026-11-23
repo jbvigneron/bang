@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bang.WebApi.Models
+namespace Bang.WebApi.Requests
 {
     public class PlayCardRequest
     {
