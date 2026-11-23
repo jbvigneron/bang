@@ -1,7 +1,6 @@
 using Bang.App.Commands.Game;
 using Bang.App.Events;
 using Bang.App.Repositories;
-using Bang.Domain.Enums;
 using Bang.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -38,25 +37,9 @@ namespace Bang.App.Handlers.Commands.Game
             var player = this.playerRepository.Get(request.PlayerId);
             var game = this.gameRepository.Get(request.GameId);
 
-            if (game.Status == GameStatus.WaitingForPlayers)
-            {
-                throw new GameException("La partie n'a pas encore démarré.", game);
-            }
-
-            if (game.Status == GameStatus.Finished)
-            {
-                throw new GameException("La partie est terminée.", game);
-            }
-
-            if (game.CurrentPlayerName != player.Name)
-            {
-                throw new PlayerException("Ce n'est pas à vous de jouer.", player);
-            }
-
-            if (!player.HasDrawnCards)
-            {
-                throw new PlayerException("Vous devez piocher avant de terminer votre tour.", player);
-            }
+            game.EnsureInProgress();
+            game.EnsureTurnOf(player);
+            player.EnsureHasDrawnCards();
 
             var hand = this.playerRepository.GetHand(player.Id);
             var requiredDiscards = Math.Max(0, hand.Cards.Count - player.Lives);

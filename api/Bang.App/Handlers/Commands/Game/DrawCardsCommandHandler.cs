@@ -1,8 +1,6 @@
 ﻿using Bang.App.Commands.Game;
 using Bang.App.Events;
 using Bang.App.Repositories;
-using Bang.Domain.Enums;
-using Bang.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -35,27 +33,12 @@ namespace Bang.App.Handlers.Commands.Game
         {
             var player = this.playerRepository.Get(request.PlayerId);
 
-            if (player.HasDrawnCards)
-            {
-                throw new PlayerException("Vous avez déjà pioché vos cartes.", player);
-            }
+            player.EnsureHasNotDrawnCards();
 
             var game = this.gameRepository.Get(request.GameId);
 
-            if (game.Status == GameStatus.WaitingForPlayers)
-            {
-                throw new GameException("La partie n'a pas encore démarré.", game);
-            }
-
-            if (game.Status == GameStatus.Finished)
-            {
-                throw new GameException("La partie est terminée.", game);
-            }
-
-            if (game.CurrentPlayerName != player.Name)
-            {
-                throw new PlayerException("Ce n'est pas à vous de jouer.", player);
-            }
+            game.EnsureInProgress();
+            game.EnsureTurnOf(player);
 
             var cards = this.playerRepository.DrawCards(player);
 
