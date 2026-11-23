@@ -114,6 +114,24 @@ namespace Bang.Tests.Drivers
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task EndTurnAsync(string playerName, int discardCount)
+        {
+            var response = await this.TryEndTurnAsync(playerName, discardCount);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public Task<HttpResponseMessage> TryEndTurnAsync(string playerName, int discardCount)
+        {
+            var cardIds = this.gameContext.PlayerCardsInHand[playerName]
+                .Take(discardCount)
+                .Select(c => c.Id)
+                .ToList();
+
+            var client = this.browsersContext.HttpClients[playerName];
+            var request = new EndTurnRequest { CardIds = cardIds };
+            return client.PostAsJsonAsync("api/turns/end", request);
+        }
+
         public async Task UpdateGameAsync()
         {
             var gameId = this.gameContext.Current.Id;

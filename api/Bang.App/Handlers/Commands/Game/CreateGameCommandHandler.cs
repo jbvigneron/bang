@@ -59,7 +59,7 @@ namespace Bang.App.Handlers.Commands.Game
         {
             var roles = GetAvailablesRoles(playerNames.Count());
 
-            return playerNames.Select(playerName =>
+            return playerNames.Select((playerName, seat) =>
             {
                 var role = this.PickRole(roles);
 
@@ -67,7 +67,8 @@ namespace Bang.App.Handlers.Commands.Game
                 {
                     Name = playerName,
                     Status = PlayerStatus.NotReady,
-                    Role = role
+                    Role = role,
+                    Seat = seat
                 };
 
                 if (role.Id == RoleKind.Sheriff)

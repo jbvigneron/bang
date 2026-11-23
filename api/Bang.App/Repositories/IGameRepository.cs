@@ -12,5 +12,7 @@ namespace Bang.App.Repositories
         CurrentGame Create(IEnumerable<Player> players, Player firstPlayer);
 
         CurrentGame Create(IEnumerable<(string Name, RoleKind RoleId, CharacterKind CharacterId)> players);
+
+        void Update(CurrentGame game);
     }
 }

@@ -34,7 +34,6 @@ namespace Bang.App.Handlers.Commands.Game
             var card = request.Card;
 
             var playerHand = this.playerRepository.GetHand(playerId);
-            this.playerRepository.PlayBlueCard(playerHand, card);
 
             this.playerRepository.PlayBrownCard(playerHand, card);
 

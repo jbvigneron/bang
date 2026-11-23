@@ -16,6 +16,8 @@ namespace Bang.Domain.Entities
 
         public int Lives { get; set; }
 
+        public int Seat { get; set; }
+
         public bool IsSheriff { get; set; }
 
         public virtual Role Role { get; set; }

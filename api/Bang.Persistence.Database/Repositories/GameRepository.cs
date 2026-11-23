@@ -57,7 +57,7 @@ namespace Bang.Persistence.Database.Repositories
             {
                 Id = Guid.NewGuid(),
                 Status = GameStatus.WaitingForPlayers,
-                Players = players.Select(player =>
+                Players = players.Select((player, seat) =>
                 {
                     var character = this.context.Characters.First(c => c.Id == player.CharacterId);
                     var role = this.context.Roles.First(r => r.Id == player.RoleId);
@@ -71,6 +71,7 @@ namespace Bang.Persistence.Database.Repositories
                         Character = character,
                         Lives = character.Lives + (isSheriff ? 1 : 0),
                         Status = PlayerStatus.NotReady,
+                        Seat = seat,
                         Weapon = this.context.Weapons.First(w => w.Id == WeaponKind.Colt45)
                     };
                 }).ToArray(),
@@ -84,6 +85,11 @@ namespace Bang.Persistence.Database.Repositories
             this.context.SaveChanges();
 
             return game;
+        }
+
+        public void Update(CurrentGame game)
+        {
+            this.context.SaveChanges();
         }
 
         private ICollection<Card> GetCardsOrderedRandomly() =>
