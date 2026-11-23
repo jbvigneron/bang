@@ -104,18 +104,25 @@ namespace Bang.Persistence.Database.Repositories
 
             playerHand.Cards.Remove(card);
             playerHand.Player.CardsInGame.Add(card);
+            playerHand.Player.CardsInHand = playerHand.Cards.Count;
 
             this.context.SaveChanges();
         }
 
         public void PlayBrownCard(PlayerHand playerHand, Card card)
         {
+            if (card.Type != CardType.Brown)
+            {
+                throw new InvalidOperationException("La carte sélectionnée n'est pas une carte marron");
+            }
+
             var discardPile = this.context.DiscardPiles
                 .Include(d => d.Cards)
                 .Single(g => g.GameId == playerHand.Player.GameId);
 
             playerHand.Cards.Remove(card);
             discardPile.Cards.Add(card);
+            playerHand.Player.CardsInHand = playerHand.Cards.Count;
 
             this.context.SaveChanges();
         }
@@ -129,6 +136,7 @@ namespace Bang.Persistence.Database.Repositories
 
             playerHand.Cards.Remove(card);
             playerHand.Player.CardsInGame.Add(card);
+            playerHand.Player.CardsInHand = playerHand.Cards.Count;
 
             var weapon = this.context.Weapons.Single(w => w.Id.ToString() == card.Kind.ToString());
             playerHand.Player.Weapon = weapon;
@@ -146,6 +154,28 @@ namespace Bang.Persistence.Database.Repositories
             otherHand.Cards.Add(oldCard);
             playerHand.Cards.Add(newCard);
 
+            this.context.SaveChanges();
+        }
+
+        public void DiscardCards(PlayerHand playerHand, IEnumerable<Card> cards)
+        {
+            var discardPile = this.context.DiscardPiles
+                .Include(d => d.Cards)
+                .Single(g => g.GameId == playerHand.Player.GameId);
+
+            foreach (var card in cards.ToList())
+            {
+                playerHand.Cards.Remove(card);
+                discardPile.Cards.Add(card);
+            }
+
+            playerHand.Player.CardsInHand = playerHand.Cards.Count;
+
+            this.context.SaveChanges();
+        }
+
+        public void Update(Player player)
+        {
             this.context.SaveChanges();
         }
     }

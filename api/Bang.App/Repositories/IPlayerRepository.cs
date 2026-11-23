@@ -21,5 +21,9 @@ namespace Bang.App.Repositories
         Weapon PlayWeaponCard(PlayerHand playerHand, Card card);
 
         void SwitchCard(PlayerHand playerHand, PlayerHand otherHand, Card oldCard, Card newCard);
+
+        void DiscardCards(PlayerHand playerHand, IEnumerable<Card> cards);
+
+        void Update(Player player);
     }
 }

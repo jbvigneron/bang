@@ -152,6 +152,151 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Jouer une carte marron")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur")]
+        [Xunit.TraitAttribute("Description", "Jouer une carte marron")]
+        public void JouerUneCarteMarron()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Jouer une carte marron", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 21
+ testRunner.Given("\"Jean\" possède une carte \"Bière\" dans son jeu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Etant donné que ");
+#line hidden
+#line 22
+ testRunner.When("\"Jean\" joue une carte \"Bière\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 23
+ testRunner.Then("\"Jean\" possède 6 cartes en main", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Terminer son tour passe la main au joueur suivant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur")]
+        [Xunit.TraitAttribute("Description", "Terminer son tour passe la main au joueur suivant")]
+        public void TerminerSonTourPasseLaMainAuJoueurSuivant()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Terminer son tour passe la main au joueur suivant", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 25
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 26
+ testRunner.When("\"Jean\" termine son tour en défaussant 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 27
+ testRunner.Then("c\'est au tour de \"Max\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Terminer son tour sans défausser le nombre requis est refusé")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur")]
+        [Xunit.TraitAttribute("Description", "Terminer son tour sans défausser le nombre requis est refusé")]
+        public void TerminerSonTourSansDefausserLeNombreRequisEstRefuse()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Terminer son tour sans défausser le nombre requis est refusé", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 29
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 30
+ testRunner.When("\"Jean\" tente de terminer son tour en défaussant 0 carte", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 31
+ testRunner.Then("la fin de tour est refusée", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Le tour fait un tour complet et revient au premier joueur")]
+        [Xunit.TraitAttribute("FeatureTitle", "Tour d\'un joueur")]
+        [Xunit.TraitAttribute("Description", "Le tour fait un tour complet et revient au premier joueur")]
+        public void LeTourFaitUnTourCompletEtRevientAuPremierJoueur()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Le tour fait un tour complet et revient au premier joueur", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 33
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 34
+ testRunner.When("\"Jean\" termine son tour en défaussant 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quand ");
+#line hidden
+#line 35
+ testRunner.And("c\'est au tour de \"Max\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 36
+ testRunner.And("\"Max\" termine son tour en défaussant 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 37
+ testRunner.And("c\'est au tour de \"Emilie\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 38
+ testRunner.And("\"Emilie\" termine son tour en défaussant 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 39
+ testRunner.And("c\'est au tour de \"Martin\", il pioche 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 40
+ testRunner.And("\"Martin\" termine son tour en défaussant 2 cartes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Et ");
+#line hidden
+#line 41
+ testRunner.Then("c\'est au tour de \"Jean\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Alors ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
