@@ -20,12 +20,13 @@ namespace Bang.Tests.Support
         public string CreateIntegrationTestToken()
         {
             var configuration = this.Services.GetRequiredService<IConfiguration>();
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is not configured.")));
             var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             var claims = new[] { new Claim("role", Roles.IntegrationTests) };
             var token = new JwtSecurityToken(
-                issuer: configuration["Jwt:Issuer"],
-                audience: configuration["Jwt:Audience"],
+                issuer: configuration["Jwt:Issuer"] ?? throw new InvalidOperationException("Jwt:Issuer is not configured."),
+                audience: configuration["Jwt:Audience"] ?? throw new InvalidOperationException("Jwt:Audience is not configured."),
                 claims: claims,
                 signingCredentials: credentials
             );

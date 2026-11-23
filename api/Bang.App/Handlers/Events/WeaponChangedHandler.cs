@@ -1,7 +1,6 @@
 ﻿using Bang.App.Events;
-using Bang.App.Hubs;
+using Bang.App.Notifications;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,11 +8,11 @@ namespace Bang.App.Handlers.Events
 {
     public class WeaponChangedHandler : INotificationHandler<WeaponChanged>
     {
-        private readonly IHubContext<GameHub> gameHub;
+        private readonly IRealtimeNotificationPublisher notificationPublisher;
 
-        public WeaponChangedHandler(IHubContext<GameHub> gameHub)
+        public WeaponChangedHandler(IRealtimeNotificationPublisher notificationPublisher)
         {
-            this.gameHub = gameHub;
+            this.notificationPublisher = notificationPublisher;
         }
 
         public Task Handle(WeaponChanged notification, CancellationToken cancellationToken)
@@ -22,9 +21,11 @@ namespace Bang.App.Handlers.Events
             var playerId = notification.PlayerId;
             var weapon = notification.Weapon;
 
-            return this.gameHub
-                    .Clients.Group(gameId.ToString())
-                    .SendAsync(Domain.Constants.Events.Game.WeaponChanged, gameId, playerId, weapon, cancellationToken);
+            return this.notificationPublisher.PublishWeaponChangedAsync(
+                gameId,
+                playerId,
+                weapon,
+                cancellationToken);
         }
     }
 }

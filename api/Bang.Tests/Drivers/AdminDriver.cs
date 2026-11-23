@@ -2,6 +2,7 @@
 using Bang.Domain.Entities;
 using Bang.Tests.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -33,8 +34,10 @@ namespace Bang.Tests.Drivers
 
         public async Task InitPreparedGameAsync(IEnumerable<(string PlayerName, string CharacterName, string RoleName)> players)
         {
-            var characters = await this.client.GetFromJsonAsync<IEnumerable<Character>>("api/characters");
-            var roles = await this.client.GetFromJsonAsync<IEnumerable<Role>>("api/roles");
+            var characters = await this.client.GetFromJsonAsync<IEnumerable<Character>>("api/characters")
+                ?? throw new InvalidOperationException("The API returned no characters.");
+            var roles = await this.client.GetFromJsonAsync<IEnumerable<Role>>("api/roles")
+                ?? throw new InvalidOperationException("The API returned no roles.");
 
             var request = new CreatePreparedGameCommand(
                 players.Select(p => new PlayersInfos
@@ -48,8 +51,10 @@ namespace Bang.Tests.Drivers
             var response = await this.client.PostAsJsonAsync("api/admin/games", request);
             response.EnsureSuccessStatusCode();
 
-            var createdGame = response.Headers.Location;
-            this.gameContext.Current = await this.client.GetFromJsonAsync<CurrentGame>(createdGame);
+            var createdGame = response.Headers.Location
+                ?? throw new InvalidOperationException("The API response did not include the created game location.");
+            this.gameContext.Current = await this.client.GetFromJsonAsync<CurrentGame>(createdGame)
+                ?? throw new InvalidOperationException("The API returned no created game.");
 
             this.browsersContext.HttpClients = players.ToDictionary(
                 player => player.PlayerName,

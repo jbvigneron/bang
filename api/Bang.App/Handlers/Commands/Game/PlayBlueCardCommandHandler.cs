@@ -12,13 +12,13 @@ namespace Bang.App.Handlers.Commands.Game
 {
     public class PlayBlueCardCommandHandler : IRequestHandler<PlayBlueCardCommand>
     {
-        private readonly ILogger<PlayBlueCardCommand> logger;
+        private readonly ILogger<PlayBlueCardCommandHandler> logger;
         private readonly IMediator mediator;
 
         private readonly IPlayerRepository playerRepository;
 
         public PlayBlueCardCommandHandler(
-            ILogger<PlayBlueCardCommand> logger,
+            ILogger<PlayBlueCardCommandHandler> logger,
             IMediator mediator,
             IPlayerRepository playerRepository)
         {

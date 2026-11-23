@@ -38,7 +38,7 @@ namespace Bang.Persistence.Database.Repositories
                 Status = GameStatus.WaitingForPlayers,
                 Players = players.ToArray(),
                 CurrentPlayerName = firstPlayer.Name,
-                DeckCount = cards.Count()
+                DeckCount = cards.Count
             };
 
             this.context.Games.Add(game);

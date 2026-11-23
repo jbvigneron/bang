@@ -7,6 +7,7 @@ namespace Bang.Tests.Contexts
     {
         public BrowsersContext()
         {
+            this.HttpClients = new Dictionary<string, HttpClient>();
             this.Cookies = new Dictionary<string, IEnumerable<string>>();
         }
 

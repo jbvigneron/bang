@@ -1,7 +1,6 @@
 ﻿using Bang.App.Events;
-using Bang.App.Hubs;
+using Bang.App.Notifications;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,13 +8,11 @@ namespace Bang.App.Handlers.Events
 {
     public class CardsDrawnHandler : INotificationHandler<CardsDrawn>
     {
-        private readonly IHubContext<GameHub> gameHub;
-        private readonly IHubContext<PlayerHub> playerHub;
+        private readonly IRealtimeNotificationPublisher notificationPublisher;
 
-        public CardsDrawnHandler(IHubContext<GameHub> gameHub, IHubContext<PlayerHub> playerHub)
+        public CardsDrawnHandler(IRealtimeNotificationPublisher notificationPublisher)
         {
-            this.gameHub = gameHub;
-            this.playerHub = playerHub;
+            this.notificationPublisher = notificationPublisher;
         }
 
         public async Task Handle(CardsDrawn notification, CancellationToken cancellationToken)
@@ -29,13 +26,14 @@ namespace Bang.App.Handlers.Events
 
             var cards = notification.Cards;
 
-            await this.gameHub
-                .Clients.Group(gameId.ToString())
-                .SendAsync(Domain.Constants.Events.Game.CardsDrawn, game.Id, game.DeckCount, playerName, player.CardsInHand, cancellationToken);
+            await this.notificationPublisher.PublishCardsDrawnAsync(
+                gameId,
+                game.DeckCount,
+                playerName,
+                player.CardsInHand,
+                cancellationToken);
 
-            await this.playerHub
-                .Clients.Group(playerId.ToString())
-                .SendAsync(Domain.Constants.Events.Player.YourHand, cards, cancellationToken);
+            await this.notificationPublisher.PublishYourHandAsync(playerId, cards, cancellationToken);
         }
     }
 }

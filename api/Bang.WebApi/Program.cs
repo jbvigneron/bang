@@ -1,7 +1,9 @@
 using Bang.App.Extensions;
-using Bang.App.Hubs;
+using Bang.App.Notifications;
 using Bang.Persistence.Database;
 using Bang.Persistence.Database.Extensions;
+using Bang.WebApi.Hubs;
+using Bang.WebApi.SignalR;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -80,6 +82,7 @@ try
         });
 
     builder.Services.AddSignalR();
+    builder.Services.AddScoped<IRealtimeNotificationPublisher, SignalRRealtimeNotificationPublisher>();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>

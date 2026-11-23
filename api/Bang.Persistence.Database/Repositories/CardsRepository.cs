@@ -14,8 +14,8 @@ namespace Bang.Persistence.Database.Repositories
             this.context = context;
         }
 
-        public Card Get(Guid id) =>
+        public Card Get(Guid cardId) =>
 
-            this.context.Cards.Single(c => c.Id == id);
+            this.context.Cards.Single(c => c.Id == cardId);
     }
 }

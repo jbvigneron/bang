@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Bang.App.Hubs
+namespace Bang.WebApi.Hubs
 {
     public class GameHub : Hub
     {

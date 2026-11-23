@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
-namespace Bang.App.Hubs
+namespace Bang.WebApi.Hubs
 {
     [Authorize]
     public class PlayerHub : Hub

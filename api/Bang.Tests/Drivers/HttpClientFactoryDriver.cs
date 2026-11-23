@@ -10,9 +10,9 @@ namespace Bang.Tests.Drivers
         {
             this.Factory = new TestWebApplicationFactory<Program>();
 
-            using (var scope = this.Factory.Services.GetService<IServiceScopeFactory>().CreateScope())
+            using (var scope = this.Factory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetService<BangDbContext>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<BangDbContext>();
                 dbContext.Database.EnsureCreated();
             }
         }

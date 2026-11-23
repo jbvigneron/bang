@@ -32,8 +32,10 @@ namespace Bang.Tests.Drivers
             var response = await client.PostAsJsonAsync("api/games", playerNames);
             response.EnsureSuccessStatusCode();
 
-            var createdGame = response.Headers.Location;
-            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>(createdGame);
+            var createdGame = response.Headers.Location
+                ?? throw new InvalidOperationException("The API response did not include the created game location.");
+            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>(createdGame)
+                ?? throw new InvalidOperationException("The API returned no created game.");
 
             this.browsersContext.HttpClients = playerNames.ToDictionary(
                 name => name,
@@ -45,7 +47,7 @@ namespace Bang.Tests.Drivers
         {
             var gameId = this.gameContext.Current.Id;
 
-            var client = this.browsersContext.HttpClients![playerName];
+            var client = this.browsersContext.HttpClients[playerName];
             var response = await client.PostAsJsonAsync($"api/games/{gameId}?authMode={authMode}", playerName);
             response.EnsureSuccessStatusCode();
 
@@ -57,7 +59,7 @@ namespace Bang.Tests.Drivers
             else
             {
                 IEnumerable<string> cookies = response.Headers.GetValues(HeaderNames.SetCookie);
-                this.browsersContext.Cookies[playerName] = cookies!;
+                this.browsersContext.Cookies[playerName] = cookies;
             }
         }
 
@@ -71,7 +73,7 @@ namespace Bang.Tests.Drivers
 
         public async Task DrawCardsAsync(string playerName)
         {
-            var client = this.browsersContext.HttpClients![playerName];
+            var client = this.browsersContext.HttpClients[playerName];
             var response = await client.PostAsync("api/cards/draw", null);
             response.EnsureSuccessStatusCode();
         }
@@ -81,7 +83,7 @@ namespace Bang.Tests.Drivers
             var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.First(b => b.Name == cardName);
 
-            var client = this.browsersContext.HttpClients![playerName];
+            var client = this.browsersContext.HttpClients[playerName];
             var request = new PlayCardRequest(card.Id);
             var response = await client.PostAsJsonAsync("api/cards/play", request);
             response.EnsureSuccessStatusCode();
@@ -92,9 +94,10 @@ namespace Bang.Tests.Drivers
             var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.First(b => b.Name == cardName);
 
-            var opponent = this.gameContext.Current.Players.FirstOrDefault(p => p.Name == opponentName);
+            var opponent = this.gameContext.Current.Players.FirstOrDefault(p => p.Name == opponentName)
+                ?? throw new InvalidOperationException($"Player '{opponentName}' does not exist in the current game.");
 
-            var client = this.browsersContext.HttpClients![playerName];
+            var client = this.browsersContext.HttpClients[playerName];
             var request = new PlayCardRequest(card.Id, opponent.Id);
             var response = await client.PostAsJsonAsync("api/cards/play", request);
             response.EnsureSuccessStatusCode();
@@ -105,7 +108,7 @@ namespace Bang.Tests.Drivers
             var cards = this.gameContext.PlayerCardsInHand[playerName];
             var card = cards.OrderBy(c => Guid.NewGuid()).First(c => !c.RequireOpponent && c.Type == CardType.Blue);
 
-            var client = this.browsersContext.HttpClients![playerName];
+            var client = this.browsersContext.HttpClients[playerName];
             var request = new PlayCardRequest(card.Id);
             var response = await client.PostAsJsonAsync("api/cards/play", request);
             response.EnsureSuccessStatusCode();
@@ -115,21 +118,24 @@ namespace Bang.Tests.Drivers
         {
             var gameId = this.gameContext.Current.Id;
             var client = this.httpClientFactoryContext.Factory.CreateClient();
-            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>($"api/games/{gameId}");
+            this.gameContext.Current = await client.GetFromJsonAsync<CurrentGame>($"api/games/{gameId}")
+                ?? throw new InvalidOperationException("The API returned no current game.");
         }
 
         public async Task UpdatePlayerAsync(string playerName)
         {
-            var client = this.browsersContext.HttpClients![playerName];
-            var player = await client.GetFromJsonAsync<Player>("api/players/me");
-            this.gameContext.Players![playerName] = player!;
+            var client = this.browsersContext.HttpClients[playerName];
+            var player = await client.GetFromJsonAsync<Player>("api/players/me")
+                ?? throw new InvalidOperationException("The API returned no current player.");
+            this.gameContext.Players[playerName] = player;
         }
 
         public async Task UpdatePlayerCardsAsync(string playerName)
         {
-            var client = this.browsersContext.HttpClients![playerName];
-            var cards = await client.GetFromJsonAsync<IList<Card>>("api/cards/mine");
-            this.gameContext.PlayerCardsInHand[playerName] = cards!;
+            var client = this.browsersContext.HttpClients[playerName];
+            var cards = await client.GetFromJsonAsync<IList<Card>>("api/cards/mine")
+                ?? throw new InvalidOperationException("The API returned no player cards.");
+            this.gameContext.PlayerCardsInHand[playerName] = cards;
         }
 
         public void IsPlayerExisting(string playerName) =>

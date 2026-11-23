@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Bang.App.Hubs
+namespace Bang.WebApi.Hubs
 {
     public class PublicHub : Hub
     {

@@ -11,13 +11,13 @@ namespace Bang.App.Handlers.Commands.Game
 {
     public class PlayWeaponCardCommandHandler : IRequestHandler<PlayWeaponCardCommand>
     {
-        private readonly ILogger<PlayWeaponCardCommand> logger;
+        private readonly ILogger<PlayWeaponCardCommandHandler> logger;
         private readonly IMediator mediator;
 
         private readonly IPlayerRepository playerRepository;
 
         public PlayWeaponCardCommandHandler(
-            ILogger<PlayWeaponCardCommand> logger,
+            ILogger<PlayWeaponCardCommandHandler> logger,
             IMediator mediator,
             IPlayerRepository playerRepository)
         {

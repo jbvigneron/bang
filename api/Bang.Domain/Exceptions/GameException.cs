@@ -1,10 +1,8 @@
 ﻿using Bang.Domain.Entities;
 using System;
-using System.Runtime.Serialization;
 
 namespace Bang.Domain.Exceptions
 {
-    [Serializable]
     public class GameException : Exception
     {
         public GameException(string message) : base(message)
@@ -19,13 +17,6 @@ namespace Bang.Domain.Exceptions
         public GameException(string message, Guid gameId) : this(message)
         {
             this.GameId = gameId;
-        }
-
-        protected GameException(SerializationInfo serializationInfo, StreamingContext streamingContext)
-            : base(serializationInfo, streamingContext)
-        {
-            serializationInfo.AddValue("Game", this.Game);
-            serializationInfo.AddValue("GameId", this.GameId);
         }
 
         public CurrentGame Game { get; }

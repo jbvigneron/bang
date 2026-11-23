@@ -1,7 +1,6 @@
 ﻿using Bang.App.Events;
-using Bang.App.Hubs;
+using Bang.App.Notifications;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,11 +8,11 @@ namespace Bang.App.Handlers.Events
 {
     public class CardPlacedHandler : INotificationHandler<CardPlaced>
     {
-        private readonly IHubContext<GameHub> gameHub;
+        private readonly IRealtimeNotificationPublisher notificationPublisher;
 
-        public CardPlacedHandler(IHubContext<GameHub> gameHub)
+        public CardPlacedHandler(IRealtimeNotificationPublisher notificationPublisher)
         {
-            this.gameHub = gameHub;
+            this.notificationPublisher = notificationPublisher;
         }
 
         public Task Handle(CardPlaced notification, CancellationToken cancellationToken)
@@ -23,9 +22,12 @@ namespace Bang.App.Handlers.Events
             var targetPlayerId = notification.TargetPlayerId;
             var card = notification.Card;
 
-            return this.gameHub
-                    .Clients.Group(gameId.ToString())
-                    .SendAsync(Domain.Constants.Events.Game.CardDiscarded, gameId, playerId, targetPlayerId, card, cancellationToken);
+            return this.notificationPublisher.PublishCardPlacedAsync(
+                gameId,
+                playerId,
+                targetPlayerId,
+                card,
+                cancellationToken);
         }
     }
 }
