@@ -15,6 +15,27 @@ namespace Bang.Domain.Entities
         public int DeckCount { get; set; }
         public virtual IEnumerable<GameDiscard> DiscardPile { get; set; }
 
+        public void EnsureInProgress()
+        {
+            if (this.Status == GameStatus.WaitingForPlayers)
+            {
+                throw new GameException("La partie n'a pas encore démarré.", this);
+            }
+
+            if (this.Status == GameStatus.Finished)
+            {
+                throw new GameException("La partie est terminée.", this);
+            }
+        }
+
+        public void EnsureTurnOf(Player player)
+        {
+            if (this.CurrentPlayerName != player.Name)
+            {
+                throw new PlayerException("Ce n'est pas à vous de jouer.", player);
+            }
+        }
+
         public Player GetNextPlayer(Player currentPlayer)
         {
             var seatedPlayers = this.Players.OrderBy(p => p.Seat).ToList();

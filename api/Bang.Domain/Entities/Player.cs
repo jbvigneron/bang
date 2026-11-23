@@ -1,4 +1,5 @@
 using Bang.Domain.Enums;
+using Bang.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 
@@ -27,6 +28,22 @@ namespace Bang.Domain.Entities
         public Guid GameId { get; set; }
 
         public bool HasDrawnCards { get; set; }
+
+        public void EnsureHasNotDrawnCards()
+        {
+            if (this.HasDrawnCards)
+            {
+                throw new PlayerException("Vous avez déjà pioché vos cartes.", this);
+            }
+        }
+
+        public void EnsureHasDrawnCards()
+        {
+            if (!this.HasDrawnCards)
+            {
+                throw new PlayerException("Vous devez piocher avant de terminer votre tour.", this);
+            }
+        }
 
         public int CardsInHand { get; set; }
 
