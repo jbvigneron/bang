@@ -24,12 +24,19 @@ namespace Bang.Persistence.Database.Repositories
                 .Include(p => p.Weapon)
                 .Single(g => g.Id == id);
 
-        public PlayerHand GetHand(Guid playerId) =>
-            this.context.PlayersHands
+        public PlayerHand GetHand(Guid playerId)
+        {
+            var hand = this.context.PlayersHands
                 .Include(d => d.Cards)
                 .Include(d => d.Player)
-                    .ThenInclude(p => p.CardsInGame)
                 .Single(p => p.PlayerId == playerId);
+
+            this.context.Entry(hand.Player)
+                .Collection(player => player.CardsInGame)
+                .Load();
+
+            return hand;
+        }
 
         public void FillPlayerHand(GameDeck gameDeck, Player player, bool canStartGame)
         {
