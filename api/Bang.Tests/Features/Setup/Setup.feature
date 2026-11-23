@@ -98,3 +98,22 @@ Scénario: Le shérif commence
 	Et "Emilie" pioche une carte personnage
 	Et "Martin" pioche une carte personnage
 	Alors c'est au shérif de commencer
+
+Scénario: Partie avec moins de 4 joueurs refusée
+	Sachant que ces joueurs veulent jouer
+		| playerName |
+		| Jean       |
+		| Max        |
+		| Emilie     |
+	Quand la partie est créée
+	Alors la création est refusée pour données invalides
+
+Scénario: Partie avec des noms de joueurs identiques refusée
+	Sachant que ces joueurs veulent jouer
+		| playerName |
+		| Jean       |
+		| Jean       |
+		| Emilie     |
+		| Martin     |
+	Quand la partie est créée
+	Alors la création est refusée pour données invalides

@@ -15,6 +15,14 @@ namespace Bang.Domain.Entities
         public int DeckCount { get; set; }
         public virtual IEnumerable<GameDiscard> DiscardPile { get; set; }
 
+        public void EnsureWaitingForPlayers()
+        {
+            if (this.Status != GameStatus.WaitingForPlayers)
+            {
+                throw new GameException("L'identifiant de la partie est incorrect", this.Id);
+            }
+        }
+
         public void EnsureInProgress()
         {
             if (this.Status == GameStatus.WaitingForPlayers)

@@ -43,6 +43,12 @@ namespace Bang.Tests.Drivers
             );
         }
 
+        public Task<HttpResponseMessage> TryInitGameAsync(IEnumerable<string> playerNames)
+        {
+            var client = this.httpClientFactoryContext.Factory.CreateClient();
+            return client.PostAsJsonAsync("api/games", playerNames);
+        }
+
         public async Task JoinGameAsync(string playerName, AuthMode? authMode = AuthMode.Cookie)
         {
             var gameId = this.gameContext.Current.Id;

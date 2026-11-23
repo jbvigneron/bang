@@ -3,7 +3,6 @@ using Bang.App.Events;
 using Bang.App.Repositories;
 using Bang.Domain.Entities;
 using Bang.Domain.Enums;
-using Bang.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -51,10 +50,7 @@ namespace Bang.App.Handlers.Commands.Game
 
             var game = this.gameRepository.Get(gameId);
 
-            if (game.Status != GameStatus.WaitingForPlayers)
-            {
-                throw new GameException("L'identifiant de la partie est incorrect", game.Id);
-            }
+            game.EnsureWaitingForPlayers();
 
             var player = game.Players.First(p => p.Name == playerName);
             player.Character ??= this.charactersRepository.GetRandom();

@@ -1,7 +1,10 @@
 using Bang.Tests.Drivers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Bang.Tests.StepDefinitions.Setup
 {
@@ -12,6 +15,9 @@ namespace Bang.Tests.StepDefinitions.Setup
         private readonly RulesDriver rulesDriver;
 
         private List<string> playerNames = new();
+        private HttpResponseMessage creationResponse = default!;
+
+        public IEnumerable<string> PlayerNames => this.playerNames;
 
         public SetupSteps(GameDriver gameDriver, RulesDriver rulesDriver)
         {
@@ -35,6 +41,19 @@ namespace Bang.Tests.StepDefinitions.Setup
         public Task WhenLaPartieSePrepare()
         {
             return this.gameDriver.InitGameAsync(this.playerNames);
+        }
+
+        [When(@"la partie est créée")]
+        public async Task WhenLaPartieEstCreee()
+        {
+            this.creationResponse = await this.gameDriver.TryInitGameAsync(this.playerNames);
+        }
+
+        [Then(@"la création est refusée pour données invalides")]
+        public async Task ThenLaCreationEstRefuseePourDonneesInvalides()
+        {
+            var body = await this.creationResponse.Content.ReadAsStringAsync();
+            Assert.True(this.creationResponse.StatusCode == HttpStatusCode.BadRequest, body);
         }
 
         [When(@"""([^""]*)"" pioche une carte personnage")]
